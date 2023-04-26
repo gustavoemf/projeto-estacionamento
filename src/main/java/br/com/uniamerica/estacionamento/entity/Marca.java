@@ -5,8 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+
 @Entity
-@Table(name = "tb_marca", schema = "publico")
+@Audited
+@Table(name = "marcas", schema = "publico")
+@AuditTable(value = "marca_audit", schema = "audit")
 public class Marca extends AbstractEntity {
     @Getter @Setter
     @Column(name = "nome", nullable = false, length = 50)
