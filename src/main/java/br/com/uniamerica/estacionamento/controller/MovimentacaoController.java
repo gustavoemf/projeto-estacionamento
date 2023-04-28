@@ -31,7 +31,7 @@ public class MovimentacaoController {
         return movimentacao == null ? ResponseEntity.badRequest().body("Nenhum valor encontrado") : ResponseEntity.ok(movimentacao);
     }
 
-    @GetMapping
+    @GetMapping("/lista")
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.movimentacaoRepository.findAll());}
 
     @GetMapping("/abertas")

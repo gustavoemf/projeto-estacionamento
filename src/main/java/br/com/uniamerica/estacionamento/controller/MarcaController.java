@@ -27,7 +27,7 @@ public class MarcaController {
         return marca == null ? ResponseEntity.badRequest().body("Nenhum valor encontrado") : ResponseEntity.ok(marca);
     }
 
-    @GetMapping
+    @GetMapping("/lista")
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.marcaRepository.findAll());}
 
     @PostMapping

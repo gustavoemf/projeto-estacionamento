@@ -25,7 +25,7 @@ public class VeiculoController {
         return veiculo == null ? ResponseEntity.badRequest().body("Nenhum valor encontrado") : ResponseEntity.ok(veiculo);
     }
 
-    @GetMapping
+    @GetMapping("/lista")
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.veiculoRepository.findAll());}
 
     @PostMapping

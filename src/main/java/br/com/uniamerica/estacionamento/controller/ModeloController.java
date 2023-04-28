@@ -27,7 +27,7 @@ public class ModeloController {
         return modelo == null ? ResponseEntity.badRequest().body("Nenhum valor encontrado") : ResponseEntity.ok(modelo);
     }
 
-    @GetMapping
+    @GetMapping("/lista")
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.modeloRepository.findAll());}
 
     @PostMapping
