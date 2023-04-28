@@ -6,9 +6,12 @@ import br.com.uniamerica.estacionamento.entity.Movimentacao;
 import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping(value = "/api/movimentacao")
@@ -30,6 +33,9 @@ public class MovimentacaoController {
 
     @GetMapping
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.movimentacaoRepository.findAll());}
+
+    @GetMapping("/abertas")
+    public ResponseEntity <?> listaAbertas(){return ResponseEntity.ok(this.movimentacaoRepository.findByAbertas());}
 
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody final Movimentacao movimentacao){
