@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/veiculo")
 public class VeiculoController {
     @Autowired
-    private VeiculoRepository veiculoRepository
+    private VeiculoRepository veiculoRepository;
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdPath(@PathVariable("id") final Long id){
         final Veiculo veiculo = this.veiculoRepository.findById(id).orElse(null);
@@ -60,7 +60,14 @@ public class VeiculoController {
     @DeleteMapping
     public ResponseEntity <?> deletar(@RequestParam("id") final Long id){
         final Veiculo veiculoBanco = this.veiculoRepository.findById(id).orElse(null);
-        this.veiculoRepository.delete(veiculoBanco);
-        return ResponseEntity.ok("Registro deletado");
+        try{
+            this.veiculoRepository.delete(veiculoBanco);
+            return ResponseEntity.ok("Registro deletado");
+        }
+        catch(RuntimeException e){
+            veiculoBanco.setAtivo(false);
+            this.veiculoRepository.save(veiculoBanco);
+            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+        }
     }
 }

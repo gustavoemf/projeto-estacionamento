@@ -1,5 +1,6 @@
 package br.com.uniamerica.estacionamento.controller;
 
+import br.com.uniamerica.estacionamento.entity.Condutor;
 import br.com.uniamerica.estacionamento.entity.Modelo;
 import br.com.uniamerica.estacionamento.repository.ModeloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,14 @@ public class ModeloController {
     @DeleteMapping
     public ResponseEntity <?> deletar(@RequestParam("id") final Long id){
         final Modelo modeloBanco = this.modeloRepository.findById(id).orElse(null);
-        this.modeloRepository.delete(modeloBanco);
-        return ResponseEntity.ok("Registro deletado");
+        try{
+            this.modeloRepository.delete(modeloBanco);
+            return ResponseEntity.ok("Registro deletado");
+        }
+        catch(RuntimeException e){
+            modeloBanco.setAtivo(false);
+            this.modeloRepository.save(modeloBanco);
+            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+        }
     }
 }

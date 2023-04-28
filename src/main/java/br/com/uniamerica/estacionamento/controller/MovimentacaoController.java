@@ -1,5 +1,6 @@
 package br.com.uniamerica.estacionamento.controller;
 
+import br.com.uniamerica.estacionamento.entity.Condutor;
 import br.com.uniamerica.estacionamento.entity.Modelo;
 import br.com.uniamerica.estacionamento.entity.Movimentacao;
 import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;
@@ -62,7 +63,8 @@ public class MovimentacaoController {
     @DeleteMapping
     public ResponseEntity <?> deletar(@RequestParam("id") final Long id){
         final Movimentacao movimentacaoBanco = this.movimentacaoRepository.findById(id).orElse(null);
-        this.movimentacaoRepository.delete(movimentacaoBanco);
-        return ResponseEntity.ok("Registro deletado");
+        movimentacaoBanco.setAtivo(false);
+        this.movimentacaoRepository.save(movimentacaoBanco);
+        return ResponseEntity.ok("Registro desativado");
     }
 }
