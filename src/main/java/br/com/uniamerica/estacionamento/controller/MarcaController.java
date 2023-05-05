@@ -37,8 +37,8 @@ public class MarcaController {
         try{
             this.marcaService.cadastrarMarca(marca);
         }
-        catch(DataIntegrityViolationException e){
-            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+        catch(Exception e){
+            return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
         return ResponseEntity.ok("Registro realizado");
     }

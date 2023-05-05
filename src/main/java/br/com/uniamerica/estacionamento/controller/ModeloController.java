@@ -2,6 +2,7 @@ package br.com.uniamerica.estacionamento.controller;
 
 import br.com.uniamerica.estacionamento.entity.Modelo;
 import br.com.uniamerica.estacionamento.repository.ModeloRepository;
+import br.com.uniamerica.estacionamento.service.ModeloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class ModeloController {
     @Autowired
     private ModeloRepository modeloRepository;
+    @Autowired
+    private ModeloService modeloService;
 
     @GetMapping("/{id}")
     public ResponseEntity <?> findByIdPath(@PathVariable("id") final Long id){
@@ -32,23 +35,18 @@ public class ModeloController {
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody final Modelo modelo){
         try{
-            this.modeloRepository.save(modelo);
-            return ResponseEntity.ok("Registro realizado");
+            this.modeloService.cadastraModelo(modelo);
         }
-        catch (DataIntegrityViolationException e){
-            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+        catch (Exception e){
+            return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
+        return ResponseEntity.ok("Registro realizado");
     }
 
     @PutMapping
     public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody Modelo modelo){
         try{
-            final Modelo modeloBanco = this.modeloRepository.findById(id).orElse(null);
-            if(modeloBanco == null || !modeloBanco.getId().equals(modelo.getId())){
-                throw new RuntimeException("Não foi possível identificar o registro informado");
-            }
-            this.modeloRepository.save(modeloBanco);
-            return ResponseEntity.ok("Registro atualizado");
+            this.modeloService.atualizaModelo(id, modelo);
         }
         catch (DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
@@ -56,6 +54,7 @@ public class ModeloController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
+        return ResponseEntity.ok("Registro atualizado");
     }
 
     @DeleteMapping

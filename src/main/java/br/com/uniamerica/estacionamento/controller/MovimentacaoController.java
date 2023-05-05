@@ -42,8 +42,8 @@ public class MovimentacaoController {
         try{
             this.movimentacaoService.cadastraMovimentacao(movimentacao);
         }
-        catch (DataIntegrityViolationException e){
-            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+        catch (Exception e){
+            return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
         return ResponseEntity.ok("Registro realizado");
     }

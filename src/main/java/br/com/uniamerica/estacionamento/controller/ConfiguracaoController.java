@@ -2,6 +2,7 @@ package br.com.uniamerica.estacionamento.controller;
 
 import br.com.uniamerica.estacionamento.entity.Configuracao;
 import br.com.uniamerica.estacionamento.repository.ConfiguracaoRepository;
+import br.com.uniamerica.estacionamento.service.ConfiguracaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class ConfiguracaoController {
     @Autowired
     private ConfiguracaoRepository configuracaoRepository;
+    @Autowired
+    private ConfiguracaoService configuracaoService;
 
     @GetMapping("/{id}")
     public ResponseEntity <?> findByIdPath (@PathVariable("id") final Long id){
@@ -29,23 +32,18 @@ public class ConfiguracaoController {
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody final Configuracao configuracao){
         try{
-            this.configuracaoRepository.save(configuracao);
-            return ResponseEntity.ok("Registro realizado");
+            this.configuracaoService.cadastraConfiguracao(configuracao);
         }
-        catch(DataIntegrityViolationException e){
-            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+        catch(Exception e){
+            return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
+        return ResponseEntity.ok("Registro realizado");
     }
 
     @PutMapping
     public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody final Configuracao configuracao){
         try{
-            final Configuracao configuracaoBanco = this.configuracaoRepository.findById(id).orElse(null);
-            if(configuracaoBanco == null || !configuracaoBanco.getId().equals(configuracao.getId())){
-                throw new RuntimeException("Não foi possível identificar o registro informado");
-            }
-            this.configuracaoRepository.save(configuracaoBanco);
-            return ResponseEntity.ok("Registro atualizado");
+            this.configuracaoService.atualizaConfiguracao(id, configuracao);
         }
         catch (DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
@@ -53,5 +51,6 @@ public class ConfiguracaoController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
+        return ResponseEntity.ok("Registro atualizado");
     }
 }
