@@ -2,6 +2,7 @@ package br.com.uniamerica.estacionamento.controller;
 
 import br.com.uniamerica.estacionamento.entity.Marca;
 import br.com.uniamerica.estacionamento.repository.MarcaRepository;
+import br.com.uniamerica.estacionamento.service.MarcaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class MarcaController {
     @Autowired
     private MarcaRepository marcaRepository;
+    @Autowired
+    private MarcaService marcaService;
 
     @GetMapping("/{id}")
     public ResponseEntity <?> findByIdPath(@PathVariable("id") final Long id){
@@ -32,12 +35,12 @@ public class MarcaController {
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody final Marca marca){
         try{
-            this.marcaRepository.save(marca);
-            return ResponseEntity.ok("Registro realizado");
+            this.marcaService.cadastrarMarca(marca);
         }
         catch(DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
         }
+        return ResponseEntity.ok("Registro realizado");
     }
 
     @PutMapping
