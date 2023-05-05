@@ -2,6 +2,7 @@ package br.com.uniamerica.estacionamento.controller;
 
 import br.com.uniamerica.estacionamento.entity.Condutor;
 import br.com.uniamerica.estacionamento.repository.CondutorRepository;
+import br.com.uniamerica.estacionamento.service.CondutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class CondutorController {
     @Autowired
     private CondutorRepository condutorRepository;
+    @Autowired
+    private CondutorService condutorService;
 
     /*public CondutorController(CondutorRepository condutorRepository) {
         this.condutorRepository = condutorRepository;
@@ -39,23 +42,18 @@ public class CondutorController {
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody final Condutor condutor){
         try{
-            this.condutorRepository.save(condutor);
-            return ResponseEntity.ok("Registro realizado");
+            this.condutorService.cadastraCondutor(condutor);
         }
-        catch (DataIntegrityViolationException e){
-            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+        catch (Exception e){
+            return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
+        return ResponseEntity.ok("Registro realizado");
     }
 
     @PutMapping
     public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody final Condutor condutor){
         try{
-            final Condutor condutorBanco = this.condutorRepository.findById(id).orElse(null);
-            if(condutorBanco == null || !condutorBanco.getId().equals(condutor.getId())){
-                throw new RuntimeException("Não foi possível identificar o registro informado");
-            }
-            this.condutorRepository.save(condutorBanco);
-            return ResponseEntity.ok("Registro atualizado");
+            this.condutorService.atualizaCondutor(id, condutor);
         }
         catch (DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
@@ -63,6 +61,7 @@ public class CondutorController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
+        return ResponseEntity.ok("Registro atualizado");
     }
 
     @DeleteMapping
