@@ -13,11 +13,14 @@ public class ModeloService {
 
     @Transactional
     public void cadastraModelo(Modelo modelo){
-        if("".equals(modelo.getMarca().getNome())){
-            throw new RuntimeException("O campo marca não pode ser nul");
+        if(modelo.getNome().isEmpty()){
+            throw new RuntimeException("O campo nome não pode ser nulo");
         }
-        if("".equals(modelo.getNome())){
-            throw new RuntimeException("O campo nome não pode ser nul");
+        if(modelo.getMarca() == null){
+            throw new RuntimeException("O campo marca não pode ser nulo");
+        }
+        if(modelo.getNome().length()>50){
+            throw new RuntimeException("O nome do modelo excede o máximo de caracteres (50)");
         }
         this.modeloRepository.save(modelo);
     }
@@ -28,11 +31,11 @@ public class ModeloService {
         if(modeloBanco==null || !modeloBanco.getId().equals(modelo.getId())){
             throw new RuntimeException("Não foi possível identificar o registro informado");
         }
-        if("".equals(modelo.getMarca().getNome())){
-            throw new RuntimeException("O campo marca não pode ser nulo");
-        }
-        if("".equals(modelo.getNome())){
+        if(modelo.getNome().isEmpty()){
             throw new RuntimeException("O campo nome não pode ser nulo");
+        }
+        if(modelo.getMarca() == null){
+            throw new RuntimeException("O campo marca não pode ser nulo");
         }
         if(modelo.getNome().length()>50){
             throw new RuntimeException("O nome do modelo excede o máximo de caracteres (50)");
