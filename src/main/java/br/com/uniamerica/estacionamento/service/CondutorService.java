@@ -33,7 +33,7 @@ public class CondutorService {
             throw new RuntimeException("O cpf do condutor excede o máximo de caracteres (15)");
         }
         if(condutor.getTelefone().length() > 17){
-            throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (70)");
+            throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
         }
         this.condutorRepository.save(condutor);
     }
@@ -60,7 +60,7 @@ public class CondutorService {
             throw new RuntimeException("O cpf do condutor excede o máximo de caracteres (15)");
         }
         if(condutor.getTelefone().length() > 17){
-            throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (70)");
+            throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
         }
         this.condutorRepository.save(condutor);
     }
