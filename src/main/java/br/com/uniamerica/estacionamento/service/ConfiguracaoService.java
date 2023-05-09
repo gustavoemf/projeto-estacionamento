@@ -13,12 +13,6 @@ public class ConfiguracaoService {
 
     @Transactional
     public void cadastraConfiguracao(Configuracao configuracao){
-        if("".equals(configuracao.getVagasVan()) || "".equals(configuracao.getVagasCarro()) || "".equals(configuracao.getVagasMoto())){
-            throw new RuntimeException("O campo vagas não pode ser nulo");
-        }
-        if("".equals(configuracao.getValorHora())){
-            throw new RuntimeException("O campo valorHora não pode ser nulo");
-        }
         this.configuracaoRepository.save(configuracao);
     }
 
@@ -27,12 +21,6 @@ public class ConfiguracaoService {
         final Configuracao configuracaoBanco = this.configuracaoRepository.findById(id).orElse(null);
         if(configuracaoBanco==null || !configuracaoBanco.getId().equals(configuracao.getId())){
             throw new RuntimeException("Não foi possível identificar o registro informado");
-        }
-        if("".equals(configuracao.getVagasVan()) || "".equals(configuracao.getVagasCarro()) || "".equals(configuracao.getVagasMoto())){
-            throw new RuntimeException("O campo vagas não pode ser nulo");
-        }
-        if("".equals(configuracao.getValorHora())){
-            throw new RuntimeException("O campo valorHora não pode ser nulo");
         }
         this.configuracaoRepository.save(configuracao);
     }
