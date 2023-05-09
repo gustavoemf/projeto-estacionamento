@@ -13,7 +13,7 @@ public class MarcaService {
 
     @Transactional
     public void cadastrarMarca(Marca marca){
-        if("".equals(marca.getNome())){
+        if(marca.getNome().isEmpty()){
             throw new RuntimeException("O campo nome não pode ser nulo");
         }
         if(marca.getNome().length() > 50){
@@ -28,7 +28,7 @@ public class MarcaService {
         if(marcaBanco==null || !marcaBanco.getId().equals(marca.getId())){
             throw new RuntimeException("Não foi possível identificar o registro informado");
         }
-        if("".equals(marca.getNome())){
+        if(marca.getNome().isEmpty()){
             throw new RuntimeException("O campo nome não pode ser nulo");
         }
         if(marca.getNome().length() > 50){
