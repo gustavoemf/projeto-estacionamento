@@ -35,6 +35,9 @@ public class CondutorService {
         if(condutor.getTelefone().length() > 17){
             throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
         }
+        if(this.validaTelefone.validaTelefone(condutor.getTelefone()) == false){
+            throw new RuntimeException("O telefone não condiz com a formatação necessária");
+        }
         this.condutorRepository.save(condutor);
     }
 
@@ -61,6 +64,9 @@ public class CondutorService {
         }
         if(condutor.getTelefone().length() > 17){
             throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
+        }
+        if(this.validaTelefone.validaTelefone(condutor.getTelefone()) == false){
+            throw new RuntimeException("O telefone não condiz com a formatação necessária");
         }
         this.condutorRepository.save(condutor);
     }

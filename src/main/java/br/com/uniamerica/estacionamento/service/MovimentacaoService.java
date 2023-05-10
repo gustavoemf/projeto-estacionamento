@@ -68,7 +68,7 @@ public class MovimentacaoService {
             throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
         }
         if(this.validaTelefone.validaTelefone(movimentacao.getCondutor().getTelefone()) == false){
-            throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
+            throw new RuntimeException("O telefone do condutor não condiz com a formatação necessária");
         }
         if(movimentacao.getEntrada() == null){
             throw new RuntimeException("O campo entrada não pode ser nulo");
@@ -132,6 +132,9 @@ public class MovimentacaoService {
         }
         if(movimentacao.getCondutor().getTelefone().length() > 17){
             throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
+        }
+        if(this.validaTelefone.validaTelefone(movimentacao.getCondutor().getTelefone()) == false){
+            throw new RuntimeException("O telefone do condutor não condiz com a formatação necessária");
         }
         if(movimentacao.getEntrada() == null){
             throw new RuntimeException("O campo entrada não pode ser nulo");
