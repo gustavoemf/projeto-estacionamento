@@ -14,6 +14,8 @@ public class CondutorService {
     private CondutorRepository condutorRepository;
     @Autowired
     private ValidaTelefone validaTelefone;
+    @Autowired
+    private ValidaCpf validaCpf;
 
     @Transactional
     public void cadastraCondutor(Condutor condutor){
@@ -31,6 +33,9 @@ public class CondutorService {
         }
         if(condutor.getCpf().length() > 15){
             throw new RuntimeException("O cpf do condutor excede o máximo de caracteres (15)");
+        }
+        if(this.validaCpf.isCPF(condutor.getCpf()) == false){
+            throw new RuntimeException("O cpf não condiz com a formatação necessária");
         }
         if(condutor.getTelefone().length() > 17){
             throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
@@ -61,6 +66,9 @@ public class CondutorService {
         }
         if(condutor.getCpf().length() > 15){
             throw new RuntimeException("O cpf do condutor excede o máximo de caracteres (15)");
+        }
+        if(this.validaCpf.isCPF(condutor.getCpf()) == false){
+            throw new RuntimeException("O cpf não condiz com a formatação necessária");
         }
         if(condutor.getTelefone().length() > 17){
             throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");

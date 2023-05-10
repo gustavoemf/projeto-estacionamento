@@ -1,5 +1,6 @@
 package br.com.uniamerica.estacionamento.service;
 
+import br.com.uniamerica.estacionamento.config.ValidaCpf;
 import br.com.uniamerica.estacionamento.config.ValidaTelefone;
 import br.com.uniamerica.estacionamento.entity.Movimentacao;
 import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;
@@ -13,6 +14,8 @@ public class MovimentacaoService {
     private MovimentacaoRepository movimentacaoRepository;
     @Autowired
     private ValidaTelefone validaTelefone;
+    @Autowired
+    private ValidaCpf validaCpf;
 
     @Transactional
     public void cadastraMovimentacao(Movimentacao movimentacao){
@@ -63,6 +66,9 @@ public class MovimentacaoService {
         }
         if(movimentacao.getCondutor().getCpf().length() > 15){
             throw new RuntimeException("O cpf do condutor excede o máximo de caracteres (15)");
+        }
+        if(this.validaCpf.isCPF(movimentacao.getCondutor().getCpf()) == false){
+            throw new RuntimeException("O cpf do condutor não condiz com a formatação necessária");
         }
         if(movimentacao.getCondutor().getTelefone().length() > 17){
             throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
@@ -129,6 +135,9 @@ public class MovimentacaoService {
         }
         if(movimentacao.getCondutor().getCpf().length() > 15){
             throw new RuntimeException("O cpf do condutor excede o máximo de caracteres (15)");
+        }
+        if(this.validaCpf.isCPF(movimentacao.getCondutor().getCpf()) == false){
+            throw new RuntimeException("O cpf do condutor não condiz com a formatação necessária");
         }
         if(movimentacao.getCondutor().getTelefone().length() > 17){
             throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
