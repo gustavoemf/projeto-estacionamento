@@ -1,5 +1,6 @@
 package br.com.uniamerica.estacionamento.service;
 
+import br.com.uniamerica.estacionamento.config.ValidaTelefone;
 import br.com.uniamerica.estacionamento.entity.Movimentacao;
 import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;
 import jakarta.transaction.Transactional;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 public class MovimentacaoService {
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
+    @Autowired
+    private ValidaTelefone validaTelefone;
 
     @Transactional
     public void cadastraMovimentacao(Movimentacao movimentacao){
@@ -62,6 +65,9 @@ public class MovimentacaoService {
             throw new RuntimeException("O cpf do condutor excede o máximo de caracteres (15)");
         }
         if(movimentacao.getCondutor().getTelefone().length() > 17){
+            throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
+        }
+        if(this.validaTelefone.validaTelefone(movimentacao.getCondutor().getTelefone()) == false){
             throw new RuntimeException("O telefone do condutor excede o máximo de caracteres (17)");
         }
         if(movimentacao.getEntrada() == null){
