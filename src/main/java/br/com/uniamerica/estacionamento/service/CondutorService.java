@@ -25,6 +25,9 @@ public class CondutorService {
         if(condutor.getCpf().isEmpty()){
             throw new RuntimeException("O campo cpf não pode ser nulo");
         }
+        if(condutorRepository.findByCpf(condutor.getCpf()) != null){
+            throw new RuntimeException("O campo cpf já existe");
+        }
         if(condutor.getTelefone().isEmpty()){
             throw new RuntimeException("O campo telefone não pode ser nulo");
         }
@@ -57,6 +60,9 @@ public class CondutorService {
         }
         if(condutor.getCpf().isEmpty()){
             throw new RuntimeException("O campo cpf não pode ser nulo");
+        }
+        if(condutorRepository.findByCpf(condutor.getCpf()) != null){
+            throw new RuntimeException("O campo cpf já existe");
         }
         if(condutor.getTelefone().isEmpty()){
             throw new RuntimeException("O campo telefone não pode ser nulo");

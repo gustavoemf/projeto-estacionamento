@@ -16,6 +16,9 @@ public class VeiculoService {
         if(veiculo.getPlaca().isEmpty()){
             throw new RuntimeException("O campo placa não pode ser nulo");
         }
+        if(veiculoRepository.findByPlaca(veiculo.getPlaca()) != null){
+            throw new RuntimeException("O campo placa já existe");
+        }
         if(veiculo.getModelo() == null){
             throw new RuntimeException("O campo modelo não pode ser nulo");
         }
@@ -51,6 +54,9 @@ public class VeiculoService {
         }
         if(veiculo.getPlaca().isEmpty()){
             throw new RuntimeException("O campo placa não pode ser nulo");
+        }
+        if(veiculoRepository.findByPlaca(veiculo.getPlaca()) != null){
+            throw new RuntimeException("O campo placa já existe");
         }
         if(veiculo.getModelo() == null){
             throw new RuntimeException("O campo modelo não pode ser nulo");

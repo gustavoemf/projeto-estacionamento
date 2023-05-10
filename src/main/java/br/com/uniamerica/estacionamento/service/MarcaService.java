@@ -19,6 +19,9 @@ public class MarcaService {
         if(marca.getNome().length() > 50){
             throw new RuntimeException("O nome da marca excede o máximo de caracteres (50)");
         }
+        if(marcaRepository.findByNome(marca.getNome()) != null){
+            throw new RuntimeException("O campo nome já existe");
+        }
         this.marcaRepository.save(marca);
     }
 
@@ -33,6 +36,9 @@ public class MarcaService {
         }
         if(marca.getNome().length() > 50){
             throw new RuntimeException("O nome da marca excede o máximo de caracteres (50)");
+        }
+        if(marcaRepository.findByNome(marca.getNome()) != null){
+            throw new RuntimeException("O campo nome já existe");
         }
         this.marcaRepository.save(marca);
     }
