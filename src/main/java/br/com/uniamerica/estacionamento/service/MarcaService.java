@@ -14,13 +14,13 @@ public class MarcaService {
     @Transactional
     public void cadastrarMarca(Marca marca){
         if(marca.getNome().isEmpty()){
-            throw new RuntimeException("O campo nome não pode ser nulo");
+            throw new RuntimeException("oo campo nome não pode ser nulo");
         }
         if(marca.getNome().length() > 50){
-            throw new RuntimeException("O nome da marca excede o máximo de caracteres (50)");
+            throw new RuntimeException("o nome da marca excede o máximo de caracteres (50)");
         }
         if(marcaRepository.findByNome(marca.getNome()) != null){
-            throw new RuntimeException("O campo nome já existe");
+            throw new RuntimeException("o campo nome já existe");
         }
         this.marcaRepository.save(marca);
     }
@@ -29,16 +29,16 @@ public class MarcaService {
     public void atualizarMarca(final Long id, Marca marca){
         final Marca marcaBanco = this.marcaRepository.findById(id).orElse(null);
         if(marcaBanco==null || !marcaBanco.getId().equals(marca.getId())){
-            throw new RuntimeException("Não foi possível identificar o registro informado");
+            throw new RuntimeException("não foi possível identificar o registro informado");
         }
         if(marca.getNome().isEmpty()){
-            throw new RuntimeException("O campo nome não pode ser nulo");
+            throw new RuntimeException("o campo nome não pode ser nulo");
         }
         if(marca.getNome().length() > 50){
-            throw new RuntimeException("O nome da marca excede o máximo de caracteres (50)");
+            throw new RuntimeException("o nome da marca excede o máximo de caracteres (50)");
         }
         if(marcaRepository.findByNome(marca.getNome()) != null){
-            throw new RuntimeException("O campo nome já existe");
+            throw new RuntimeException("o campo nome já existe");
         }
         this.marcaRepository.save(marca);
     }
