@@ -69,12 +69,12 @@ public class CondutorController {
         final Condutor condutorBanco = this.condutorRepository.findById(id).orElse(null);
         try{
                 this.condutorRepository.delete(condutorBanco);
-                return ResponseEntity.ok("Registro deletado");
         }
         catch(DataIntegrityViolationException e){
             condutorBanco.setAtivo(false);
             this.condutorRepository.save(condutorBanco);
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
         }
+        return ResponseEntity.ok("Registro deletado");
     }
 }

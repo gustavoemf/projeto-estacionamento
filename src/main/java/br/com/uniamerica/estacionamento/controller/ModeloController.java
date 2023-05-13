@@ -62,12 +62,12 @@ public class ModeloController {
         final Modelo modeloBanco = this.modeloRepository.findById(id).orElse(null);
         try{
             this.modeloRepository.delete(modeloBanco);
-            return ResponseEntity.ok("Registro deletado");
         }
         catch(RuntimeException e){
             modeloBanco.setAtivo(false);
             this.modeloRepository.save(modeloBanco);
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
         }
+        return ResponseEntity.ok("Registro deletado");
     }
 }

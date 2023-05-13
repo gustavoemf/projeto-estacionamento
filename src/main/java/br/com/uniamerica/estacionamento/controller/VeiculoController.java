@@ -61,12 +61,12 @@ public class VeiculoController {
         final Veiculo veiculoBanco = this.veiculoRepository.findById(id).orElse(null);
         try{
             this.veiculoRepository.delete(veiculoBanco);
-            return ResponseEntity.ok("Registro deletado");
         }
         catch(RuntimeException e){
             veiculoBanco.setAtivo(false);
             this.veiculoRepository.save(veiculoBanco);
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
         }
+        return ResponseEntity.ok("Registro deletado");
     }
 }

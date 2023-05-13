@@ -62,12 +62,12 @@ public class MarcaController {
         final Marca marcaBanco = this.marcaRepository.findById(id).orElse(null);
         try{
             this.marcaRepository.delete(marcaBanco);
-            return ResponseEntity.ok("Registro deletado");
         }
         catch(RuntimeException e){
             marcaBanco.setAtivo(false);
             this.marcaRepository.save(marcaBanco);
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
         }
+        return ResponseEntity.ok("Registro deletado");
     }
 }
