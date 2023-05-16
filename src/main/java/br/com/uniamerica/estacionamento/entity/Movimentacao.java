@@ -25,10 +25,10 @@ public class Movimentacao extends AbstractEntity {
     private Condutor condutor;
     @Getter @Setter
     @Column(name = "entrada", nullable = false)
-    private LocalDateTime entrada;
+    private LocalTime entrada;
     @Getter @Setter
     @Column(name = "saida")
-    private LocalDateTime saida;
+    private LocalTime saida;
     @Getter @Setter
     @Column(name = "tempo")
     private LocalTime tempo;

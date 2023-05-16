@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+
 @Service
 public class MovimentacaoService {
     @Autowired
@@ -79,6 +81,13 @@ public class MovimentacaoService {
         if(movimentacao.getEntrada() == null){
             throw new RuntimeException("o campo entrada não pode ser nulo");
         }
+        if(movimentacao.getSaida() != null){
+            LocalTime tempo = movimentacao.getSaida()
+                    .minusHours(movimentacao.getEntrada().getHour())
+                    .minusMinutes(movimentacao.getEntrada().getMinute())
+                    .minusSeconds(movimentacao.getEntrada().getSecond());
+            movimentacao.setTempo(tempo);
+        }
         this.movimentacaoRepository.save(movimentacao);
     }
 
@@ -147,6 +156,13 @@ public class MovimentacaoService {
         }
         if(movimentacao.getEntrada() == null){
             throw new RuntimeException("o campo entrada não pode ser nulo");
+        }
+        if(movimentacao.getSaida() != null){
+            LocalTime tempo = movimentacao.getSaida()
+                    .minusHours(movimentacao.getEntrada().getHour())
+                    .minusMinutes(movimentacao.getEntrada().getMinute())
+                    .minusSeconds(movimentacao.getEntrada().getSecond());
+            movimentacao.setTempo(tempo);
         }
         this.movimentacaoRepository.save(movimentacao);
     }
