@@ -20,39 +20,50 @@ public class Movimentacao extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "veiculo")
     private Veiculo veiculo;
+
     @Getter @Setter
     @NotNull(message = "o campo condutor não pode ser nulo")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "condutor")
     private Condutor condutor;
+
     @Getter @Setter
     @NotNull(message = "o campo entrada não pode ser nulo")
     @Column(name = "entrada")
     private LocalTime entrada;
+
     @Getter @Setter
     @Column(name = "saida")
     private LocalTime saida;
+
     @Getter @Setter
     @Column(name = "tempo")
     private LocalTime tempo;
+
     @Getter @Setter
     @Column(name = "tempo_desconto")
     private LocalTime tempoDesconto;
+
     @Getter @Setter
     @Column(name = "tempo_multa")
     private LocalTime tempoMulta;
+
     @Getter @Setter
     @Column(name = "valor_desconto")
     private BigDecimal valorDesconto;
+
     @Getter @Setter
     @Column(name = "valor_multa")
     private BigDecimal valorMulta;
+
     @Getter @Setter
     @Column(name = "valor_total")
     private BigDecimal valorTotal;
+
     @Getter @Setter
     @Column(name = "valor_hora")
     private BigDecimal valorHora;
+
     @Getter @Setter
     @Column(name = "valor_hora_multa")
     private BigDecimal valorHoraMulta;

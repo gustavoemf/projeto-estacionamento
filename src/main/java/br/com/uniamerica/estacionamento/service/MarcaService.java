@@ -13,12 +13,6 @@ public class MarcaService {
 
     @Transactional
     public void cadastrarMarca(Marca marca){
-        if(marca.getNome().isEmpty()){
-            throw new RuntimeException("oo campo nome não pode ser nulo");
-        }
-        if(marca.getNome().length() > 50){
-            throw new RuntimeException("o nome da marca excede o máximo de caracteres (50)");
-        }
         if(marcaRepository.findByNome(marca.getNome()) != null){
             throw new RuntimeException("o campo nome já existe");
         }
@@ -30,12 +24,6 @@ public class MarcaService {
         final Marca marcaBanco = this.marcaRepository.findById(id).orElse(null);
         if(marcaBanco==null || !marcaBanco.getId().equals(marca.getId())){
             throw new RuntimeException("não foi possível identificar o registro informado");
-        }
-        if(marca.getNome().isEmpty()){
-            throw new RuntimeException("o campo nome não pode ser nulo");
-        }
-        if(marca.getNome().length() > 50){
-            throw new RuntimeException("o nome da marca excede o máximo de caracteres (50)");
         }
         if(marcaRepository.findByNome(marca.getNome()) != null){
             throw new RuntimeException("o campo nome já existe");
