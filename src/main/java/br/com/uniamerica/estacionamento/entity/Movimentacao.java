@@ -1,13 +1,13 @@
 package br.com.uniamerica.estacionamento.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -16,15 +16,18 @@ import java.time.LocalTime;
 @AuditTable(value = "movimentacoes_audit", schema = "audit")
 public class Movimentacao extends AbstractEntity {
     @Getter @Setter
+    @NotNull(message = "o campo veiculo não pode ser nulo")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "veiculo", nullable = false)
+    @JoinColumn(name = "veiculo")
     private Veiculo veiculo;
     @Getter @Setter
+    @NotNull(message = "o campo condutor não pode ser nulo")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "condutor", nullable = false)
+    @JoinColumn(name = "condutor")
     private Condutor condutor;
     @Getter @Setter
-    @Column(name = "entrada", nullable = false)
+    @NotNull(message = "o campo entrada não pode ser nulo")
+    @Column(name = "entrada")
     private LocalTime entrada;
     @Getter @Setter
     @Column(name = "saida")

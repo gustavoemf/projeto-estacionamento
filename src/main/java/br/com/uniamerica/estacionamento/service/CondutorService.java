@@ -19,31 +19,10 @@ public class CondutorService {
 
     @Transactional
     public void cadastraCondutor(Condutor condutor){
-        if(condutor.getNome().isEmpty()){
-            throw new RuntimeException("o campo nome não pode ser nulo");
-        }
-        if(condutor.getCpf().isEmpty()){
-            throw new RuntimeException("o campo cpf não pode ser nulo");
-        }
-        if(condutorRepository.findByCpf(condutor.getCpf()) != null){
-            throw new RuntimeException("o campo cpf já existe");
-        }
-        if(condutor.getTelefone().isEmpty()){
-            throw new RuntimeException("o campo telefone não pode ser nulo");
-        }
-        if(condutor.getNome().length() > 100){
-            throw new RuntimeException("o nome do condutor excede o máximo de caracteres (100)");
-        }
-        if(condutor.getCpf().length() > 15){
-            throw new RuntimeException("o cpf do condutor excede o máximo de caracteres (15)");
-        }
-        if(this.validaCpf.isCPF(condutor.getCpf()) == false){
+        if(!this.validaCpf.isCPF(condutor.getCpf())){
             throw new RuntimeException("o cpf não condiz com a formatação necessária");
         }
-        if(condutor.getTelefone().length() > 17){
-            throw new RuntimeException("o telefone do condutor excede o máximo de caracteres (17)");
-        }
-        if(this.validaTelefone.validaTelefone(condutor.getTelefone()) == false){
+        if(!ValidaTelefone.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
         }
         this.condutorRepository.save(condutor);
@@ -55,31 +34,10 @@ public class CondutorService {
         if(condutorBanco==null || !condutorBanco.getId().equals(condutor.getId())){
             throw new RuntimeException("não foi possível identificar o registro informado");
         }
-        if(condutor.getNome().isEmpty()){
-            throw new RuntimeException("o campo nome não pode ser nulo");
-        }
-        if(condutor.getCpf().isEmpty()){
-            throw new RuntimeException("o campo cpf não pode ser nulo");
-        }
-        if(condutorRepository.findByCpf(condutor.getCpf()) != null){
-            throw new RuntimeException("o campo cpf já existe");
-        }
-        if(condutor.getTelefone().isEmpty()){
-            throw new RuntimeException("o campo telefone não pode ser nulo");
-        }
-        if(condutor.getNome().length() > 100){
-            throw new RuntimeException("o nome do condutor excede o máximo de caracteres (100)");
-        }
-        if(condutor.getCpf().length() > 15){
-            throw new RuntimeException("o cpf do condutor excede o máximo de caracteres (15)");
-        }
-        if(this.validaCpf.isCPF(condutor.getCpf()) == false){
+        if(!this.validaCpf.isCPF(condutor.getCpf())){
             throw new RuntimeException("o cpf não condiz com a formatação necessária");
         }
-        if(condutor.getTelefone().length() > 17){
-            throw new RuntimeException("o telefone do condutor excede o máximo de caracteres (17)");
-        }
-        if(this.validaTelefone.validaTelefone(condutor.getTelefone()) == false){
+        if(!ValidaTelefone.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
         }
         this.condutorRepository.save(condutor);
