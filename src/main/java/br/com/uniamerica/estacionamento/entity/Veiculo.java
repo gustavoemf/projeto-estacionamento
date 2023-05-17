@@ -2,6 +2,7 @@ package br.com.uniamerica.estacionamento.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
@@ -20,22 +21,27 @@ public class Veiculo extends AbstractEntity {
     @UniqueElements(message = "o campo placa já existe")
     @Column(name = "placa")
     private String placa;
+
     @Getter @Setter
     @NotNull(message = "o campo modelo não pode ser nulo")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "modelo")
     private Modelo modelo;
-    @Enumerated(EnumType.STRING)
+
     @Getter @Setter
     @NotNull(message = "o campo cor não pode ser nulo")
-    @Column(name = "cor", nullable = false)
-    private Cor cor;
     @Enumerated(EnumType.STRING)
+    @Column(name = "cor")
+    private Cor cor;
+
     @Getter @Setter
     @NotNull(message = "o campo tipo não pode ser nulo")
-    @Column(name = "tipo", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo")
     private Tipo tipo;
+
     @Getter @Setter
-    @Column(name = "ano", nullable = false)
+    @Size(min = 1, message = "o campo ano não pode ser zero")
+    @Column(name = "ano")
     private int ano;
 }
