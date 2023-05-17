@@ -3,13 +3,14 @@ package br.com.uniamerica.estacionamento.controller;
 import br.com.uniamerica.estacionamento.entity.Condutor;
 import br.com.uniamerica.estacionamento.repository.CondutorRepository;
 import br.com.uniamerica.estacionamento.service.CondutorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/condutor")
 public class CondutorController {
     @Autowired
@@ -40,7 +41,7 @@ public class CondutorController {
     public ResponseEntity <?> listaAtivo(){return ResponseEntity.ok(this.condutorRepository.findByAtivo(true));}
 
     @PostMapping
-    public ResponseEntity <?> cadastrar(@RequestBody final Condutor condutor){
+    public ResponseEntity <?> cadastrar(@RequestBody @Valid final Condutor condutor){
         try{
             this.condutorService.cadastraCondutor(condutor);
         }
@@ -51,7 +52,7 @@ public class CondutorController {
     }
 
     @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody final Condutor condutor){
+    public ResponseEntity <?> editar(@RequestParam("id") @Valid final Long id, @RequestBody @Valid final Condutor condutor){
         try{
             this.condutorService.atualizaCondutor(id, condutor);
         }

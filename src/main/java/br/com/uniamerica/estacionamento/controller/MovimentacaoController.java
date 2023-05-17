@@ -3,6 +3,7 @@ package br.com.uniamerica.estacionamento.controller;
 import br.com.uniamerica.estacionamento.entity.Movimentacao;
 import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;
 import br.com.uniamerica.estacionamento.service.MovimentacaoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/movimentacao")
 public class MovimentacaoController {
     @Autowired
@@ -38,7 +39,7 @@ public class MovimentacaoController {
     public ResponseEntity <?> listaAbertas(){return ResponseEntity.ok(this.movimentacaoRepository.findByAbertas());}
 
     @PostMapping
-    public ResponseEntity <?> cadastrar(@RequestBody final Movimentacao movimentacao){
+    public ResponseEntity <?> cadastrar(@RequestBody @Valid final Movimentacao movimentacao){
         try{
             this.movimentacaoService.cadastraMovimentacao(movimentacao);
         }
@@ -49,7 +50,7 @@ public class MovimentacaoController {
     }
 
     @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody Movimentacao movimentacao){
+    public ResponseEntity <?> editar(@RequestParam("id") @Valid final Long id, @RequestBody @Valid Movimentacao movimentacao){
         try{
             this.movimentacaoService.atuaizaMovimentacao(id, movimentacao);
         }

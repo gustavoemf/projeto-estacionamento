@@ -18,18 +18,18 @@ public class Movimentacao extends AbstractEntity {
     @Getter @Setter
     @NotNull(message = "o campo veiculo não pode ser nulo")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "veiculo")
+    @JoinColumn(name = "veiculo", nullable = false)
     private Veiculo veiculo;
 
     @Getter @Setter
     @NotNull(message = "o campo condutor não pode ser nulo")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "condutor")
+    @JoinColumn(name = "condutor", nullable = false)
     private Condutor condutor;
 
     @Getter @Setter
     @NotNull(message = "o campo entrada não pode ser nulo")
-    @Column(name = "entrada")
+    @Column(name = "entrada", nullable = false)
     private LocalTime entrada;
 
     @Getter @Setter

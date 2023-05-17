@@ -4,37 +4,42 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jdk.jfr.Name;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalTime;
 
 @Entity
 @Audited
-@Table(name = "condutores", schema = "publico")
+@Table(name = "condutores", schema = "public")
 @AuditTable(value = "condutores_audit", schema = "audit")
 public class Condutor extends AbstractEntity {
     @Getter @Setter
     @NotNull(message = "o campo nome não pode ser nulo")
-    @Length(max = 100, message = "o nome do condutor excede o máximo de caracteres (100)")
-    @Column(name = "nome")
+    @Size(min = 3, max = 50, message = "o nome do condutor não respeita a quantidade de caracteres necessária (3-50)")
+    @Column(name = "nome", nullable = false, length = 50)
     private String nome;
 
     @Getter @Setter
     @NotNull(message = "o campo cpf não pode ser nulo")
-    @Length(max = 16, message = "o cpf do condutor excede o máximo de caracteres (16)")
+    @Size(max = 11, message = "o cpf do condutor não respeita a quantidade de caracteres necessária (11)")
     @UniqueElements(message = "o campo cpf já existe")
-    @Column(name = "cpf")
+    @Column(name = "cpf", nullable = false, unique = true, length = 15)
     private String cpf;
 
     @Getter @Setter
     @NotNull(message = "o campo telefone não pode ser nulo")
-    @Length(max = 16, message = "o telefone do condutor excede o máximo de caracteres (16)")
-    @Column(name = "telefone")
+    @Size(min = 7, max = 15, message = "o cpf do condutor não respeita a quantidade de caracteres necessária (7-15)")
+    @UniqueElements(message = "o campo telefone já existe")
+    @Column(name = "telefone", nullable = false, unique = true, length = 15)
     private String telefone;
 
     @Getter @Setter

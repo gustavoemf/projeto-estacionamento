@@ -3,13 +3,14 @@ package br.com.uniamerica.estacionamento.controller;
 import br.com.uniamerica.estacionamento.entity.Modelo;
 import br.com.uniamerica.estacionamento.repository.ModeloRepository;
 import br.com.uniamerica.estacionamento.service.ModeloService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/modelo")
 public class ModeloController {
     @Autowired
@@ -33,7 +34,7 @@ public class ModeloController {
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.modeloRepository.findAll());}
 
     @PostMapping
-    public ResponseEntity <?> cadastrar(@RequestBody final Modelo modelo){
+    public ResponseEntity <?> cadastrar(@RequestBody @Valid final Modelo modelo){
         try{
             this.modeloService.cadastraModelo(modelo);
         }
@@ -44,7 +45,7 @@ public class ModeloController {
     }
 
     @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody Modelo modelo){
+    public ResponseEntity <?> editar(@RequestParam("id") @Valid final Long id, @RequestBody @Valid Modelo modelo){
         try{
             this.modeloService.atualizaModelo(id, modelo);
         }
