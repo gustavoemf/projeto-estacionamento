@@ -44,9 +44,9 @@ public class Condutor extends AbstractEntity {
 
     @Getter @Setter
     @Column(name = "tempo_pago")
-    private LocalTime tempoPago;
+    private LocalTime tempoPago; // soma ao seu total o tempo total de cada movimentação realizada
 
     @Getter @Setter
     @Column(name = "tempo_desconto")
-    private LocalTime tempoDesconto;
+    private LocalTime tempoDesconto; // soma ao seu total o valor de tempoGanhoDeDesconto cada vez que tempoPago atingir o valor de tempoParaDesconto da Configuração
 }

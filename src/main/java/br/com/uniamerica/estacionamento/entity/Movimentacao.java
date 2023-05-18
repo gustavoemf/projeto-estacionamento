@@ -38,33 +38,33 @@ public class Movimentacao extends AbstractEntity {
 
     @Getter @Setter
     @Column(name = "tempo")
-    private LocalTime tempo;
+    private LocalTime tempo; //  recebe seu valor por meio da operação: entrada - saida
 
     @Getter @Setter
     @Column(name = "tempo_desconto")
-    private LocalTime tempoDesconto;
+    private LocalTime tempoDesconto; // recebe seu valor da variável tempoDesconto do Condutor
 
     @Getter @Setter
     @Column(name = "tempo_multa")
-    private LocalTime tempoMulta;
+    private LocalTime tempoMulta; // soma cada minuto fora do expediente
 
     @Getter @Setter
-    @Column(name = "valor_desconto")
-    private BigDecimal valorDesconto;
-
-    @Getter @Setter
-    @Column(name = "valor_multa")
-    private BigDecimal valorMulta;
-
-    @Getter @Setter
-    @Column(name = "valor_total")
-    private BigDecimal valorTotal;
+    @Column(name = "valor_minuto_multa")
+    private BigDecimal valorMinutoMulta; // recebe seu valor da variável valorMinutoMulta da Configuração
 
     @Getter @Setter
     @Column(name = "valor_hora")
-    private BigDecimal valorHora;
+    private BigDecimal valorHora; // recebe seu valor da variável valorHora da Configuração
 
     @Getter @Setter
-    @Column(name = "valor_hora_multa")
-    private BigDecimal valorHoraMulta;
+    @Column(name = "valor_multa")
+    private BigDecimal valorMulta; // valorMulta = tempoMulta x valorMinutoMulta
+
+    @Getter @Setter
+    @Column(name = "valor_normal")
+    private BigDecimal valorNormal; // valorNormal = (tempo - tempoDesconto) x valorHora
+
+    @Getter @Setter
+    @Column(name = "valor_total")
+    private BigDecimal valorTotal; // valorTotal = valorNormal + valorMulta
 }

@@ -21,8 +21,8 @@ public class Configuracao extends AbstractEntity{
     private BigDecimal valorHora;
 
     @Getter @Setter
-    @Column(name = "valor_minuto_hora")
-    private BigDecimal valorMinutoHora;
+    @Column(name = "valor_multa_minuto")
+    private BigDecimal valorMultaMinuto;
 
     @Getter @Setter
     @Column(name = "inicio_expediente")
@@ -33,16 +33,16 @@ public class Configuracao extends AbstractEntity{
     private LocalTime fimExpediente;
 
     @Getter @Setter
+    @Column(name = "gerar_desconto")
+    private boolean gerarDesconto;
+
+    @Getter @Setter
     @Column(name = "tempo_para_desconto")
     private int tempoParaDesconto;
 
     @Getter @Setter
-    @Column(name = "tempo_de_desconto")
-    private LocalTime tempoDeDesconto;
-
-    @Getter @Setter
-    @Column(name = "gerar_desconto")
-    private boolean gerarDesconto;
+    @Column(name = "tempo_ganho_de_desconto")
+    private LocalTime tempoGanhoDeDesconto;
 
     @Getter @Setter
     @Column(name = "vagas_carro")

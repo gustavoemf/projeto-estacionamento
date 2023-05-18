@@ -3,17 +3,21 @@ package br.com.uniamerica.estacionamento.service;
 import br.com.uniamerica.estacionamento.config.ValidaCpf;
 import br.com.uniamerica.estacionamento.config.ValidaTelefone;
 import br.com.uniamerica.estacionamento.entity.Movimentacao;
+import br.com.uniamerica.estacionamento.repository.ConfiguracaoRepository;
 import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 
 @Service
 public class MovimentacaoService {
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
+    @Autowired
+    private ConfiguracaoRepository configuracaoRepository;
     @Autowired
     private ValidaTelefone validaTelefone;
     @Autowired
@@ -33,6 +37,12 @@ public class MovimentacaoService {
                     .minusMinutes(movimentacao.getEntrada().getMinute())
                     .minusSeconds(movimentacao.getEntrada().getSecond());
             movimentacao.setTempo(tempo);
+        }
+        if(movimentacao.getTempo() != null){
+            movimentacao.setValorHora(configuracaoRepository.findValorHora());
+            movimentacao.setValorTotal(configuracaoRepository.findValorHora()
+                    .multiply(new BigDecimal(movimentacao.getTempo().getHour()))
+            );
         }
         this.movimentacaoRepository.save(movimentacao);
     }
@@ -55,6 +65,12 @@ public class MovimentacaoService {
                     .minusMinutes(movimentacao.getEntrada().getMinute())
                     .minusSeconds(movimentacao.getEntrada().getSecond());
             movimentacao.setTempo(tempo);
+        }
+        if(movimentacao.getTempo() != null){
+            movimentacao.setValorHora(configuracaoRepository.findValorHora());
+            movimentacao.setValorTotal(configuracaoRepository.findValorHora()
+                    .multiply(new BigDecimal(movimentacao.getTempo().getHour()))
+            );
         }
         this.movimentacaoRepository.save(movimentacao);
     }
