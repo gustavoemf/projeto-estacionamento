@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 
 @Entity
 @Audited
-@Table(name = "marcas", schema = "publico")
+@Table(name = "marcas", schema = "public")
 @AuditTable(value = "marca_audit", schema = "audit")
 public class Marca extends AbstractEntity {
     @Getter @Setter

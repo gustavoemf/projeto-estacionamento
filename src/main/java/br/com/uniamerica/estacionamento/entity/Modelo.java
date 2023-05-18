@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Audited
-@Table(name = "modelos", schema = "publico")
+@Table(name = "modelos", schema = "public")
 @AuditTable(value = "modelos_audit", schema = "audit")
 public class Modelo extends AbstractEntity {
     @Getter @Setter
