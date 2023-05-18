@@ -13,9 +13,6 @@ public class ModeloService {
 
     @Transactional
     public void cadastraModelo(Modelo modelo){
-        if(modeloRepository.findByNome(modelo.getNome()) != null){
-            throw new RuntimeException("o campo nome já existe");
-        }
         this.modeloRepository.save(modelo);
     }
 
@@ -24,9 +21,6 @@ public class ModeloService {
         final Modelo modeloBanco = this.modeloRepository.findById(id).orElse(null);
         if(modeloBanco==null || !modeloBanco.getId().equals(modelo.getId())){
             throw new RuntimeException("mão foi possível identificar o registro informado");
-        }
-        if(modeloRepository.findByNome(modelo.getNome()) != null){
-            throw new RuntimeException("o campo nome já existe");
         }
         this.modeloRepository.save(modelo);
     }
