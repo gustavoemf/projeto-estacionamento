@@ -17,13 +17,13 @@ import java.time.LocalTime;
 public class Movimentacao extends AbstractEntity {
     @Getter @Setter
     @NotNull(message = "o campo veiculo não pode ser nulo")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "veiculo", nullable = false)
     private Veiculo veiculo;
 
     @Getter @Setter
     @NotNull(message = "o campo condutor não pode ser nulo")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "condutor", nullable = false)
     private Condutor condutor;
 
@@ -46,7 +46,7 @@ public class Movimentacao extends AbstractEntity {
 
     @Getter @Setter
     @Column(name = "tempo_multa")
-    private LocalTime tempoMulta; // soma cada minuto fora do expediente
+    private Long tempoMulta; // soma cada minuto fora do expediente
 
     @Getter @Setter
     @Column(name = "valor_minuto_multa")

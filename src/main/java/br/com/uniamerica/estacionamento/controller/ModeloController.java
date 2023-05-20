@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping(value = "/api/modelo")
 public class ModeloController {
@@ -55,6 +57,7 @@ public class ModeloController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
+        modelo.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro atualizado");
     }
 
@@ -69,6 +72,7 @@ public class ModeloController {
             this.modeloRepository.save(modeloBanco);
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
         }
+        modeloBanco.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro deletado");
     }
 }

@@ -60,6 +60,7 @@ public class MovimentacaoController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
+        movimentacao.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro atualizado");
     }
 
@@ -68,6 +69,7 @@ public class MovimentacaoController {
         final Movimentacao movimentacaoBanco = this.movimentacaoRepository.findById(id).orElse(null);
         movimentacaoBanco.setAtivo(false);
         this.movimentacaoRepository.save(movimentacaoBanco);
+        movimentacaoBanco.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro desativado");
     }
 }

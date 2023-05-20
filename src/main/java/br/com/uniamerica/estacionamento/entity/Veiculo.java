@@ -26,7 +26,7 @@ public class Veiculo extends AbstractEntity {
 
     @Getter @Setter
     @NotNull(message = "o campo modelo não pode ser nulo")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "modelo", nullable = false)
     private Modelo modelo;
 

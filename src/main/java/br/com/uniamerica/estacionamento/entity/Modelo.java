@@ -22,7 +22,7 @@ public class Modelo extends AbstractEntity {
 
     @Getter @Setter
     @NotNull(message = "o campo marca não pode ser nulo")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "marca", nullable = false)
     private Marca marca;
 }

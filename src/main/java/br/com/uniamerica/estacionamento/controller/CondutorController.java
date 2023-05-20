@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping(value = "/api/condutor")
 public class CondutorController {
@@ -62,6 +64,7 @@ public class CondutorController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
+        condutor.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro atualizado");
     }
 
@@ -76,6 +79,7 @@ public class CondutorController {
             this.condutorRepository.save(condutorBanco);
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
         }
+        condutorBanco.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro deletado");
     }
 }

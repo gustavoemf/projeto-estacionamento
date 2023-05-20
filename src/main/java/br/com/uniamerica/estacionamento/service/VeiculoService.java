@@ -1,5 +1,7 @@
 package br.com.uniamerica.estacionamento.service;
 
+import br.com.uniamerica.estacionamento.config.ValidaPlaca;
+import br.com.uniamerica.estacionamento.config.ValidaTelefone;
 import br.com.uniamerica.estacionamento.entity.Veiculo;
 import br.com.uniamerica.estacionamento.repository.VeiculoRepository;
 import jakarta.transaction.Transactional;
@@ -10,9 +12,14 @@ import org.springframework.stereotype.Service;
 public class VeiculoService {
     @Autowired
     private VeiculoRepository veiculoRepository;
+    @Autowired
+    private ValidaPlaca validaPlaca;
 
     @Transactional
     public void cadastraVeiculo(Veiculo veiculo){
+        if(!ValidaPlaca.validaPlaca(veiculo.getPlaca())){
+            throw new RuntimeException("a placa não condiz com a formatação necessária");
+        }
         this.veiculoRepository.save(veiculo);
     }
 
@@ -20,7 +27,10 @@ public class VeiculoService {
     public void atualizaVeiculo(final Long id, Veiculo veiculo){
         final Veiculo veiculoBanco = this.veiculoRepository.findById(id).orElse(null);
         if(veiculoBanco==null || !veiculoBanco.getId().equals(veiculo.getId())){
-            throw new RuntimeException("não foi possivel encontrar o registro informado");
+            throw new RuntimeException("Não foi possivel encontrar o registro informado");
+        }
+        if(!ValidaPlaca.validaPlaca(veiculo.getPlaca())){
+            throw new RuntimeException("a placa não condiz com a formatação necessária");
         }
         this.veiculoRepository.save(veiculo);
     }

@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping(value = "/api/marca")
 public class MarcaController {
@@ -55,6 +57,7 @@ public class MarcaController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
+        marca.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro atualizado");
     }
 
@@ -69,6 +72,7 @@ public class MarcaController {
             this.marcaRepository.save(marcaBanco);
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
         }
+        marcaBanco.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro deletado");
     }
 }
