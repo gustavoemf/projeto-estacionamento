@@ -30,9 +30,7 @@ public class CondutorService {
         if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(condutor.getNome() != null){
-            condutor.setNome(this.formataNome.formataNome(condutor.getNome()));
-        }
+        condutor.setNome(FormataNome.formataNome(condutor.getNome()));
         if("".equals(condutor.getCpf())){
             throw new RuntimeException("o campo cpf não pode ser vazio");
         }
@@ -66,9 +64,7 @@ public class CondutorService {
         if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(condutor.getNome() != null){
-            condutor.setNome(this.formataNome.formataNome(condutor.getNome()));
-        }
+        condutor.setNome(FormataNome.formataNome(condutor.getNome()));
         if("".equals(condutor.getCpf())){
             throw new RuntimeException("o campo cpf não pode ser vazio");
         }

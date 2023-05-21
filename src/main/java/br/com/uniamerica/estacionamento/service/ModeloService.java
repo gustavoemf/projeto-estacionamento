@@ -45,9 +45,7 @@ public class ModeloService {
         if("".equals(modelo.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(modelo.getNome() != null){
-            modelo.setNome(this.formataNome.formataNome(modelo.getNome()));
-        }
+        modelo.setNome(this.formataNome.formataNome(modelo.getNome()));
         if(modeloRepository.findByNome(modelo.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }

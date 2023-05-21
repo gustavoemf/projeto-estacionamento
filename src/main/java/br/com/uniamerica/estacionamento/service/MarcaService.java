@@ -49,9 +49,7 @@ public class MarcaService {
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(marca.getNome() != null){
-            marca.setNome(this.formataNome.formataNome(marca.getNome()));
-        }
+        marca.setNome(this.formataNome.formataNome(marca.getNome()));
         if(marcaRepository.findByNome(marca.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }

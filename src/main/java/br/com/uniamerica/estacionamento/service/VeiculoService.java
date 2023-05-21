@@ -23,14 +23,18 @@ public class VeiculoService {
         if(veiculo.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
-        if(veiculo.getPlaca() != null){
-            veiculo.setPlaca(veiculo.getPlaca().toUpperCase());
-        }
+        veiculo.setPlaca(veiculo.getPlaca().toUpperCase());
         if("".equals(veiculo.getPlaca())){
             throw new RuntimeException("o campo placa não pode ser vazio");
         }
         if(veiculo.getAno() == 0 || veiculo.getAno() > LocalDate.now().getYear()){
             throw new RuntimeException("o campo ano não pode ser zero ou maior que o ano atual");
+        }
+        if(!veiculo.getTipo().toString().equals(veiculo.getTipo().toString().toUpperCase())){
+            throw new RuntimeException("o campo tipo deve ser inserido em maiúsculo (CARRO, MOTO, VAN)");
+        }
+        if(!veiculo.getCor().toString().equals(veiculo.getCor().toString().toUpperCase())){
+            throw new RuntimeException("o campo cor deve ser inserido em maiúsculo (PRETO, AZUL, PRATA...)");
         }
         if(veiculoRepository.findByPlaca(veiculo.getPlaca())!=null){
             throw new RuntimeException("o campo placa já existe");

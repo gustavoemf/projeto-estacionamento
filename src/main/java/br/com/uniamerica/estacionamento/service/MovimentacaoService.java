@@ -56,7 +56,7 @@ public class MovimentacaoService {
                     .minusSeconds(movimentacao.getEntrada().getSecond());
             movimentacao.setTempo(tempo);
         }
-        if (movimentacao.getEntrada()!=null && movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente())) {
+        if (movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente())) {
             Duration tempoMulta = Duration.between(configuracaoRepository.findInicioExpediente(), movimentacao.getEntrada());
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
             movimentacao.setTempoMulta(tempoMulta.toMinutes());
@@ -95,7 +95,7 @@ public class MovimentacaoService {
                     .minusSeconds(movimentacao.getEntrada().getSecond());
             movimentacao.setTempo(tempo);
         }
-        if (movimentacao.getEntrada()!=null && movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente())) {
+        if (movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente())) {
             Duration tempoMulta = Duration.between(configuracaoRepository.findInicioExpediente(), movimentacao.getEntrada());
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
             movimentacao.setTempoMulta(tempoMulta.toMinutes());
