@@ -28,9 +28,7 @@ public class MarcaService {
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(marca.getNome() != null){
-            marca.setNome(this.formataNome.formataNome(marca.getNome()));
-        }
+        marca.setNome(FormataNome.formataNome(marca.getNome()));
         if(marcaRepository.findByNome(marca.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }
@@ -49,12 +47,15 @@ public class MarcaService {
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        marca.setNome(this.formataNome.formataNome(marca.getNome()));
+        marca.setNome(FormataNome.formataNome(marca.getNome()));
         if(marcaRepository.findByNome(marca.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }
         if(marca.getAtualizacao() == null){
             marca.setAtualizacao(LocalDateTime.now());
+        }
+        if(marca.getCadastro() != null){
+            throw new RuntimeException("é impossível alterar a data de cadastro");
         }
         this.marcaRepository.save(marca);
     }

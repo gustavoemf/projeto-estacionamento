@@ -33,6 +33,9 @@ public class ConfiguracaoService {
         if(configuracao.getAtualizacao() == null){
             configuracao.setAtualizacao(LocalDateTime.now());
         }
+        if(configuracao.getCadastro() != null){
+            throw new RuntimeException("é impossível alterar a data de cadastro");
+        }
         this.configuracaoRepository.save(configuracao);
     }
 }

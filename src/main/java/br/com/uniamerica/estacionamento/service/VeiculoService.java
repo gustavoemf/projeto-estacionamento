@@ -66,6 +66,9 @@ public class VeiculoService {
         if(veiculo.getAtualizacao() == null){
             veiculo.setAtualizacao(LocalDateTime.now());
         }
+        if(veiculo.getCadastro() != null){
+            throw new RuntimeException("é impossível alterar a data de cadastro");
+        }
         this.veiculoRepository.save(veiculo);
     }
 }

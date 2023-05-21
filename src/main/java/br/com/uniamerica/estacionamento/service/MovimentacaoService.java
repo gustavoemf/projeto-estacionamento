@@ -113,6 +113,9 @@ public class MovimentacaoService {
         if(movimentacao.getAtualizacao() == null){
             movimentacao.setAtualizacao(LocalDateTime.now());
         }
+        if(movimentacao.getCadastro() != null){
+            throw new RuntimeException("é impossível alterar a data de cadastro");
+        }
         this.movimentacaoRepository.save(movimentacao);
     }
 }

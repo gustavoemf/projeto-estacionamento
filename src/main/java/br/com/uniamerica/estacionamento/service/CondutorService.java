@@ -86,6 +86,9 @@ public class CondutorService {
         if(condutor.getAtualizacao() == null){
             condutor.setAtualizacao(LocalDateTime.now());
         }
+        if(condutor.getCadastro() != null){
+            throw new RuntimeException("é impossível alterar a data de cadastro");
+        }
         this.condutorRepository.save(condutor);
     }
 }

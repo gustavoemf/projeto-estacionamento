@@ -24,9 +24,7 @@ public class ModeloService {
         if("".equals(modelo.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(modelo.getNome() != null){
-            modelo.setNome(this.formataNome.formataNome(modelo.getNome()));
-        }
+        modelo.setNome(FormataNome.formataNome(modelo.getNome()));
         if(modeloRepository.findByNome(modelo.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }
@@ -45,12 +43,15 @@ public class ModeloService {
         if("".equals(modelo.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        modelo.setNome(this.formataNome.formataNome(modelo.getNome()));
+        modelo.setNome(FormataNome.formataNome(modelo.getNome()));
         if(modeloRepository.findByNome(modelo.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }
         if(modelo.getAtualizacao() == null){
             modelo.setAtualizacao(LocalDateTime.now());
+        }
+        if(modelo.getCadastro() != null){
+            throw new RuntimeException("é impossível alterar a data de cadastro");
         }
         this.modeloRepository.save(modelo);
     }
