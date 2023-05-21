@@ -21,6 +21,9 @@ public class CondutorService {
 
     @Transactional
     public void cadastraCondutor(Condutor condutor){
+        if(condutor.getId() != null){
+            throw new RuntimeException("o campo id não deve ser inserido");
+        }
         if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }

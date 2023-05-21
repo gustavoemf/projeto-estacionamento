@@ -15,6 +15,9 @@ public class ConfiguracaoService {
 
     @Transactional
     public void cadastraConfiguracao(Configuracao configuracao){
+        if(configuracao.getId() != null){
+            throw new RuntimeException("o campo id não deve ser inserido");
+        }
         if(configuracao.getCadastro() == null){
             configuracao.setCadastro(LocalDateTime.now());
         }

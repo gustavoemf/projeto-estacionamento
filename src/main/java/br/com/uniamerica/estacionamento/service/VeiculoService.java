@@ -19,6 +19,9 @@ public class VeiculoService {
 
     @Transactional
     public void cadastraVeiculo(Veiculo veiculo){
+        if(veiculo.getId() != null){
+            throw new RuntimeException("o campo id não deve ser inserido");
+        }
         if("".equals(veiculo.getPlaca())){
             throw new RuntimeException("o campo placa não pode ser vazio");
         }

@@ -27,6 +27,9 @@ public class MovimentacaoService {
 
     @Transactional
     public void cadastraMovimentacao(Movimentacao movimentacao){
+        if(movimentacao.getId() != null){
+            throw new RuntimeException("o campo id não deve ser inserido");
+        }
         if(!this.validaCpf.isCPF(movimentacao.getCondutor().getCpf())){
             throw new RuntimeException("o cpf do condutor não condiz com a formatação necessária");
         }

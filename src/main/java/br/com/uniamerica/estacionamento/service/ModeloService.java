@@ -15,6 +15,9 @@ public class ModeloService {
 
     @Transactional
     public void cadastraModelo(Modelo modelo){
+        if(modelo.getId() != null){
+            throw new RuntimeException("o campo id não deve ser inserido");
+        }
         if("".equals(modelo.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }

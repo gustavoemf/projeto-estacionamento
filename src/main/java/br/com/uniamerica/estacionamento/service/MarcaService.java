@@ -15,6 +15,9 @@ public class MarcaService {
 
     @Transactional
     public void cadastrarMarca(Marca marca){
+        if(marca.getId() != null){
+            throw new RuntimeException("o campo id não deve ser inserido");
+        }
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
