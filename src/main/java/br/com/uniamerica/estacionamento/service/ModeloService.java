@@ -1,5 +1,6 @@
 package br.com.uniamerica.estacionamento.service;
 
+import br.com.uniamerica.estacionamento.config.FormataNome;
 import br.com.uniamerica.estacionamento.entity.Modelo;
 import br.com.uniamerica.estacionamento.repository.ModeloRepository;
 import jakarta.transaction.Transactional;
@@ -12,6 +13,8 @@ import java.time.LocalDateTime;
 public class ModeloService {
     @Autowired
     private ModeloRepository modeloRepository;
+    @Autowired
+    private FormataNome formataNome;
 
     @Transactional
     public void cadastraModelo(Modelo modelo){
@@ -20,6 +23,9 @@ public class ModeloService {
         }
         if("".equals(modelo.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
+        }
+        if(modelo.getNome() != null){
+            modelo.setNome(this.formataNome.formataNome(modelo.getNome()));
         }
         if(modeloRepository.findByNome(modelo.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
@@ -38,6 +44,9 @@ public class ModeloService {
         }
         if("".equals(modelo.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
+        }
+        if(modelo.getNome() != null){
+            modelo.setNome(this.formataNome.formataNome(modelo.getNome()));
         }
         if(modeloRepository.findByNome(modelo.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");

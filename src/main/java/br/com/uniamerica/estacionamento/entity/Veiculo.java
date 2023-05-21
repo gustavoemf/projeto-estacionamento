@@ -42,7 +42,6 @@ public class Veiculo extends AbstractEntity {
     private Tipo tipo;
 
     @Getter @Setter
-    @Size(min = 1, message = "o campo ano não pode ser zero")
     @Column(name = "ano", nullable = false)
     private int ano;
 }
