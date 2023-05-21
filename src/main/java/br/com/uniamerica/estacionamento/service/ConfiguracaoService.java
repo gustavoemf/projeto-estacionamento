@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class ConfiguracaoService {
     @Autowired
@@ -13,6 +15,9 @@ public class ConfiguracaoService {
 
     @Transactional
     public void cadastraConfiguracao(Configuracao configuracao){
+        if(configuracao.getCadastro() == null){
+            configuracao.setCadastro(LocalDateTime.now());
+        }
         this.configuracaoRepository.save(configuracao);
     }
 
@@ -21,6 +26,9 @@ public class ConfiguracaoService {
         final Configuracao configuracaoBanco = this.configuracaoRepository.findById(id).orElse(null);
         if(configuracaoBanco==null || !configuracaoBanco.getId().equals(configuracao.getId())){
             throw new RuntimeException("Não foi possível identificar o registro informado");
+        }
+        if(configuracao.getAtualizacao() == null){
+            configuracao.setAtualizacao(LocalDateTime.now());
         }
         this.configuracaoRepository.save(configuracao);
     }

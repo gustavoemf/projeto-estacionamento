@@ -56,7 +56,6 @@ public class VeiculoController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
-        veiculo.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro atualizado");
     }
 

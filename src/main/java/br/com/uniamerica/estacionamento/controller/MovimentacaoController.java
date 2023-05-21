@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -36,7 +35,7 @@ public class MovimentacaoController {
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.movimentacaoRepository.findAll());}
 
     @GetMapping("/abertas")
-    public ResponseEntity <?> listaAbertas(){return ResponseEntity.ok(this.movimentacaoRepository.findByAbertas());}
+    public ResponseEntity <?> listaAbertas(){return ResponseEntity.ok(this.movimentacaoRepository.findByAberta());}
 
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody @Valid final Movimentacao movimentacao){
@@ -60,7 +59,6 @@ public class MovimentacaoController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
-        movimentacao.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro atualizado");
     }
 

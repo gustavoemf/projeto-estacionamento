@@ -14,4 +14,5 @@ public interface ModeloRepository extends JpaRepository<Modelo, Long> {
     public List<Modelo> findByNomeLikeNative(@Param("nome") final String nome);
 */
     public List<Modelo> findByAtivo(@Param("ativo") final boolean ativo);
+    Modelo findByNome(String nome);
 }

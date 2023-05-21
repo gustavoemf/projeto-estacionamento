@@ -19,8 +19,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 public class Marca extends AbstractEntity {
     @Getter @Setter
     @NotNull(message = "o campo nome não pode ser nulo")
-    @Size(min = 3, max = 50, message = "o nome da marca excede o máximo de caracteres (50)")
-    @UniqueElements(message = "o campo nome já existe")
+    @Size(min = 3, max = 50, message = "o nome da marca não respeita a quantidade de caracteres necessária (3-50)")
     @Column(name = "nome", nullable = false, unique = true, length = 50)
     private String nome;
 }

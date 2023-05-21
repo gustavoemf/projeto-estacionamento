@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-@RestController
+@Controller
 @RequestMapping(value = "/api/marca")
 public class MarcaController {
     @Autowired
@@ -57,7 +57,6 @@ public class MarcaController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
-        marca.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro atualizado");
     }
 

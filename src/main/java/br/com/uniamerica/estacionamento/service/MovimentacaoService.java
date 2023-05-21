@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Service
@@ -67,9 +68,11 @@ public class MovimentacaoService {
             BigDecimal valorTotal = movimentacao.getValorHora().multiply(new BigDecimal(movimentacao.getTempo().getHour()));
             movimentacao.setValorTotal(valorTotal);
         }
+        if(movimentacao.getCadastro() == null){
+            movimentacao.setCadastro(LocalDateTime.now());
+        }
         this.movimentacaoRepository.save(movimentacao);
     }
-
     @Transactional
     public void atuaizaMovimentacao(final Long id, Movimentacao movimentacao){
         final Movimentacao movimentacaoBanco = this.movimentacaoRepository.findById(id).orElse(null);
@@ -99,11 +102,13 @@ public class MovimentacaoService {
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
             movimentacao.setTempoMulta(movimentacao.getTempoMulta().longValue() + tempoMulta.toMinutes());
         }
-
         if(movimentacao.getTempo()!=null) {
             movimentacao.setValorHora(configuracaoRepository.findValorHora());
             BigDecimal valorTotal = movimentacao.getValorHora().multiply(new BigDecimal(movimentacao.getTempo().getHour()));
             movimentacao.setValorTotal(valorTotal);
+        }
+        if(movimentacao.getAtualizacao() == null){
+            movimentacao.setAtualizacao(LocalDateTime.now());
         }
         this.movimentacaoRepository.save(movimentacao);
     }

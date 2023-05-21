@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class VeiculoService {
     @Autowired
@@ -17,8 +19,17 @@ public class VeiculoService {
 
     @Transactional
     public void cadastraVeiculo(Veiculo veiculo){
+        if("".equals(veiculo.getPlaca())){
+            throw new RuntimeException("o campo placa não pode ser vazio");
+        }
+        if(veiculoRepository.findByPlaca(veiculo.getPlaca())!=null){
+            throw new RuntimeException("o campo placa já existe");
+        }
         if(!ValidaPlaca.validaPlaca(veiculo.getPlaca())){
             throw new RuntimeException("a placa não condiz com a formatação necessária");
+        }
+        if(veiculo.getCadastro() == null){
+            veiculo.setCadastro(LocalDateTime.now());
         }
         this.veiculoRepository.save(veiculo);
     }
@@ -29,8 +40,17 @@ public class VeiculoService {
         if(veiculoBanco==null || !veiculoBanco.getId().equals(veiculo.getId())){
             throw new RuntimeException("Não foi possivel encontrar o registro informado");
         }
+        if("".equals(veiculo.getPlaca())){
+            throw new RuntimeException("o campo placa não pode ser vazio");
+        }
+        if(veiculoRepository.findByPlaca(veiculo.getPlaca())!=null){
+            throw new RuntimeException("o campo placa já existe");
+        }
         if(!ValidaPlaca.validaPlaca(veiculo.getPlaca())){
             throw new RuntimeException("a placa não condiz com a formatação necessária");
+        }
+        if(veiculo.getAtualizacao() == null){
+            veiculo.setAtualizacao(LocalDateTime.now());
         }
         this.veiculoRepository.save(veiculo);
     }

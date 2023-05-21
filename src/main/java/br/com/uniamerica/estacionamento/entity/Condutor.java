@@ -31,14 +31,12 @@ public class Condutor extends AbstractEntity {
     @Getter @Setter
     @NotNull(message = "o campo cpf não pode ser nulo")
     @Size(max = 11, message = "o cpf do condutor não respeita a quantidade de caracteres necessária (11)")
-    @UniqueElements(message = "o campo cpf já existe")
-    @Column(name = "cpf", nullable = false, unique = true, length = 15)
+    @Column(name = "cpf", nullable = false, unique = true, length = 11)
     private String cpf;
 
     @Getter @Setter
     @NotNull(message = "o campo telefone não pode ser nulo")
     @Size(min = 7, max = 15, message = "o cpf do condutor não respeita a quantidade de caracteres necessária (7-15)")
-    @UniqueElements(message = "o campo telefone já existe")
     @Column(name = "telefone", nullable = false, unique = true, length = 15)
     private String telefone;
 
