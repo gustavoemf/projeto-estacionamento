@@ -1,11 +1,11 @@
 # 🚗 Estacionamento
 
 O projeto consiste em um sistema de estacionamento desenvolvido utilizando a linguagem Java e o framework Spring Boot.
-Nele podemos manipular informações sobre os veículos, condutores e as movimentações realizadas pelos mesmo através de um banco de dados.
+Nele podemos manipular informações e dados dos veículos, condutores e das movimentações realizadas pelos mesmos através de um banco de dados.
 
 ## 💻 Funcionalidades
 
-A classe `MovimentacaoService` contém o método `cadastrarMovimentacao` realiza o cadastro de uma nova movimentação. Nela as seguintes verifiações são realizadas PrePersist:
+A classe `MovimentacaoService` contém o método `cadastrarMovimentacao` realiza o cadastro de uma nova movimentação. Nela as seguintes verifiações serão realizadas PrePersist:
 ```
 - Verifica se o id não está sendo inserido pelo usuário
 - Verifica se o id do veiculo foi preenchido
@@ -14,7 +14,7 @@ A classe `MovimentacaoService` contém o método `cadastrarMovimentacao` realiza
 - Verifica se existe uma saida, caso haja, executa o cálculo de tempo de uso do estacionamento
 - Verifica se existe um tempo de uso, caso haja, executa o cálculo de multa, desconto e valor total
 ```
-A classe `MovimentacaoService` contém o método `atualizarMovimentacao` realiza a atualização de uma movimentação existente. Nela as seguintes verifiações são realizadas PreUpdate:
+A classe `MovimentacaoService` contém o método `atualizarMovimentacao` realiza a atualização de uma movimentação existente. Nela as seguintes verificações serão realizadas PreUpdate:
 ```
 - Verifica se o id não está sendo inserido pelo usuário
 - Verifica se o id do veiculo foi preenchido
@@ -36,10 +36,10 @@ Para iniciar, verifique se sua máquina atende aos seguintes requisitos:
 
 ## 🚀 Iniciando o projeto
 
-Para iniciar o projeto, siga estas etapas:
+Para iniciar o projeto, siga estas indicações:
 
-O projeto será iniciado por meio da appliation `EstacionamentoApplication` que é responsável por exeutar aplicação Spring Boot.
-Ao executa-lo, a aplicação iniializa e fica pronta para receber requisições e fornecer os serviços relacionados ao estacionamento.
+O projeto será iniciado por meio da application `EstacionamentoApplication` que é responsável por executar a aplicação Spring Boot.
+Ao executa-la, a aplicação inicializará e estará pronta para receber requisições e fornecer os serviços relacionados ao estacionamento.
 
 ## 📚 Desenvolvido com
 
