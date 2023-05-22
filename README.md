@@ -38,10 +38,8 @@ Para iniciar, verifique se sua máquina atende aos seguintes requisitos:
 
 Para iniciar o projeto, siga estas etapas:
 
-```
 O projeto será iniciado por meio da appliation `EstacionamentoApplication` que é responsável por exeutar aplicação Spring Boot.
 Ao executa-lo, a aplicação iniializa e fica pronta para receber requisições e fornecer os serviços relacionados ao estacionamento.
-```
 
 ## 📚 Desenvolvido com
 
