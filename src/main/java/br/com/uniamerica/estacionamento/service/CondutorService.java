@@ -30,7 +30,6 @@ public class CondutorService {
         if(ValidaNome.validaNome(condutor.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        condutor.setNome(FormataNome.formataNome(condutor.getNome()));
         if("".equals(condutor.getCpf())){
             throw new RuntimeException("o campo cpf não pode ser vazio");
         }
@@ -58,6 +57,7 @@ public class CondutorService {
         if(condutor.getCadastro() == null){
             condutor.setCadastro(LocalDateTime.now());
         }
+        condutor.setNome(FormataNome.formataNome(condutor.getNome()));
         condutor.setAtivo(true);
         this.condutorRepository.save(condutor);
     }
@@ -74,7 +74,6 @@ public class CondutorService {
         if(ValidaNome.validaNome(condutor.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        condutor.setNome(FormataNome.formataNome(condutor.getNome()));
         if("".equals(condutor.getCpf())){
             throw new RuntimeException("o campo cpf não pode ser vazio");
         }
@@ -85,7 +84,7 @@ public class CondutorService {
             throw new RuntimeException("o campo tempoPago não deve ser inserido");
         }
         if(condutor.getTempoDesconto() != null){
-            throw new RuntimeException("o campo tempoPago não deve ser inserido");
+            throw new RuntimeException("o campo tempoDesconto não deve ser inserido");
         }
         if(condutorRepository.findByCpf(condutor.getCpf())!=null){
             throw new RuntimeException("o campo cpf já existe");
@@ -105,6 +104,7 @@ public class CondutorService {
         if(condutor.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");
         }
+        condutor.setNome(FormataNome.formataNome(condutor.getNome()));
         this.condutorRepository.save(condutor);
     }
 }

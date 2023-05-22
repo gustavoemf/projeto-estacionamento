@@ -15,6 +15,11 @@ public class ConfiguracaoService {
 
     @Transactional
     public void cadastraConfiguracao(Configuracao configuracao){
+        // Verificar se valorHora é vazio
+        // Verificar se valorMinutoMulta é vazio
+        // Verificar se vagasCarro é vazio
+        // Verificar se vagasMoto é vazio
+        // Verificar se vagasVan é vazio
         if(configuracao.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
@@ -41,8 +46,13 @@ public class ConfiguracaoService {
     public void atualizaConfiguracao(final Long id, Configuracao configuracao){
         final Configuracao configuracaoBanco = this.configuracaoRepository.findById(id).orElse(null);
         if(configuracaoBanco==null || !configuracaoBanco.getId().equals(configuracao.getId())){
-            throw new RuntimeException("Não foi possível identificar o registro informado");
+            throw new RuntimeException("não foi possível identificar o registro informado");
         }
+        // Verificar se valorHora é vazio
+        // Verificar se valorMinutoMulta é vazio
+        // Verificar se vagasCarro é vazio
+        // Verificar se vagasMoto é vazio
+        // Verificar se vagasVan é vazio
         if("".equals(configuracao.getInicioExpediente().toString())){
             throw new RuntimeException("o campo inicioExpediente não pode ser vazio");
         }

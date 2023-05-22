@@ -19,7 +19,7 @@ import java.time.LocalTime;
 public class Condutor extends AbstractEntity {
     @Getter @Setter
     @NotNull(message = "o campo nome não pode ser nulo")
-    @Size(min = 2, max = 50, message = "o nome do condutor não respeita a quantidade de caracteres necessária (3-50)")
+    @Size(min = 2, max = 50, message = "o nome do condutor não respeita a quantidade de caracteres necessária (2-50)")
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
 

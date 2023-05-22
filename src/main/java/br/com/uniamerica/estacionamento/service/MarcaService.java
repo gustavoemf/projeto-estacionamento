@@ -26,13 +26,13 @@ public class MarcaService {
         if(ValidaNome.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        marca.setNome(FormataNome.formataNome(marca.getNome()));
         if(marcaRepository.findByNome(marca.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }
         if(marca.getCadastro() == null){
             marca.setCadastro(LocalDateTime.now());
         }
+        marca.setNome(FormataNome.formataNome(marca.getNome()));
         marca.setAtivo(true);
         this.marcaRepository.save(marca);
     }
@@ -49,7 +49,6 @@ public class MarcaService {
         if(ValidaNome.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        marca.setNome(FormataNome.formataNome(marca.getNome()));
         if(marcaRepository.findByNome(marca.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }
@@ -59,6 +58,7 @@ public class MarcaService {
         if(marca.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");
         }
+        marca.setNome(FormataNome.formataNome(marca.getNome()));
         this.marcaRepository.save(marca);
     }
 }
