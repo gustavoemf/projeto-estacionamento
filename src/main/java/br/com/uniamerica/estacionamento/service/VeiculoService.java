@@ -1,7 +1,6 @@
 package br.com.uniamerica.estacionamento.service;
 
 import br.com.uniamerica.estacionamento.config.ValidaPlaca;
-import br.com.uniamerica.estacionamento.config.ValidaTelefone;
 import br.com.uniamerica.estacionamento.entity.Veiculo;
 import br.com.uniamerica.estacionamento.repository.VeiculoRepository;
 import jakarta.transaction.Transactional;
@@ -15,9 +14,6 @@ import java.time.LocalDateTime;
 public class VeiculoService {
     @Autowired
     private VeiculoRepository veiculoRepository;
-    @Autowired
-    private ValidaPlaca validaPlaca;
-
     @Transactional
     public void cadastraVeiculo(Veiculo veiculo){
         if(veiculo.getId() != null){

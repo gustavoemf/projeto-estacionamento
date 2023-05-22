@@ -1,8 +1,8 @@
 package br.com.uniamerica.estacionamento.service;
 
 import br.com.uniamerica.estacionamento.config.FormataNome;
+import br.com.uniamerica.estacionamento.config.ValidaNome;
 import br.com.uniamerica.estacionamento.entity.Marca;
-import br.com.uniamerica.estacionamento.repository.CondutorRepository;
 import br.com.uniamerica.estacionamento.repository.MarcaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,6 @@ import java.time.LocalDateTime;
 public class MarcaService {
     @Autowired
     private MarcaRepository marcaRepository;
-    @Autowired
-    private FormataNome formataNome;
-    @Autowired
-    private CondutorRepository condutorRepository;
 
     @Transactional
     public void cadastraMarca(Marca marca){
@@ -26,6 +22,9 @@ public class MarcaService {
         }
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
+        }
+        if(ValidaNome.validaNome(marca.getNome())){
+            throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         marca.setNome(FormataNome.formataNome(marca.getNome()));
         if(marcaRepository.findByNome(marca.getNome())!=null){
@@ -46,6 +45,9 @@ public class MarcaService {
         }
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
+        }
+        if(ValidaNome.validaNome(marca.getNome())){
+            throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         marca.setNome(FormataNome.formataNome(marca.getNome()));
         if(marcaRepository.findByNome(marca.getNome())!=null){

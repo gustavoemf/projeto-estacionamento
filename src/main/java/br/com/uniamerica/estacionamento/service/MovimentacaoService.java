@@ -1,7 +1,5 @@
 package br.com.uniamerica.estacionamento.service;
 
-import br.com.uniamerica.estacionamento.config.ValidaCpf;
-import br.com.uniamerica.estacionamento.config.ValidaTelefone;
 import br.com.uniamerica.estacionamento.entity.Movimentacao;
 import br.com.uniamerica.estacionamento.repository.ConfiguracaoRepository;
 import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;

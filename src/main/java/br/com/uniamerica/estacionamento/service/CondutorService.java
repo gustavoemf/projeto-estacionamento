@@ -2,6 +2,7 @@ package br.com.uniamerica.estacionamento.service;
 
 import br.com.uniamerica.estacionamento.config.FormataNome;
 import br.com.uniamerica.estacionamento.config.ValidaCpf;
+import br.com.uniamerica.estacionamento.config.ValidaNome;
 import br.com.uniamerica.estacionamento.config.ValidaTelefone;
 import br.com.uniamerica.estacionamento.entity.Condutor;
 import br.com.uniamerica.estacionamento.repository.CondutorRepository;
@@ -16,11 +17,7 @@ public class CondutorService {
     @Autowired
     private CondutorRepository condutorRepository;
     @Autowired
-    private ValidaTelefone validaTelefone;
-    @Autowired
     private ValidaCpf validaCpf;
-    @Autowired
-    private FormataNome formataNome;
 
     @Transactional
     public void cadastraCondutor(Condutor condutor){
@@ -29,6 +26,9 @@ public class CondutorService {
         }
         if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
+        }
+        if(ValidaNome.validaNome(condutor.getNome())){
+            throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         condutor.setNome(FormataNome.formataNome(condutor.getNome()));
         if("".equals(condutor.getCpf())){
@@ -70,6 +70,9 @@ public class CondutorService {
         }
         if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
+        }
+        if(ValidaNome.validaNome(condutor.getNome())){
+            throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         condutor.setNome(FormataNome.formataNome(condutor.getNome()));
         if("".equals(condutor.getCpf())){
