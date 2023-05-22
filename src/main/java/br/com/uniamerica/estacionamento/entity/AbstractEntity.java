@@ -7,10 +7,9 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class AbstractEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
     @Getter @Setter
     @Column(name = "cadastro")

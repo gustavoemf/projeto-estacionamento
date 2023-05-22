@@ -3,16 +3,15 @@ package br.com.uniamerica.estacionamento.controller;
 import br.com.uniamerica.estacionamento.entity.Marca;
 import br.com.uniamerica.estacionamento.repository.MarcaRepository;
 import br.com.uniamerica.estacionamento.service.MarcaService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/marca")
 public class MarcaController {
     @Autowired
@@ -36,9 +35,9 @@ public class MarcaController {
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.marcaRepository.findAll());}
 
     @PostMapping
-    public ResponseEntity <?> cadastrar(@RequestBody @Valid final Marca marca){
+    public ResponseEntity <?> cadastrar(@RequestBody @Validated final Marca marca){
         try{
-            this.marcaService.cadastrarMarca(marca);
+            this.marcaService.cadastraMarca(marca);
         }
         catch(Exception e){
             return ResponseEntity.badRequest().body("Erro " + e.getMessage());
@@ -47,9 +46,9 @@ public class MarcaController {
     }
 
     @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") @Valid final Long id, @RequestBody @Valid final Marca marca){
+    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody @Validated final Marca marca){
         try{
-            this.marcaService.atualizarMarca(id, marca);
+            this.marcaService.atualizaMarca(id, marca);
         }
         catch (DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());

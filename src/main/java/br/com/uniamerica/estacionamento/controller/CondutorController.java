@@ -3,10 +3,10 @@ package br.com.uniamerica.estacionamento.controller;
 import br.com.uniamerica.estacionamento.entity.Condutor;
 import br.com.uniamerica.estacionamento.repository.CondutorRepository;
 import br.com.uniamerica.estacionamento.service.CondutorService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -18,10 +18,6 @@ public class CondutorController {
     private CondutorRepository condutorRepository;
     @Autowired
     private CondutorService condutorService;
-
-    /*public CondutorController(CondutorRepository condutorRepository) {
-        this.condutorRepository = condutorRepository;
-    }*/
 
     @GetMapping("/{id}")
     public ResponseEntity <?> findByIdPath (@PathVariable("id") final Long id){
@@ -42,7 +38,7 @@ public class CondutorController {
     public ResponseEntity <?> listaAtivo(){return ResponseEntity.ok(this.condutorRepository.findByAtivo(true));}
 
     @PostMapping
-    public ResponseEntity <?> cadastrar(@RequestBody @Valid final Condutor condutor){
+    public ResponseEntity <?> cadastrar(@RequestBody @Validated final Condutor condutor){
         try{
             this.condutorService.cadastraCondutor(condutor);
         }
@@ -53,7 +49,7 @@ public class CondutorController {
     }
 
     @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") @Valid final Long id, @RequestBody @Valid final Condutor condutor){
+    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody @Validated final Condutor condutor){
         try{
             this.condutorService.atualizaCondutor(id, condutor);
         }

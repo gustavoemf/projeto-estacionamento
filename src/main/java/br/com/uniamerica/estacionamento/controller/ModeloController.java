@@ -3,10 +3,10 @@ package br.com.uniamerica.estacionamento.controller;
 import br.com.uniamerica.estacionamento.entity.Modelo;
 import br.com.uniamerica.estacionamento.repository.ModeloRepository;
 import br.com.uniamerica.estacionamento.service.ModeloService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -35,7 +35,7 @@ public class ModeloController {
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.modeloRepository.findAll());}
 
     @PostMapping
-    public ResponseEntity <?> cadastrar(@RequestBody @Valid final Modelo modelo){
+    public ResponseEntity <?> cadastrar(@RequestBody @Validated final Modelo modelo){
         try{
             this.modeloService.cadastraModelo(modelo);
         }
@@ -46,7 +46,7 @@ public class ModeloController {
     }
 
     @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") @Valid final Long id, @RequestBody @Valid Modelo modelo){
+    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody @Validated final Modelo modelo){
         try{
             this.modeloService.atualizaModelo(id, modelo);
         }

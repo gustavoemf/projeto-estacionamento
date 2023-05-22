@@ -27,6 +27,12 @@ public class VeiculoService {
         if("".equals(veiculo.getPlaca())){
             throw new RuntimeException("o campo placa não pode ser vazio");
         }
+        if("".equals(veiculo.getTipo().toString())){
+            throw new RuntimeException("o campo tipo não pode ser vazio");
+        }
+        if("".equals(veiculo.getCor().toString())){
+            throw new RuntimeException("o campo cor não pode ser vazio");
+        }
         if(veiculo.getAno() == 0 || veiculo.getAno() > LocalDate.now().getYear()){
             throw new RuntimeException("o campo ano não pode ser zero ou maior que o ano atual");
         }
@@ -45,6 +51,7 @@ public class VeiculoService {
         if(veiculo.getCadastro() == null){
             veiculo.setCadastro(LocalDateTime.now());
         }
+        veiculo.setAtivo(true);
         this.veiculoRepository.save(veiculo);
     }
 
@@ -56,6 +63,12 @@ public class VeiculoService {
         }
         if("".equals(veiculo.getPlaca())){
             throw new RuntimeException("o campo placa não pode ser vazio");
+        }
+        if("".equals(veiculo.getTipo().toString())){
+            throw new RuntimeException("o campo tipo não pode ser vazio");
+        }
+        if("".equals(veiculo.getCor().toString())){
+            throw new RuntimeException("o campo cor não pode ser vazio");
         }
         if(veiculoRepository.findByPlaca(veiculo.getPlaca())!=null){
             throw new RuntimeException("o campo placa já existe");

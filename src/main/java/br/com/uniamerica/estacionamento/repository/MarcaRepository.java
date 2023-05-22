@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MarcaRepository extends JpaRepository<Marca, Long> {
-    public List<Marca> findByAtivo(@Param("ativo") final boolean ativo);
+    List<Marca> findByAtivo(@Param("ativo") final boolean ativo);
     Marca findByNome(String nome);
 }

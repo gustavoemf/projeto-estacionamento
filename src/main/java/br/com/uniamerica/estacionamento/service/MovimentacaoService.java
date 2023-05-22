@@ -20,21 +20,25 @@ public class MovimentacaoService {
     private MovimentacaoRepository movimentacaoRepository;
     @Autowired
     private ConfiguracaoRepository configuracaoRepository;
-    @Autowired
-    private ValidaTelefone validaTelefone;
-    @Autowired
-    private ValidaCpf validaCpf;
-
     @Transactional
     public void cadastraMovimentacao(Movimentacao movimentacao){
         if(movimentacao.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
-        if(!this.validaCpf.isCPF(movimentacao.getCondutor().getCpf())){
-            throw new RuntimeException("o cpf do condutor não condiz com a formatação necessária");
+        if("".equals(movimentacao.getEntrada().toString())){
+            throw new RuntimeException("o campo entrada não pode ser vazio");
         }
-        if(!ValidaTelefone.validaTelefone(movimentacao.getCondutor().getTelefone())){
-            throw new RuntimeException("o telefone do condutor não condiz com a formatação necessária");
+        if("".equals(movimentacao.getSaida().toString())){
+            throw new RuntimeException("o campo saida não pode ser vazio");
+        };
+        if("".equals(movimentacao.getTempo().toString())){
+            throw new RuntimeException("o campo tempo não pode ser vazio");
+        }
+        if("".equals(movimentacao.getTempoDesconto().toString())){
+            throw new RuntimeException("o campo tempoDesconto não pode ser vazio");
+        }
+        if("".equals(movimentacao.getTempoMulta().toString())){
+            throw new RuntimeException("o campo tempoMulta não pode ser vazio");
         }
         if(movimentacao.getSaida() != null){
             LocalTime tempo = movimentacao.getSaida()
@@ -48,13 +52,6 @@ public class MovimentacaoService {
             movimentacao.setValorTotal(configuracaoRepository.findValorHora()
                     .multiply(new BigDecimal(movimentacao.getTempo().getHour()))
             );
-        }
-        if(movimentacao.getSaida() != null){
-            LocalTime tempo = movimentacao.getSaida()
-                    .minusHours(movimentacao.getEntrada().getHour())
-                    .minusMinutes(movimentacao.getEntrada().getMinute())
-                    .minusSeconds(movimentacao.getEntrada().getSecond());
-            movimentacao.setTempo(tempo);
         }
         if (movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente())) {
             Duration tempoMulta = Duration.between(configuracaoRepository.findInicioExpediente(), movimentacao.getEntrada());
@@ -74,6 +71,7 @@ public class MovimentacaoService {
         if(movimentacao.getCadastro() == null){
             movimentacao.setCadastro(LocalDateTime.now());
         }
+        movimentacao.setAtivo(true);
         this.movimentacaoRepository.save(movimentacao);
     }
     @Transactional
@@ -82,11 +80,20 @@ public class MovimentacaoService {
         if(movimentacaoBanco==null || !movimentacaoBanco.getId().equals(movimentacao.getId())){
             throw new RuntimeException("não foi possível identificar o registro informado");
         }
-        if(!this.validaCpf.isCPF(movimentacao.getCondutor().getCpf())){
-            throw new RuntimeException("o cpf do condutor não condiz com a formatação necessária");
+        if("".equals(movimentacao.getEntrada().toString())){
+            throw new RuntimeException("o campo entrada não pode ser vazio");
         }
-        if(!ValidaTelefone.validaTelefone(movimentacao.getCondutor().getTelefone())){
-            throw new RuntimeException("o telefone do condutor não condiz com a formatação necessária");
+        if("".equals(movimentacao.getSaida().toString())){
+            throw new RuntimeException("o campo saida não pode ser vazio");
+        };
+        if("".equals(movimentacao.getTempo().toString())){
+            throw new RuntimeException("o campo tempo não pode ser vazio");
+        }
+        if("".equals(movimentacao.getTempoDesconto().toString())){
+            throw new RuntimeException("o campo tempoDesconto não pode ser vazio");
+        }
+        if("".equals(movimentacao.getTempoMulta().toString())){
+            throw new RuntimeException("o campo tempoMulta não pode ser vazio");
         }
         if(movimentacao.getSaida() != null){
             LocalTime tempo = movimentacao.getSaida()
@@ -94,6 +101,12 @@ public class MovimentacaoService {
                     .minusMinutes(movimentacao.getEntrada().getMinute())
                     .minusSeconds(movimentacao.getEntrada().getSecond());
             movimentacao.setTempo(tempo);
+        }
+        if(movimentacao.getTempo() != null){
+            movimentacao.setValorHora(configuracaoRepository.findValorHora());
+            movimentacao.setValorTotal(configuracaoRepository.findValorHora()
+                    .multiply(new BigDecimal(movimentacao.getTempo().getHour()))
+            );
         }
         if (movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente())) {
             Duration tempoMulta = Duration.between(configuracaoRepository.findInicioExpediente(), movimentacao.getEntrada());

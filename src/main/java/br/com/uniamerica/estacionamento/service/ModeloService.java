@@ -31,6 +31,7 @@ public class ModeloService {
         if(modelo.getCadastro() == null){
             modelo.setCadastro(LocalDateTime.now());
         }
+        modelo.setAtivo(true);
         this.modeloRepository.save(modelo);
     }
 

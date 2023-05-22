@@ -5,15 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.Name;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.hibernate.validator.constraints.br.CNPJ;
-import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalTime;
 
@@ -24,7 +19,7 @@ import java.time.LocalTime;
 public class Condutor extends AbstractEntity {
     @Getter @Setter
     @NotNull(message = "o campo nome não pode ser nulo")
-    @Size(min = 3, max = 50, message = "o nome do condutor não respeita a quantidade de caracteres necessária (3-50)")
+    @Size(min = 2, max = 50, message = "o nome do condutor não respeita a quantidade de caracteres necessária (3-50)")
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
 

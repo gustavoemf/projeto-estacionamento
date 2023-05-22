@@ -3,13 +3,11 @@ package br.com.uniamerica.estacionamento.controller;
 import br.com.uniamerica.estacionamento.entity.Configuracao;
 import br.com.uniamerica.estacionamento.repository.ConfiguracaoRepository;
 import br.com.uniamerica.estacionamento.service.ConfiguracaoService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping(value = "/api/configuracao")
@@ -32,7 +30,7 @@ public class ConfiguracaoController {
     }
 
     @PostMapping
-    public ResponseEntity <?> cadastrar(@RequestBody @Valid final Configuracao configuracao){
+    public ResponseEntity <?> cadastrar(@RequestBody @Validated final Configuracao configuracao){
         try{
             this.configuracaoService.cadastraConfiguracao(configuracao);
         }
@@ -43,7 +41,7 @@ public class ConfiguracaoController {
     }
 
     @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody final Configuracao configuracao){
+    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody @Validated final Configuracao configuracao){
         try{
             this.configuracaoService.atualizaConfiguracao(id, configuracao);
         }

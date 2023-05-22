@@ -7,10 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Audited
@@ -25,7 +21,7 @@ public class Veiculo extends AbstractEntity {
 
     @Getter @Setter
     @NotNull(message = "o campo modelo não pode ser nulo")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "modelo", nullable = false)
     private Modelo modelo;
 

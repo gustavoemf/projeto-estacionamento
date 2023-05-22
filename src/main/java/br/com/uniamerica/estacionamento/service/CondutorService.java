@@ -37,6 +37,12 @@ public class CondutorService {
         if("".equals(condutor.getTelefone())){
             throw new RuntimeException("o campo telefone não pode ser vazio");
         }
+        if(condutor.getTempoPago() != null){
+            throw new RuntimeException("o campo tempoPago não deve ser inserido");
+        }
+        if(condutor.getTempoDesconto() != null){
+            throw new RuntimeException("o campo tempoPago não deve ser inserido");
+        }
         if(condutorRepository.findByCpf(condutor.getCpf())!=null){
             throw new RuntimeException("o campo cpf já existe");
         }
@@ -52,6 +58,7 @@ public class CondutorService {
         if(condutor.getCadastro() == null){
             condutor.setCadastro(LocalDateTime.now());
         }
+        condutor.setAtivo(true);
         this.condutorRepository.save(condutor);
     }
 
@@ -70,6 +77,12 @@ public class CondutorService {
         }
         if("".equals(condutor.getTelefone())){
             throw new RuntimeException("o campo telefone não pode ser vazio");
+        }
+        if(condutor.getTempoPago() != null){
+            throw new RuntimeException("o campo tempoPago não deve ser inserido");
+        }
+        if(condutor.getTempoDesconto() != null){
+            throw new RuntimeException("o campo tempoPago não deve ser inserido");
         }
         if(condutorRepository.findByCpf(condutor.getCpf())!=null){
             throw new RuntimeException("o campo cpf já existe");

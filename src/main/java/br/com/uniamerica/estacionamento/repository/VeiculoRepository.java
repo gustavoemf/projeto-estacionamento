@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
-    public List<Veiculo> findByAtivo(@Param("ativo") final boolean ativo);
+    List<Veiculo> findByAtivo(@Param("ativo") final boolean ativo);
     Veiculo findByPlaca(String placa);
 }

@@ -8,7 +8,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.Format;
 import java.time.LocalDateTime;
 
 @Service
@@ -21,7 +20,7 @@ public class MarcaService {
     private CondutorRepository condutorRepository;
 
     @Transactional
-    public void cadastrarMarca(Marca marca){
+    public void cadastraMarca(Marca marca){
         if(marca.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
@@ -35,11 +34,12 @@ public class MarcaService {
         if(marca.getCadastro() == null){
             marca.setCadastro(LocalDateTime.now());
         }
+        marca.setAtivo(true);
         this.marcaRepository.save(marca);
     }
 
     @Transactional
-    public void atualizarMarca(final Long id, Marca marca){
+    public void atualizaMarca(final Long id, Marca marca){
         final Marca marcaBanco = this.marcaRepository.findById(id).orElse(null);
         if(marcaBanco==null || !marcaBanco.getId().equals(marca.getId())){
             throw new RuntimeException("não foi possível identificar o registro informado");
