@@ -5,7 +5,28 @@ import org.springframework.stereotype.Component;
 import java.util.InputMismatchException;
 
 @Component
-public class ValidaCpf {
+public class Validacoes {
+    public static boolean validaNome(String nome) {
+        String nomeInserido = "^[a-zA-Z ]+$";
+        return nome.matches(nomeInserido);
+    }
+    public static boolean validaModelo(String nome) {
+        String nomeInserido = "^[a-zA-Z0-9]+$";
+        return nome.matches(nomeInserido);
+    }
+    public static String formataNome(String nome) {
+        nome = nome.toLowerCase();
+        nome = Character.toUpperCase(nome.charAt(0)) + nome.substring(1);
+        return nome;
+    }
+    public static boolean validaPlaca(String placa) {
+        String placaBr = "^[A-Z]{3}-\\d{4}$|^[A-Z]{3}\\d[A-Z]\\d{2}$";
+        return placa.matches(placaBr);
+    }
+    public static boolean validaTelefone(String tel) {
+        String telBR = "[1-9][0-9] [2-9]{2}[0-9]{3}[0-9]{4}";
+        return tel.matches(telBR);
+    }
     public boolean isCPF(String CPF) {
         // considera-se erro CPF's formados por uma sequencia de numeros iguais
         if (CPF.equals("00000000000") ||

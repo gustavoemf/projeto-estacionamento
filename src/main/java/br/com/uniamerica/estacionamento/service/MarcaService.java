@@ -1,14 +1,11 @@
 package br.com.uniamerica.estacionamento.service;
 
-import br.com.uniamerica.estacionamento.config.FormataNome;
-import br.com.uniamerica.estacionamento.config.ValidaNome;
+import br.com.uniamerica.estacionamento.config.Validacoes;
 import br.com.uniamerica.estacionamento.entity.Marca;
 import br.com.uniamerica.estacionamento.repository.MarcaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class MarcaService {
@@ -23,13 +20,13 @@ public class MarcaService {
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(!ValidaNome.validaNome(marca.getNome())){
+        if(!Validacoes.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         if(marcaRepository.findByNome(marca.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }
-        marca.setNome(FormataNome.formataNome(marca.getNome()));
+        marca.setNome(Validacoes.formataNome(marca.getNome()));
         marca.setAtivo(true);
         this.marcaRepository.save(marca);
     }
@@ -43,7 +40,7 @@ public class MarcaService {
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(!ValidaNome.validaNome(marca.getNome())){
+        if(!Validacoes.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         if(marcaRepository.findByNome(marca.getNome())!=null){
@@ -52,7 +49,7 @@ public class MarcaService {
         if(marca.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");
         }
-        marca.setNome(FormataNome.formataNome(marca.getNome()));
+        marca.setNome(Validacoes.formataNome(marca.getNome()));
         this.marcaRepository.save(marca);
     }
 }

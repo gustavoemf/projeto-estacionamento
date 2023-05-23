@@ -1,15 +1,12 @@
 package br.com.uniamerica.estacionamento.service;
 
-import br.com.uniamerica.estacionamento.config.FormataNome;
-import br.com.uniamerica.estacionamento.config.ValidaModelo;
+import br.com.uniamerica.estacionamento.config.Validacoes;
 import br.com.uniamerica.estacionamento.entity.Modelo;
 import br.com.uniamerica.estacionamento.repository.MarcaRepository;
 import br.com.uniamerica.estacionamento.repository.ModeloRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class ModeloService {
@@ -26,7 +23,7 @@ public class ModeloService {
         if("".equals(modelo.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(!ValidaModelo.validaModelo(modelo.getNome())){
+        if(!Validacoes.validaModelo(modelo.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         if(modeloRepository.findByNome(modelo.getNome()) != null){
@@ -35,7 +32,7 @@ public class ModeloService {
         if(marcaRepository.findById(modelo.getMarca().getId()).isEmpty()){
             throw new RuntimeException("o id de marca inserido não existe");
         }
-        modelo.setNome(FormataNome.formataNome(modelo.getNome()));
+        modelo.setNome(Validacoes.formataNome(modelo.getNome()));
         modelo.setAtivo(true);
         this.modeloRepository.save(modelo);
     }
@@ -49,7 +46,7 @@ public class ModeloService {
         if("".equals(modelo.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(!ValidaModelo.validaModelo(modelo.getNome())){
+        if(!Validacoes.validaModelo(modelo.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         if(modeloRepository.findByNome(modelo.getNome())!=null){
@@ -61,7 +58,7 @@ public class ModeloService {
         if(modelo.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");
         }
-        modelo.setNome(FormataNome.formataNome(modelo.getNome()));
+        modelo.setNome(Validacoes.formataNome(modelo.getNome()));
         this.modeloRepository.save(modelo);
     }
 }

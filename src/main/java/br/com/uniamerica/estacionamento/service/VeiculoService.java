@@ -1,6 +1,6 @@
 package br.com.uniamerica.estacionamento.service;
 
-import br.com.uniamerica.estacionamento.config.ValidaPlaca;
+import br.com.uniamerica.estacionamento.config.Validacoes;
 import br.com.uniamerica.estacionamento.entity.Veiculo;
 import br.com.uniamerica.estacionamento.repository.ModeloRepository;
 import br.com.uniamerica.estacionamento.repository.VeiculoRepository;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 public class VeiculoService {
@@ -48,7 +47,7 @@ public class VeiculoService {
         if(veiculoRepository.findByPlaca(veiculo.getPlaca())!=null){
             throw new RuntimeException("o campo placa já existe");
         }
-        if(!ValidaPlaca.validaPlaca(veiculo.getPlaca())){
+        if(!Validacoes.validaPlaca(veiculo.getPlaca())){
             throw new RuntimeException("a placa não condiz com a formatação necessária");
         }
         veiculo.setAtivo(true);
@@ -86,7 +85,7 @@ public class VeiculoService {
         if(veiculoRepository.findByPlaca(veiculo.getPlaca())!=null){
             throw new RuntimeException("o campo placa já existe");
         }
-        if(!ValidaPlaca.validaPlaca(veiculo.getPlaca())){
+        if(!Validacoes.validaPlaca(veiculo.getPlaca())){
             throw new RuntimeException("a placa não condiz com a formatação necessária");
         }
         if(veiculo.getCadastro() != null){

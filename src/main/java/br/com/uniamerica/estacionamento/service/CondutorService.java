@@ -1,23 +1,18 @@
 package br.com.uniamerica.estacionamento.service;
 
-import br.com.uniamerica.estacionamento.config.FormataNome;
-import br.com.uniamerica.estacionamento.config.ValidaCpf;
-import br.com.uniamerica.estacionamento.config.ValidaNome;
-import br.com.uniamerica.estacionamento.config.ValidaTelefone;
+import br.com.uniamerica.estacionamento.config.Validacoes;
 import br.com.uniamerica.estacionamento.entity.Condutor;
 import br.com.uniamerica.estacionamento.repository.CondutorRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 public class CondutorService {
     @Autowired
     private CondutorRepository condutorRepository;
     @Autowired
-    private ValidaCpf validaCpf;
+    private Validacoes validaCpf;
 
     @Transactional
     public void cadastraCondutor(Condutor condutor){
@@ -27,7 +22,7 @@ public class CondutorService {
         if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(!ValidaNome.validaNome(condutor.getNome())){
+        if(!Validacoes.validaNome(condutor.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         if("".equals(condutor.getCpf())){
@@ -51,10 +46,10 @@ public class CondutorService {
         if(!this.validaCpf.isCPF(condutor.getCpf())){
             throw new RuntimeException("o cpf não condiz com a formatação necessária");
         }
-        if(!ValidaTelefone.validaTelefone(condutor.getTelefone())){
+        if(!Validacoes.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
         }
-        condutor.setNome(FormataNome.formataNome(condutor.getNome()));
+        condutor.setNome(Validacoes.formataNome(condutor.getNome()));
         condutor.setAtivo(true);
         this.condutorRepository.save(condutor);
     }
@@ -68,7 +63,7 @@ public class CondutorService {
         if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(!ValidaNome.validaNome(condutor.getNome())){
+        if(!Validacoes.validaNome(condutor.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         if("".equals(condutor.getCpf())){
@@ -92,13 +87,13 @@ public class CondutorService {
         if(!this.validaCpf.isCPF(condutor.getCpf())){
             throw new RuntimeException("o cpf não condiz com a formatação necessária");
         }
-        if(!ValidaTelefone.validaTelefone(condutor.getTelefone())){
+        if(!Validacoes.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
         }
         if(condutor.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");
         }
-        condutor.setNome(FormataNome.formataNome(condutor.getNome()));
+        condutor.setNome(Validacoes.formataNome(condutor.getNome()));
         this.condutorRepository.save(condutor);
     }
 }

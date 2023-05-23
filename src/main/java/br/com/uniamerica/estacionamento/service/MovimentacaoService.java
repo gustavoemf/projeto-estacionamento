@@ -1,5 +1,6 @@
 package br.com.uniamerica.estacionamento.service;
 
+import br.com.uniamerica.estacionamento.config.CalculaTempo;
 import br.com.uniamerica.estacionamento.entity.Movimentacao;
 import br.com.uniamerica.estacionamento.repository.CondutorRepository;
 import br.com.uniamerica.estacionamento.repository.ConfiguracaoRepository;
@@ -50,22 +51,9 @@ public class MovimentacaoService {
         if("".equals(movimentacao.getTempoMulta().toString())){
             throw new RuntimeException("o campo tempoMulta não pode ser vazio");
         }
-        if(movimentacao.getSaida() != null){
-            LocalTime tempo = movimentacao.getSaida()
-                    .minusHours(movimentacao.getEntrada().getHour())
-                    .minusMinutes(movimentacao.getEntrada().getMinute())
-                    .minusSeconds(movimentacao.getEntrada().getSecond());
-            movimentacao.setTempo(tempo);
-            /*movimentacao.getCondutor().setTempoPago(movimentacao.getCondutor().getTempoPago()
-                    .plusHours(tempo.getHour())
-                    .plusMinutes(tempo.getMinute())
-                    .plusSeconds(tempo.getSecond())
-            );
-            if(movimentacao.getCondutor().getTempoPago().getHour() >= configuracaoRepository.findTempoParaDesconto().getHour()){
-                movimentacao.getCondutor().setTempoDesconto(movimentacao.getCondutor().getTempoDesconto().plusHours(configuracaoRepository.findTempoGanhoDeDesconto().getHour()));
-                movimentacao.getCondutor().setTempoPago(movimentacao.getCondutor().getTempoPago().minusHours(configuracaoRepository.findTempoParaDesconto().getHour()));
-            }*/
-        }
+        movimentacao.setTempo(CalculaTempo.calculaTempo(movimentacao.getEntrada(), movimentacao.getSaida()));
+        movimentacao.getCondutor().setTempoPago(CalculaTempo.calculaTempoPago(movimentacao.getCondutor().getTempoPago(), movimentacao.getTempo()));
+
         if(movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente())){
             Duration tempoMulta = Duration.between(configuracaoRepository.findInicioExpediente(), movimentacao.getEntrada());
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
