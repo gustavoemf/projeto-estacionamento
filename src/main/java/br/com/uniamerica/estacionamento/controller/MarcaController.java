@@ -69,9 +69,12 @@ public class MarcaController {
             this.marcaRepository.delete(marcaBanco);
         }
         catch(RuntimeException e){
+            if(!marcaBanco.isAtivo()){
+                throw new RuntimeException("esse registro já está desativado");
+            }
             marcaBanco.setAtivo(false);
             this.marcaRepository.save(marcaBanco);
-            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+            return ResponseEntity.internalServerError().body("[REGISTRO DESATIVADO]" + e.getCause().getCause().getMessage());
         }
         marcaBanco.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro deletado");

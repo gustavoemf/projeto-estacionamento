@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Service
@@ -41,7 +40,7 @@ public class MovimentacaoService {
         }
         if("".equals(movimentacao.getSaida().toString())){
             throw new RuntimeException("o campo saida não pode ser vazio");
-        };
+        }
         if("".equals(movimentacao.getTempo().toString())){
             throw new RuntimeException("o campo tempo não pode ser vazio");
         }
@@ -72,7 +71,7 @@ public class MovimentacaoService {
         if (movimentacao.getSaida() != null && movimentacao.getSaida().isAfter(configuracaoRepository.findFimExpediente())) {
             Duration tempoMulta = Duration.between(movimentacao.getEntrada(), movimentacao.getSaida());
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
-            movimentacao.setTempoMulta(movimentacao.getTempoMulta().longValue() + tempoMulta.toMinutes());
+            movimentacao.setTempoMulta(movimentacao.getTempoMulta() + tempoMulta.toMinutes());
         }
         if(movimentacao.getTempo()!=null) {
             movimentacao.setValorHora(configuracaoRepository.findValorHora());
@@ -99,7 +98,7 @@ public class MovimentacaoService {
         }
         if("".equals(movimentacao.getSaida().toString())){
             throw new RuntimeException("o campo saida não pode ser vazio");
-        };
+        }
         if("".equals(movimentacao.getTempo().toString())){
             throw new RuntimeException("o campo tempo não pode ser vazio");
         }
@@ -130,7 +129,7 @@ public class MovimentacaoService {
         if (movimentacao.getSaida() != null && movimentacao.getSaida().isAfter(configuracaoRepository.findFimExpediente())) {
             Duration tempoMulta = Duration.between(movimentacao.getEntrada(), movimentacao.getSaida());
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
-            movimentacao.setTempoMulta(movimentacao.getTempoMulta().longValue() + tempoMulta.toMinutes());
+            movimentacao.setTempoMulta(movimentacao.getTempoMulta() + tempoMulta.toMinutes());
         }
         if(movimentacao.getTempo()!=null) {
             movimentacao.setValorHora(configuracaoRepository.findValorHora());

@@ -68,9 +68,12 @@ public class ModeloController {
             this.modeloRepository.delete(modeloBanco);
         }
         catch(RuntimeException e){
+            if(!modeloBanco.isAtivo()){
+                throw new RuntimeException("esse registro já está desativado");
+            }
             modeloBanco.setAtivo(false);
             this.modeloRepository.save(modeloBanco);
-            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+            return ResponseEntity.internalServerError().body("[REGISTRO DESATIVADO]" + e.getCause().getCause().getMessage());
         }
         modeloBanco.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro deletado");

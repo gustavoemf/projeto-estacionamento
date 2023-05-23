@@ -66,12 +66,15 @@ public class CondutorController {
     public ResponseEntity <?> deletar(@RequestParam("id") final Long id){
         final Condutor condutorBanco = this.condutorRepository.findById(id).orElse(null);
         try{
-                this.condutorRepository.delete(condutorBanco);
+            this.condutorRepository.delete(condutorBanco);
         }
         catch(DataIntegrityViolationException e){
+            if(!condutorBanco.isAtivo()){
+                throw new RuntimeException("esse registro já está desativado");
+            }
             condutorBanco.setAtivo(false);
             this.condutorRepository.save(condutorBanco);
-            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+            return ResponseEntity.internalServerError().body("[REGISTRO DESATIVADO]" + e.getCause().getCause().getMessage());
         }
         condutorBanco.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro deletado");

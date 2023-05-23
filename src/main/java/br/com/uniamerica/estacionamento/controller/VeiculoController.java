@@ -68,9 +68,12 @@ public class VeiculoController {
             this.veiculoRepository.delete(veiculoBanco);
         }
         catch(RuntimeException e){
+            if(!veiculoBanco.isAtivo()){
+                throw new RuntimeException("esse registro já está desativado");
+            }
             veiculoBanco.setAtivo(false);
             this.veiculoRepository.save(veiculoBanco);
-            return ResponseEntity.internalServerError().body("Erro " + e.getCause().getCause().getMessage());
+            return ResponseEntity.internalServerError().body("[REGISTRO DESATIVADO]" + e.getCause().getCause().getMessage());
         }
         veiculoBanco.setAtualizacao(LocalDateTime.now());
         return ResponseEntity.ok("Registro deletado");
