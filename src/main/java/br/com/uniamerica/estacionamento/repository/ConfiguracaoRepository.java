@@ -13,7 +13,7 @@ public interface ConfiguracaoRepository extends JpaRepository<Configuracao, Long
     List<Configuracao> findByAtivo();
     @Query("SELECT vh.valorHora FROM Configuracao vh WHERE vh.valorHora IS NOT NULL")
     BigDecimal findValorHora();
-    @Query("SELECT vh.valorMultaMinuto FROM Configuracao vh WHERE vh.valorMultaMinuto IS NOT NULL")
+    @Query("SELECT vh.valorMinutoMulta FROM Configuracao vh WHERE vh.valorMinutoMulta IS NOT NULL")
     BigDecimal findValorMultaMinuto();
     @Query("SELECT x.inicioExpediente FROM Configuracao x where x.inicioExpediente IS NOT NULL")
     LocalTime findInicioExpediente();

@@ -10,14 +10,14 @@ public class Validacoes {
         String nomeInserido = "^[a-zA-Z ]+$";
         return nome.matches(nomeInserido);
     }
-    public static boolean validaModelo(String nome) {
-        String nomeInserido = "^[a-zA-Z0-9]+$";
-        return nome.matches(nomeInserido);
-    }
     public static String formataNome(String nome) {
         nome = nome.toLowerCase();
         nome = Character.toUpperCase(nome.charAt(0)) + nome.substring(1);
         return nome;
+    }
+    public static boolean validaModelo(String nome) {
+        String nomeInserido = "^[a-zA-Z0-9]+$";
+        return nome.matches(nomeInserido);
     }
     public static boolean validaPlaca(String placa) {
         String placaBr = "^[A-Z]{3}-\\d{4}$|^[A-Z]{3}\\d[A-Z]\\d{2}$";
@@ -95,7 +95,6 @@ public class Validacoes {
             return(false);
         }
     }
-
     public String imprimeCPF(String CPF) {
         return(CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." +
                 CPF.substring(6, 9) + "-" + CPF.substring(9, 11));

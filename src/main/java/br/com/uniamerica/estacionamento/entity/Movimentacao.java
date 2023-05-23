@@ -46,7 +46,7 @@ public class Movimentacao extends AbstractEntity {
 
     @Getter @Setter
     @Column(name = "tempo_multa")
-    private Long tempoMulta; // soma cada minuto fora do expediente
+    private LocalTime tempoMulta; // soma cada minuto fora do expediente
 
     @Getter @Setter
     @Column(name = "valor_minuto_multa")
