@@ -65,6 +65,9 @@ public class MovimentacaoController {
     @DeleteMapping
     public ResponseEntity <?> deletar(@RequestParam("id") final Long id){
         final Movimentacao movimentacaoBanco = this.movimentacaoRepository.findById(id).orElse(null);
+        if(!movimentacaoBanco.isAtivo()){
+            throw new RuntimeException("esse registro já está desativado");
+        }
         movimentacaoBanco.setAtivo(false);
         this.movimentacaoRepository.save(movimentacaoBanco);
         movimentacaoBanco.setAtualizacao(LocalDateTime.now());
