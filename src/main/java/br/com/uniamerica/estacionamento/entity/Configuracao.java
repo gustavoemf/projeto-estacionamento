@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
+import org.springframework.cglib.core.Local;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -39,11 +40,11 @@ public class Configuracao extends AbstractEntity{
 
     @Getter @Setter
     @Column(name = "tempo_para_desconto")
-    private Duration tempoParaDesconto;
+    private LocalTime tempoParaDesconto;
 
     @Getter @Setter
     @Column(name = "tempo_ganho_de_desconto")
-    private Duration tempoGanhoDeDesconto;
+    private LocalTime tempoGanhoDeDesconto;
 
     @Getter @Setter
     @Column(name = "vagas_carro")
