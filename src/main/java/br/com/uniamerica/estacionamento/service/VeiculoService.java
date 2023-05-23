@@ -50,7 +50,6 @@ public class VeiculoService {
         if(!Validacoes.validaPlaca(veiculo.getPlaca())){
             throw new RuntimeException("a placa não condiz com a formatação necessária");
         }
-        veiculo.setAtivo(true);
         this.veiculoRepository.save(veiculo);
     }
 
@@ -82,14 +81,11 @@ public class VeiculoService {
             throw new RuntimeException("o campo cor deve ser inserido em maiúsculo (PRETO, AZUL, PRATA...)");
         }
         veiculo.setPlaca(veiculo.getPlaca().toUpperCase());
-        if(veiculoRepository.findByPlaca(veiculo.getPlaca())!=null){
+        /*if(veiculoRepository.findByPlaca(veiculo.getPlaca())!=null){
             throw new RuntimeException("o campo placa já existe");
-        }
+        }*/
         if(!Validacoes.validaPlaca(veiculo.getPlaca())){
             throw new RuntimeException("a placa não condiz com a formatação necessária");
-        }
-        if(veiculo.getCadastro() != null){
-            throw new RuntimeException("é impossível alterar a data de cadastro");
         }
         this.veiculoRepository.save(veiculo);
     }

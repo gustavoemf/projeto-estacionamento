@@ -17,7 +17,7 @@ public class MarcaService {
         if(marca.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
-        if("".equals(marca.getNome())){
+        if("".equals(marca.getNome()) && marca.getNome() != null){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
         if(!Validacoes.validaNome(marca.getNome())){
@@ -27,7 +27,6 @@ public class MarcaService {
             throw new RuntimeException("o campo nome já existe");
         }
         marca.setNome(Validacoes.formataNome(marca.getNome()));
-        marca.setAtivo(true);
         this.marcaRepository.save(marca);
     }
 
@@ -37,18 +36,16 @@ public class MarcaService {
         if(marcaBanco==null || !marcaBanco.getId().equals(marca.getId())){
             throw new RuntimeException("não foi possível identificar o registro informado");
         }
-        if("".equals(marca.getNome())){
+        if("".equals(marca.getNome()) && marca.getNome() != null){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
         if(!Validacoes.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
+        /*
         if(marcaRepository.findByNome(marca.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
-        }
-        if(marca.getCadastro() != null){
-            throw new RuntimeException("é impossível alterar a data de cadastro");
-        }
+        }*/
         marca.setNome(Validacoes.formataNome(marca.getNome()));
         this.marcaRepository.save(marca);
     }

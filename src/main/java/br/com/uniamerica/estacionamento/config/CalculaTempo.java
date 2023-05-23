@@ -61,24 +61,14 @@ public class CalculaTempo {
                 .minusSeconds(tempoParaDesconto.getSecond());
         return tempoNovo;
     }
-    public static /*LocalDateTime*/ LocalTime calculaTempoMultaInicio(/*LocalDateTime*/ LocalTime entrada, /*LocalDateTime*/ LocalTime inicioExpediente){
-        /*LocalDateTime*/ LocalTime tempoMultaTotal = entrada
-                    /*.minusYears(inicioExpediente.getYear())
-                    .minusMonths(inicioExpediente.getMonthValue())
-                    .minusDays(inicioExpediente.getDayOfMonth())*/
-                    .minusHours(inicioExpediente.getHour())
-                    .minusMinutes(inicioExpediente.getMinute())
-                    .minusSeconds(inicioExpediente.getSecond());
-        return tempoMultaTotal;
-    }
-    public static /*LocalDateTime*/ LocalTime calculaTempoMultaSaida(/*LocalDateTime*/ LocalTime saida, /*LocalDateTime*/ LocalTime fimExpediente){
-        /*LocalDateTime*/ LocalTime tempoMultaTotal = saida
-                    /*.minusYears(fimExpediente.getYear())
-                    .minusMonths(fimExpediente.getMonthValue())
-                    .minusDays(fimExpediente.getDayOfMonth())*/
-                    .minusHours(fimExpediente.getHour())
-                    .minusMinutes(fimExpediente.getMinute())
-                    .minusSeconds(fimExpediente.getSecond());
+    public static /*LocalDateTime*/ LocalTime calculaTempoMulta(/*LocalDateTime*/ LocalTime movimentacao, /*LocalDateTime*/ LocalTime expediente){
+        /*LocalDateTime*/ LocalTime tempoMultaTotal = expediente
+                    /*.minusYears(movimentacao.getYear())
+                    .minusMonths(movimentacao.getMonthValue())
+                    .minusDays(movimentacao.getDayOfMonth())*/
+                    .minusHours(movimentacao.getHour())
+                    .minusMinutes(movimentacao.getMinute())
+                    .minusSeconds(movimentacao.getSecond());
         return tempoMultaTotal;
     }
     public static /*LocalDateTime*/ LocalTime calculaTempoMultaTotal(/*LocalDateTime*/ LocalTime tempoMultaInicio, /*LocalDateTime*/ LocalTime tempoMultaFim){
@@ -92,29 +82,10 @@ public class CalculaTempo {
                 ;
         return tempoMultaTotal;
     }
-    public static /*LocalDateTime*/ BigDecimal calculaValorMultaInicio(/*LocalDateTime*/ LocalTime tempoMultaInicio, BigDecimal valorMinutoMulta){
-        long multaHora = tempoMultaInicio.getHour();
-        long multaMinuto = tempoMultaInicio.getMinute() / 60;
-        long multaSegundos = tempoMultaInicio.getSecond() / 3600;
-        long multaTotal = multaHora + multaMinuto + multaSegundos;
-
-        BigDecimal valorMulta = valorMinutoMulta.multiply(BigDecimal.valueOf(multaTotal));
-        return valorMulta;
-    }
-    public static /*LocalDateTime*/ BigDecimal calculaValorMultaSaida(/*LocalDateTime*/ LocalTime tempoMultaSaida, BigDecimal valorMinutoMulta){
-        long multaHora = tempoMultaSaida.getHour();
-        long multaMinuto = tempoMultaSaida.getMinute() / 60;
-        long multaSegundos = tempoMultaSaida.getSecond() / 3600;
-        long multaTotal = multaHora + multaMinuto + multaSegundos;
-
-        BigDecimal valorMulta = valorMinutoMulta.multiply(BigDecimal.valueOf(multaTotal));
-        return valorMulta;
-    }
-    public static /*LocalDateTime*/ BigDecimal calculaValorMultaTotal(/*LocalDateTime*/ LocalTime tempoMultaTotal, BigDecimal valorMinutoMulta){
-        long multaHora = tempoMultaTotal.getHour();
-        long multaMinuto = tempoMultaTotal.getMinute() / 60;
-        long multaSegundos = tempoMultaTotal.getSecond() / 3600;
-        long multaTotal = multaHora + multaMinuto + multaSegundos;
+    public static /*LocalDateTime*/ BigDecimal calculaValorMulta(/*LocalDateTime*/ LocalTime tempoMulta, BigDecimal valorMinutoMulta){
+        long multaHora = tempoMulta.getHour() * 60;
+        long multaMinuto = tempoMulta.getMinute();
+        long multaTotal = multaHora + multaMinuto;
 
         BigDecimal valorMulta = valorMinutoMulta.multiply(BigDecimal.valueOf(multaTotal));
         return valorMulta;
@@ -122,8 +93,7 @@ public class CalculaTempo {
     public static /*LocalDateTime*/ BigDecimal calculaValorNormal(/*LocalDateTime*/ LocalTime tempoNormal, BigDecimal valorHora){
         long horas = tempoNormal.getHour();
         long minutos = tempoNormal.getMinute() / 60;
-        long segundos = tempoNormal.getSecond() / 3600;
-        long total = horas + minutos + segundos;
+        long total = horas + minutos;
 
         BigDecimal valorNormal = valorHora.multiply(BigDecimal.valueOf(total));
         return valorNormal;
