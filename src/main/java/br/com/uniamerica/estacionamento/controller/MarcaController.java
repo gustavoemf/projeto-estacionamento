@@ -34,6 +34,9 @@ public class MarcaController {
     @GetMapping("/lista")
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.marcaRepository.findAll());}
 
+    @GetMapping("/ativo")
+    public ResponseEntity <?> listaAtivo(){return ResponseEntity.ok(this.marcaRepository.findByAtivo(true));}
+
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody @Validated final Marca marca){
         try{

@@ -33,6 +33,8 @@ public class VeiculoController {
 
     @GetMapping("/lista")
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.veiculoRepository.findAll());}
+    @GetMapping("/ativo")
+    public ResponseEntity <?> listaAtivo(){return ResponseEntity.ok(this.veiculoRepository.findByAtivo(true));}
 
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody @Validated final Veiculo veiculo){

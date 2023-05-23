@@ -33,6 +33,8 @@ public class ModeloController {
 
     @GetMapping("/lista")
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.modeloRepository.findAll());}
+    @GetMapping("/ativo")
+    public ResponseEntity <?> listaAtivo(){return ResponseEntity.ok(this.modeloRepository.findByAtivo(true));}
 
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody @Validated final Modelo modelo){

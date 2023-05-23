@@ -34,8 +34,8 @@ public class MovimentacaoController {
     @GetMapping("/lista")
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.movimentacaoRepository.findAll());}
 
-    @GetMapping("/abertas")
-    public ResponseEntity <?> listaAbertas(){return ResponseEntity.ok(this.movimentacaoRepository.findByAberta());}
+    @GetMapping("/aberta")
+    public ResponseEntity <?> listaAberta(){return ResponseEntity.ok(this.movimentacaoRepository.findByAberta());}
 
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody @Validated final Movimentacao movimentacao){
