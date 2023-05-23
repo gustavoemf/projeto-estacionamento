@@ -35,9 +35,6 @@ public class ModeloService {
         if(marcaRepository.findById(modelo.getMarca().getId()).isEmpty()){
             throw new RuntimeException("o id de marca inserido não existe");
         }
-        if(modelo.getCadastro() == null){
-            modelo.setCadastro(LocalDateTime.now());
-        }
         modelo.setNome(FormataNome.formataNome(modelo.getNome()));
         modelo.setAtivo(true);
         this.modeloRepository.save(modelo);
@@ -60,9 +57,6 @@ public class ModeloService {
         }
         if(marcaRepository.findById(modelo.getMarca().getId()).isEmpty()){
             throw new RuntimeException("o id de marca inserido não existe");
-        }
-        if(modelo.getAtualizacao() == null){
-            modelo.setAtualizacao(LocalDateTime.now());
         }
         if(modelo.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");

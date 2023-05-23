@@ -51,9 +51,6 @@ public class VeiculoService {
         if(!ValidaPlaca.validaPlaca(veiculo.getPlaca())){
             throw new RuntimeException("a placa não condiz com a formatação necessária");
         }
-        if(veiculo.getCadastro() == null){
-            veiculo.setCadastro(LocalDateTime.now());
-        }
         veiculo.setAtivo(true);
         this.veiculoRepository.save(veiculo);
     }
@@ -91,9 +88,6 @@ public class VeiculoService {
         }
         if(!ValidaPlaca.validaPlaca(veiculo.getPlaca())){
             throw new RuntimeException("a placa não condiz com a formatação necessária");
-        }
-        if(veiculo.getAtualizacao() == null){
-            veiculo.setAtualizacao(LocalDateTime.now());
         }
         if(veiculo.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");

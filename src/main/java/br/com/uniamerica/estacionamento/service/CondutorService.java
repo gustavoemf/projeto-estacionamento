@@ -54,9 +54,6 @@ public class CondutorService {
         if(!ValidaTelefone.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
         }
-        if(condutor.getCadastro() == null){
-            condutor.setCadastro(LocalDateTime.now());
-        }
         condutor.setNome(FormataNome.formataNome(condutor.getNome()));
         condutor.setAtivo(true);
         this.condutorRepository.save(condutor);
@@ -97,9 +94,6 @@ public class CondutorService {
         }
         if(!ValidaTelefone.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
-        }
-        if(condutor.getAtualizacao() == null){
-            condutor.setAtualizacao(LocalDateTime.now());
         }
         if(condutor.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");

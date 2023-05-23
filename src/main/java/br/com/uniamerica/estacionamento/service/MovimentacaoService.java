@@ -79,9 +79,6 @@ public class MovimentacaoService {
             BigDecimal valorTotal = movimentacao.getValorHora().multiply(new BigDecimal(movimentacao.getTempo().getHour()));
             movimentacao.setValorTotal(valorTotal);
         }
-        if(movimentacao.getCadastro() == null){
-            movimentacao.setCadastro(LocalDateTime.now());
-        }
         movimentacao.setAtivo(true);
         this.movimentacaoRepository.save(movimentacao);
     }
@@ -139,9 +136,6 @@ public class MovimentacaoService {
             movimentacao.setValorHora(configuracaoRepository.findValorHora());
             BigDecimal valorTotal = movimentacao.getValorHora().multiply(new BigDecimal(movimentacao.getTempo().getHour()));
             movimentacao.setValorTotal(valorTotal);
-        }
-        if(movimentacao.getAtualizacao() == null){
-            movimentacao.setAtualizacao(LocalDateTime.now());
         }
         if(movimentacao.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");

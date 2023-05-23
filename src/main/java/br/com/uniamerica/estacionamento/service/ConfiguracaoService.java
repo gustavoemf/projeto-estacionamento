@@ -35,9 +35,6 @@ public class ConfiguracaoService {
         if("".equals(configuracao.getTempoGanhoDeDesconto().toString())){
             throw new RuntimeException("o campo tempoGanhoDeDesconto não pode ser vazio");
         }
-        if(configuracao.getCadastro() == null){
-            configuracao.setCadastro(LocalDateTime.now());
-        }
         configuracao.setAtivo(true);
         this.configuracaoRepository.save(configuracao);
     }
@@ -64,9 +61,6 @@ public class ConfiguracaoService {
         }
         if("".equals(configuracao.getTempoGanhoDeDesconto().toString())){
             throw new RuntimeException("o campo tempoGanhoDeDesconto não pode ser vazio");
-        }
-        if(configuracao.getAtualizacao() == null){
-            configuracao.setAtualizacao(LocalDateTime.now());
         }
         if(configuracao.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");

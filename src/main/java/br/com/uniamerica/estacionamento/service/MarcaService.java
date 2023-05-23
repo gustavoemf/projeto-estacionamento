@@ -29,9 +29,6 @@ public class MarcaService {
         if(marcaRepository.findByNome(marca.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }
-        if(marca.getCadastro() == null){
-            marca.setCadastro(LocalDateTime.now());
-        }
         marca.setNome(FormataNome.formataNome(marca.getNome()));
         marca.setAtivo(true);
         this.marcaRepository.save(marca);
@@ -51,9 +48,6 @@ public class MarcaService {
         }
         if(marcaRepository.findByNome(marca.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
-        }
-        if(marca.getAtualizacao() == null){
-            marca.setAtualizacao(LocalDateTime.now());
         }
         if(marca.getCadastro() != null){
             throw new RuntimeException("é impossível alterar a data de cadastro");
