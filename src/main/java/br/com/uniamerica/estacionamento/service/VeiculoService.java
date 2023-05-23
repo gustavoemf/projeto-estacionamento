@@ -2,6 +2,7 @@ package br.com.uniamerica.estacionamento.service;
 
 import br.com.uniamerica.estacionamento.config.ValidaPlaca;
 import br.com.uniamerica.estacionamento.entity.Veiculo;
+import br.com.uniamerica.estacionamento.repository.ModeloRepository;
 import br.com.uniamerica.estacionamento.repository.VeiculoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,16 @@ import java.time.LocalDateTime;
 public class VeiculoService {
     @Autowired
     private VeiculoRepository veiculoRepository;
+    @Autowired
+    private ModeloRepository modeloRepository;
+
     @Transactional
     public void cadastraVeiculo(Veiculo veiculo){
         if(veiculo.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
+        }
+        if(modeloRepository.findById(veiculo.getModelo().getId()).isEmpty()){
+            throw new RuntimeException("o id do modelo inserido não existe");
         }
         if("".equals(veiculo.getPlaca())){
             throw new RuntimeException("o campo placa não pode ser vazio");
@@ -56,6 +63,9 @@ public class VeiculoService {
         final Veiculo veiculoBanco = this.veiculoRepository.findById(id).orElse(null);
         if(veiculoBanco==null || !veiculoBanco.getId().equals(veiculo.getId())){
             throw new RuntimeException("não foi possivel encontrar o registro informado");
+        }
+        if(modeloRepository.findById(veiculo.getModelo().getId()).isEmpty()){
+            throw new RuntimeException("o id do modelo inserido não existe");
         }
         if("".equals(veiculo.getPlaca())){
             throw new RuntimeException("o campo placa não pode ser vazio");

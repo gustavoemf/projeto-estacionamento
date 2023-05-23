@@ -32,6 +32,9 @@ public class ModeloService {
         if(modeloRepository.findByNome(modelo.getNome()) != null){
             throw new RuntimeException("o campo nome já existe");
         }
+        if(marcaRepository.findById(modelo.getMarca().getId()).isEmpty()){
+            throw new RuntimeException("o id inserido não existe");
+        }
         if(modelo.getCadastro() == null){
             modelo.setCadastro(LocalDateTime.now());
         }
@@ -54,6 +57,9 @@ public class ModeloService {
         }
         if(modeloRepository.findByNome(modelo.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
+        }
+        if(marcaRepository.findById(modelo.getMarca().getId()).isEmpty()){
+            throw new RuntimeException("o id de marca inserido não existe");
         }
         if(modelo.getAtualizacao() == null){
             modelo.setAtualizacao(LocalDateTime.now());

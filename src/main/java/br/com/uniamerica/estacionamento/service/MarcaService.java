@@ -23,7 +23,7 @@ public class MarcaService {
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(ValidaNome.validaNome(marca.getNome())){
+        if(!ValidaNome.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         if(marcaRepository.findByNome(marca.getNome())!=null){
@@ -46,7 +46,7 @@ public class MarcaService {
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(ValidaNome.validaNome(marca.getNome())){
+        if(!ValidaNome.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         if(marcaRepository.findByNome(marca.getNome())!=null){

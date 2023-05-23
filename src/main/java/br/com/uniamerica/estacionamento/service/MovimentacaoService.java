@@ -1,8 +1,10 @@
 package br.com.uniamerica.estacionamento.service;
 
 import br.com.uniamerica.estacionamento.entity.Movimentacao;
+import br.com.uniamerica.estacionamento.repository.CondutorRepository;
 import br.com.uniamerica.estacionamento.repository.ConfiguracaoRepository;
 import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;
+import br.com.uniamerica.estacionamento.repository.VeiculoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,21 @@ public class MovimentacaoService {
     private MovimentacaoRepository movimentacaoRepository;
     @Autowired
     private ConfiguracaoRepository configuracaoRepository;
+    @Autowired
+    private CondutorRepository condutorRepository;
+    @Autowired
+    private VeiculoRepository veiculoRepository;
+
     @Transactional
     public void cadastraMovimentacao(Movimentacao movimentacao){
         if(movimentacao.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
+        }
+        if(veiculoRepository.findById(movimentacao.getVeiculo().getId()).isEmpty()){
+            throw new RuntimeException("o id do veiculo inserido não existe");
+        }
+        if(condutorRepository.findById(movimentacao.getCondutor().getId()).isEmpty()){
+            throw new RuntimeException("o id do condutor inserido não existe");
         }
         if("".equals(movimentacao.getEntrada().toString())){
             throw new RuntimeException("o campo entrada não pode ser vazio");
@@ -77,6 +90,12 @@ public class MovimentacaoService {
         final Movimentacao movimentacaoBanco = this.movimentacaoRepository.findById(id).orElse(null);
         if(movimentacaoBanco==null || !movimentacaoBanco.getId().equals(movimentacao.getId())){
             throw new RuntimeException("não foi possível identificar o registro informado");
+        }
+        if(veiculoRepository.findById(movimentacao.getVeiculo().getId()).isEmpty()){
+            throw new RuntimeException("o id do veiculo inserido não existe");
+        }
+        if(condutorRepository.findById(movimentacao.getCondutor().getId()).isEmpty()){
+            throw new RuntimeException("o id do condutor inserido não existe");
         }
         if("".equals(movimentacao.getEntrada().toString())){
             throw new RuntimeException("o campo entrada não pode ser vazio");

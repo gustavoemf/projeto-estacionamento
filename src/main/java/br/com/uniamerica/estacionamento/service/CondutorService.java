@@ -27,7 +27,7 @@ public class CondutorService {
         if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(ValidaNome.validaNome(condutor.getNome())){
+        if(!ValidaNome.validaNome(condutor.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         if("".equals(condutor.getCpf())){
@@ -71,7 +71,7 @@ public class CondutorService {
         if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
-        if(ValidaNome.validaNome(condutor.getNome())){
+        if(!ValidaNome.validaNome(condutor.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
         if("".equals(condutor.getCpf())){
