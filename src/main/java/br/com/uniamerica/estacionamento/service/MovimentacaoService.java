@@ -36,20 +36,11 @@ public class MovimentacaoService {
             throw new RuntimeException("o id do condutor inserido não existe");
         }
         /*
-        if("".equals(movimentacao.getEntrada().toString()) && movimentacao.getEntrada() != null){
+        if(movimentacao.getEntrada() != null && "".equals(movimentacao.getEntrada().toString())){
             throw new RuntimeException("o campo entrada não pode ser vazio");
         }
-        if("".equals(movimentacao.getSaida().toString()) && movimentacao.getSaida() != null){
+        if(movimentacao.getSaida() != null && "".equals(movimentacao.getSaida().toString())){
             throw new RuntimeException("o campo saida não pode ser vazio");
-        }
-        if("".equals(movimentacao.getTempo().toString()) && movimentacao.getTempo() != null){
-            throw new RuntimeException("o campo tempo não pode ser vazio");
-        }
-        if("".equals(movimentacao.getTempoDesconto().toString()) && movimentacao.getTempoDesconto() != null){
-            throw new RuntimeException("o campo tempoDesconto não pode ser vazio");
-        }
-        if("".equals(movimentacao.getTempoMulta().toString()) && movimentacao.getTempoMulta() != null){
-            throw new RuntimeException("o campo tempoMulta não pode ser vazio");
         }*/
         movimentacao.setTempo(LocalTime.of(0, 0, 0));
         movimentacao.setTempoDesconto(LocalTime.of(0, 0, 0));
@@ -60,17 +51,17 @@ public class MovimentacaoService {
         if (movimentacao.getSaida() != null){
             movimentacao.setValorHora(configuracaoRepository.findValorHora());
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
-            if (configuracaoRepository.findGerarDesconto() == true && condutorRepository.findTempoDesconto() != null){
-                movimentacao.setTempoDesconto(condutorRepository.findTempoPago());
-                movimentacao.setTempo(CalculaTempo.calculaTempoComDesconto(CalculaTempo.calculaTempo(movimentacao.getEntrada(), movimentacao.getSaida()), condutorRepository.findTempoDesconto()));
+            if (configuracaoRepository.findGerarDesconto() == true && condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto() != null){
+                movimentacao.setTempoDesconto(condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto());
+                movimentacao.setTempo(CalculaTempo.calculaTempoComDesconto(CalculaTempo.calculaTempo(movimentacao.getEntrada(), movimentacao.getSaida()), condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto()));
             } else {
                 movimentacao.setTempo(CalculaTempo.calculaTempo(movimentacao.getEntrada(), movimentacao.getSaida()));
             }
-            if (CalculaTempo.validaTempoPago(condutorRepository.findTempoPago(), configuracaoRepository.findTempoParaDesconto())) {
-                movimentacao.getCondutor().setTempoDesconto(CalculaTempo.calculaTempoGanhoDeDesconto(condutorRepository.findTempoDesconto(), configuracaoRepository.findTempoGanhoDeDesconto()));
-                movimentacao.getCondutor().setTempoPago(CalculaTempo.subtraiTempoPago(condutorRepository.findTempoPago(), configuracaoRepository.findTempoParaDesconto()));
+            if (CalculaTempo.validaTempoPago(condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoPago(), configuracaoRepository.findTempoParaDesconto())) {
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoPago(CalculaTempo.calculaTempoGanhoDeDesconto(condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto(), configuracaoRepository.findTempoGanhoDeDesconto()));
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoDesconto(CalculaTempo.subtraiTempoPago(condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoPago(), configuracaoRepository.findTempoParaDesconto()));
             } else {
-                movimentacao.getCondutor().setTempoPago(CalculaTempo.calculaTempoPago(condutorRepository.findTempoPago(), movimentacao.getTempo()));
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoPago(CalculaTempo.calculaTempoPago(condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoPago(), movimentacao.getTempo()));
             }
             if (movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente())) {
                 movimentacao.setTempoMulta(CalculaTempo.calculaTempoMulta(movimentacao.getEntrada(), configuracaoRepository.findInicioExpediente()));

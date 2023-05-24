@@ -94,8 +94,6 @@ public class CondutorService {
         if(!Validacoes.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
         }
-        condutor.setTempoPago(condutorRepository.findTempoPago());
-        condutor.setTempoDesconto(condutorRepository.findTempoDesconto());
         condutor.setNome(Validacoes.formataNome(condutor.getNome()));
         this.condutorRepository.save(condutor);
     }
