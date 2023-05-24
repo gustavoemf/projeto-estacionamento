@@ -93,6 +93,12 @@ public class CondutorService {
         if(!this.validaCpf.isCPF(condutor.getCpf())){
             throw new RuntimeException("o cpf não condiz com a formatação necessária");
         }
+        if(!condutor.getCpf().equals(condutorRepository.findById(condutor.getId()).get().getCpf())){
+            throw new RuntimeException("o campo cpf já existe");
+        }
+        if(!condutor.getTelefone().equals(condutorRepository.findById(condutor.getId()).get().getTelefone())){
+            throw new RuntimeException("o campo telefone já existe");
+        }
         if(!Validacoes.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
         }
