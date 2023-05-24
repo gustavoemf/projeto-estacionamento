@@ -21,16 +21,16 @@ public class CondutorService {
         if(condutor.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
-        if("".equals(condutor.getNome()) && condutor.getNome() != null){
+        if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
         if(!Validacoes.validaNome(condutor.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        if("".equals(condutor.getCpf()) && condutor.getCpf() != null){
+        if("".equals(condutor.getCpf())){
             throw new RuntimeException("o campo cpf não pode ser vazio");
         }
-        if("".equals(condutor.getTelefone()) && condutor.getTelefone() != null){
+        if("".equals(condutor.getTelefone())){
             throw new RuntimeException("o campo telefone não pode ser vazio");
         }
         if(condutor.getTempoPago() != null){
@@ -63,16 +63,16 @@ public class CondutorService {
         if(condutorBanco==null || !condutorBanco.getId().equals(condutor.getId())){
             throw new RuntimeException("não foi possível identificar o registro informado");
         }
-        if("".equals(condutor.getNome()) && condutor.getNome() != null){
+        if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
         if(!Validacoes.validaNome(condutor.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        if("".equals(condutor.getCpf()) && condutor.getCpf() != null){
+        if("".equals(condutor.getCpf())){
             throw new RuntimeException("o campo cpf não pode ser vazio");
         }
-        if("".equals(condutor.getTelefone()) && condutor.getTelefone() != null){
+        if("".equals(condutor.getTelefone())){
             throw new RuntimeException("o campo telefone não pode ser vazio");
         }
         if(condutor.getTempoPago() != null){
@@ -81,8 +81,7 @@ public class CondutorService {
         if(condutor.getTempoDesconto() != null){
             throw new RuntimeException("o campo tempoDesconto não deve ser inserido");
         }
-        /*
-        if(condutorRepository.findByCpf(condutor.getCpf())!=null){
+        /*if(condutorRepository.findByCpf(condutor.getCpf())!=null){
             throw new RuntimeException("o campo cpf já existe");
         }
         if(condutorRepository.findByTelefone(condutor.getTelefone())!=null){
@@ -94,6 +93,8 @@ public class CondutorService {
         if(!Validacoes.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
         }
+        condutor.setTempoPago(condutorRepository.findById(condutor.getId()).get().getTempoPago());
+        condutor.setTempoDesconto(condutorRepository.findById(condutor.getId()).get().getTempoDesconto());
         condutor.setNome(Validacoes.formataNome(condutor.getNome()));
         this.condutorRepository.save(condutor);
     }

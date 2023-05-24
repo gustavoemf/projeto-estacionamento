@@ -25,6 +25,7 @@ public class Condutor extends AbstractEntity {
 
     @Getter @Setter
     @NotNull(message = "o campo cpf não pode ser nulo")
+    
     @Size(max = 11, message = "o cpf do condutor não respeita a quantidade de caracteres necessária (11)")
     @Column(name = "cpf", nullable = false, unique = true, length = 11)
     private String cpf;

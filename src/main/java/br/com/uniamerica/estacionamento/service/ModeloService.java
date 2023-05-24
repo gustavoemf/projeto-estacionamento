@@ -26,7 +26,7 @@ public class ModeloService {
         if(!Validacoes.validaModelo(modelo.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        if(modeloRepository.findByNome(modelo.getNome()) != null){
+        if(modeloRepository.findByNome(modelo.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }
         if(marcaRepository.findById(modelo.getMarca().getId()).isEmpty()){
@@ -48,8 +48,7 @@ public class ModeloService {
         if(!Validacoes.validaModelo(modelo.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        /*
-        if(modeloRepository.findByNome(modelo.getNome())!=null){
+        /*if(modeloRepository.findByNome(modelo.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }*/
         if(marcaRepository.findById(modelo.getMarca().getId()).isEmpty()){

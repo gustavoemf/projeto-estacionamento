@@ -36,14 +36,13 @@ public class MarcaService {
         if(marcaBanco==null || !marcaBanco.getId().equals(marca.getId())){
             throw new RuntimeException("não foi possível identificar o registro informado");
         }
-        if("".equals(marca.getNome()) && marca.getNome() != null){
+        if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
         if(!Validacoes.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        /*
-        if(marcaRepository.findByNome(marca.getNome())!=null){
+        /*if(marcaRepository.findByNome(marca.getNome())!=null){
             throw new RuntimeException("o campo nome já existe");
         }*/
         marca.setNome(Validacoes.formataNome(marca.getNome()));

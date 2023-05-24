@@ -23,16 +23,16 @@ public class ConfiguracaoService {
         if(configuracao.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
-        if("".equals(configuracao.getInicioExpediente().toString()) && configuracao.getInicioExpediente() != null){
+        if("".equals(configuracao.getInicioExpediente().toString())){
             throw new RuntimeException("o campo inicioExpediente não pode ser vazio");
         }
-        if("".equals(configuracao.getFimExpediente().toString()) && configuracao.getFimExpediente() != null){
+        if("".equals(configuracao.getFimExpediente().toString())){
             throw new RuntimeException("o campo fimExpediente não pode ser vazio");
         }
-        if("".equals(configuracao.getTempoParaDesconto().toString()) && configuracao.getTempoParaDesconto() != null){
+        if("".equals(configuracao.getTempoParaDesconto().toString())){
             throw new RuntimeException("o campo tempoParaDesconto não pode ser vazio");
         }
-        if("".equals(configuracao.getTempoGanhoDeDesconto().toString()) && configuracao.getTempoGanhoDeDesconto() != null){
+        if("".equals(configuracao.getTempoGanhoDeDesconto().toString())){
             throw new RuntimeException("o campo tempoGanhoDeDesconto não pode ser vazio");
         }
         this.configuracaoRepository.save(configuracao);
@@ -49,16 +49,16 @@ public class ConfiguracaoService {
         // Verificar se vagasCarro é vazio
         // Verificar se vagasMoto é vazio
         // Verificar se vagasVan é vazio
-        if("".equals(configuracao.getInicioExpediente().toString()) && configuracao.getInicioExpediente() != null){
+        if("".equals(configuracao.getInicioExpediente().toString())){
             throw new RuntimeException("o campo inicioExpediente não pode ser vazio");
         }
-        if("".equals(configuracao.getFimExpediente().toString()) && configuracao.getFimExpediente() != null){
+        if("".equals(configuracao.getFimExpediente().toString())){
             throw new RuntimeException("o campo fimExpediente não pode ser vazio");
         }
-        if("".equals(configuracao.getTempoParaDesconto().toString()) && configuracao.getTempoParaDesconto() != null){
+        if("".equals(configuracao.getTempoParaDesconto().toString())){
             throw new RuntimeException("o campo tempoParaDesconto não pode ser vazio");
         }
-        if("".equals(configuracao.getTempoGanhoDeDesconto().toString()) && configuracao.getTempoGanhoDeDesconto() != null){
+        if("".equals(configuracao.getTempoGanhoDeDesconto().toString())){
             throw new RuntimeException("o campo tempoGanhoDeDesconto não pode ser vazio");
         }
         this.configuracaoRepository.save(configuracao);
