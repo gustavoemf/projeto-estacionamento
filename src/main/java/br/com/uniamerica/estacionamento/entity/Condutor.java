@@ -18,20 +18,16 @@ import java.time.LocalTime;
 @AuditTable(value = "condutores_audit", schema = "audit")
 public class Condutor extends AbstractEntity {
     @Getter @Setter
-    @NotNull(message = "o campo nome não pode ser nulo")
     @Size(min = 2, max = 50, message = "o nome do condutor não respeita a quantidade de caracteres necessária (2-50)")
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
 
     @Getter @Setter
-    @NotNull(message = "o campo cpf não pode ser nulo")
-    
     @Size(max = 11, message = "o cpf do condutor não respeita a quantidade de caracteres necessária (11)")
     @Column(name = "cpf", nullable = false, unique = true, length = 11)
     private String cpf;
 
     @Getter @Setter
-    @NotNull(message = "o campo telefone não pode ser nulo")
     @Size(min = 7, max = 15, message = "o cpf do condutor não respeita a quantidade de caracteres necessária (7-15)")
     @Column(name = "telefone", nullable = false, unique = true, length = 15)
     private String telefone;

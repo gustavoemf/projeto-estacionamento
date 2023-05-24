@@ -21,6 +21,15 @@ public class CondutorService {
         if(condutor.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
+        if(condutor.getNome() == null){
+            throw new RuntimeException("o campo nome não pode ser nulo");
+        }
+        if(condutor.getCpf() == null){
+            throw new RuntimeException("o campo cpf não pode ser nulo");
+        }
+        if(condutor.getTelefone() == null){
+            throw new RuntimeException("o campo telefone não pode ser nulo");
+        }
         if("".equals(condutor.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
@@ -81,17 +90,17 @@ public class CondutorService {
         if(condutor.getTempoDesconto() != null){
             throw new RuntimeException("o campo tempoDesconto não deve ser inserido");
         }
-        /*if(condutorRepository.findByCpf(condutor.getCpf())!=null){
-            throw new RuntimeException("o campo cpf já existe");
-        }
-        if(condutorRepository.findByTelefone(condutor.getTelefone())!=null){
-            throw new RuntimeException("o campo telefone já existe");
-        }*/
         if(!this.validaCpf.isCPF(condutor.getCpf())){
             throw new RuntimeException("o cpf não condiz com a formatação necessária");
         }
         if(!Validacoes.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
+        }
+        if(condutor.isAtivo() != condutorRepository.findById(condutor.getId()).get().isAtivo()){
+            condutor.isAtivo();
+        }
+        if(condutor.getCadastro() == null){
+            condutor.setCadastro(condutorRepository.findById(condutor.getId()).get().getCadastro());
         }
         condutor.setTempoPago(condutorRepository.findById(condutor.getId()).get().getTempoPago());
         condutor.setTempoDesconto(condutorRepository.findById(condutor.getId()).get().getTempoDesconto());

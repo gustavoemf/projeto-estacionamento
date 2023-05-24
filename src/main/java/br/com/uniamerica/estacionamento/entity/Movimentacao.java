@@ -16,19 +16,16 @@ import java.time.LocalTime;
 @AuditTable(value = "movimentacoes_audit", schema = "audit")
 public class Movimentacao extends AbstractEntity {
     @Getter @Setter
-    @NotNull(message = "o campo veiculo não pode ser nulo")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "veiculo", nullable = false)
     private Veiculo veiculo;
 
     @Getter @Setter
-    @NotNull(message = "o campo condutor não pode ser nulo")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "condutor", nullable = false)
     private Condutor condutor;
 
     @Getter @Setter
-    @NotNull(message = "o campo entrada não pode ser nulo")
     @Column(name = "entrada", nullable = false)
     private LocalTime entrada;
 

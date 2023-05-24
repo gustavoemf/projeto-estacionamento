@@ -3,7 +3,7 @@ package br.com.uniamerica.estacionamento.config;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 
-public class CalculaTempo {
+public class Calculos {
     public static /*LocalDateTime*/ LocalTime calculaTempo(/*LocalDateTime*/ LocalTime entrada, /*LocalDateTime*/ LocalTime saida){
         /*LocalDateTime*/ LocalTime tempo = saida
                 /*.minusYears(entrada.getYear())
@@ -33,13 +33,6 @@ public class CalculaTempo {
                 .plusMinutes(tempo.getMinute())
                 .plusSeconds(tempo.getSecond());
         return tempoTotal;
-    }
-    public static boolean validaTempoPago (/*LocalDateTime*/ LocalTime tempoPago, /*LocalDateTime*/ LocalTime tempoParaDesconto){
-        if(tempoPago.compareTo(tempoParaDesconto) == 0 || tempoPago.compareTo(tempoParaDesconto) > 0) {
-            return true;
-        } else {
-            return false;
-        }
     }
     public static /*LocalDateTime*/ LocalTime calculaTempoGanhoDeDesconto(/*LocalDateTime*/ LocalTime tempoDesconto, /*LocalDateTime*/ LocalTime tempoGanhoDeDesconto){
         /*LocalDateTime*/ LocalTime tempoGanho = tempoDesconto

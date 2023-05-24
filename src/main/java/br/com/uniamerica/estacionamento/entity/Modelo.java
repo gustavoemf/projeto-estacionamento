@@ -14,13 +14,11 @@ import org.hibernate.envers.Audited;
 @AuditTable(value = "modelos_audit", schema = "audit")
 public class Modelo extends AbstractEntity {
     @Getter @Setter
-    @NotNull(message = "o campo nome não pode ser nulo")
     @Size(min = 2, max = 50, message = "o nome do modelo não respeita a quantidade de caracteres necessária (2-50)")
     @Column(name = "nome", nullable = false, unique = true, length = 50)
     private String nome;
 
     @Getter @Setter
-    @NotNull(message = "o campo marca não pode ser nulo")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "marca", nullable = false)
     private Marca marca;

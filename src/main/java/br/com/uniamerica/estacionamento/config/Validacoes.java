@@ -2,6 +2,7 @@ package br.com.uniamerica.estacionamento.config;
 
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
 import java.util.InputMismatchException;
 
 @Component
@@ -98,5 +99,12 @@ public class Validacoes {
     public String imprimeCPF(String CPF) {
         return(CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." +
                 CPF.substring(6, 9) + "-" + CPF.substring(9, 11));
+    }
+    public static boolean validaTempoPago (/*LocalDateTime*/ LocalTime tempoPago, /*LocalDateTime*/ LocalTime tempoParaDesconto){
+        if(tempoPago.compareTo(tempoParaDesconto) == 0 || tempoPago.compareTo(tempoParaDesconto) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

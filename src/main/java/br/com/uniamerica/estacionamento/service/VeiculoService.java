@@ -22,6 +22,18 @@ public class VeiculoService {
         if(veiculo.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
+        if(veiculo.getPlaca() == null){
+            throw new RuntimeException("o campo placa não pode ser nulo");
+        }
+        if(veiculo.getModelo() == null){
+            throw new RuntimeException("o campo modelo não pode ser nulo");
+        }
+        if(veiculo.getCor() == null){
+            throw new RuntimeException("o campo cor não pode ser nulo");
+        }
+        if(veiculo.getTipo() == null){
+            throw new RuntimeException("o campo tipo não pode ser nulo");
+        }
         if(modeloRepository.findById(veiculo.getModelo().getId()).isEmpty()){
             throw new RuntimeException("o id do modelo inserido não existe");
         }
@@ -81,11 +93,14 @@ public class VeiculoService {
             throw new RuntimeException("o campo cor deve ser inserido em maiúsculo (PRETO, AZUL, PRATA...)");
         }
         veiculo.setPlaca(veiculo.getPlaca().toUpperCase());
-        /*if(veiculoRepository.findByPlaca(veiculo.getPlaca())!=null){
-            throw new RuntimeException("o campo placa já existe");
-        }*/
         if(!Validacoes.validaPlaca(veiculo.getPlaca())){
             throw new RuntimeException("a placa não condiz com a formatação necessária");
+        }
+        if(veiculo.isAtivo() != veiculoRepository.findById(veiculo.getId()).get().isAtivo()){
+            veiculo.isAtivo();
+        }
+        if(veiculo.getCadastro() == null){
+            veiculo.setCadastro(veiculoRepository.findById(veiculo.getId()).get().getCadastro());
         }
         this.veiculoRepository.save(veiculo);
     }

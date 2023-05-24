@@ -17,6 +17,9 @@ public class MarcaService {
         if(marca.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
+        if(marca.getNome() == null){
+            throw new RuntimeException("o campo nome não pode ser nulo");
+        }
         if("".equals(marca.getNome()) && marca.getNome() != null){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
@@ -42,10 +45,13 @@ public class MarcaService {
         if(!Validacoes.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        /*if(marcaRepository.findByNome(marca.getNome())!=null){
-            throw new RuntimeException("o campo nome já existe");
-        }*/
         marca.setNome(Validacoes.formataNome(marca.getNome()));
+        if(marca.isAtivo() != marcaRepository.findById(marca.getId()).get().isAtivo()){
+            marca.isAtivo();
+        }
+        if(marca.getCadastro() == null){
+            marca.setCadastro(marcaRepository.findById(marca.getId()).get().getCadastro());
+        }
         this.marcaRepository.save(marca);
     }
 }

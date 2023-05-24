@@ -20,7 +20,13 @@ public class ModeloService {
         if(modelo.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
-        if("".equals(modelo.getNome()) && modelo.getNome() != null){
+        if(modelo.getNome() == null){
+            throw new RuntimeException("o campo nome não pode ser nulo");
+        }
+        if(modelo.getMarca() == null){
+            throw new RuntimeException("o campo marca não pode ser nulo");
+        }
+        if("".equals(modelo.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
         if(!Validacoes.validaModelo(modelo.getNome())){
@@ -30,7 +36,7 @@ public class ModeloService {
             throw new RuntimeException("o campo nome já existe");
         }
         if(marcaRepository.findById(modelo.getMarca().getId()).isEmpty()){
-            throw new RuntimeException("o id de marca inserido não existe");
+            throw new RuntimeException("o id da marca inserido não existe");
         }
         modelo.setNome(Validacoes.formataNome(modelo.getNome()));
         this.modeloRepository.save(modelo);
@@ -48,13 +54,16 @@ public class ModeloService {
         if(!Validacoes.validaModelo(modelo.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        /*if(modeloRepository.findByNome(modelo.getNome())!=null){
-            throw new RuntimeException("o campo nome já existe");
-        }*/
         if(marcaRepository.findById(modelo.getMarca().getId()).isEmpty()){
             throw new RuntimeException("o id de marca inserido não existe");
         }
         modelo.setNome(Validacoes.formataNome(modelo.getNome()));
+        if(modelo.isAtivo() != modeloRepository.findById(modelo.getId()).get().isAtivo()){
+            modelo.isAtivo();
+        }
+        if(modelo.getCadastro() == null){
+            modelo.setCadastro(modeloRepository.findById(modelo.getId()).get().getCadastro());
+        }
         this.modeloRepository.save(modelo);
     }
 }
