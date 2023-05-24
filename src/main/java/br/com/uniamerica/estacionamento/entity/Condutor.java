@@ -23,12 +23,10 @@ public class Condutor extends AbstractEntity {
     private String nome;
 
     @Getter @Setter
-    @Size(max = 11, message = "o cpf do condutor não respeita a quantidade de caracteres necessária (11)")
     @Column(name = "cpf", nullable = false, unique = true, length = 11)
     private String cpf;
 
     @Getter @Setter
-    @Size(min = 7, max = 15, message = "o cpf do condutor não respeita a quantidade de caracteres necessária (7-15)")
     @Column(name = "telefone", nullable = false, unique = true, length = 15)
     private String telefone;
 

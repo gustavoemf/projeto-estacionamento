@@ -20,7 +20,10 @@ public class MarcaService {
         if(marca.getNome() == null){
             throw new RuntimeException("o campo nome não pode ser nulo");
         }
-        if("".equals(marca.getNome()) && marca.getNome() != null){
+        if(marca.getNome().length() > 50 || marca.getNome().length() < 2){
+            throw new RuntimeException("o nome da marca não respeita a quantidade de caracteres necessária (2-50)");
+        }
+        if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
         if(!Validacoes.validaNome(marca.getNome())){
@@ -42,12 +45,20 @@ public class MarcaService {
         if("".equals(marca.getNome())){
             throw new RuntimeException("o campo nome não pode ser vazio");
         }
+        if(marca.getNome().length() > 50 || marca.getNome().length() < 2){
+            throw new RuntimeException("o nome da marca não respeita a quantidade de caracteres necessária (2-50)");
+        }
         if(!Validacoes.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
+        if(marcaRepository.findByNome(marca.getNome())!=null){
+            throw new RuntimeException("o campo nome já existe");
+        }
         marca.setNome(Validacoes.formataNome(marca.getNome()));
-        if(marca.isAtivo() != marcaRepository.findById(marca.getId()).get().isAtivo()){
-            marca.isAtivo();
+        if(marca.isAtivo() == marcaRepository.findById(marca.getId()).get().isAtivo()){
+            marca.setAtivo(marcaRepository.findById(marca.getId()).get().isAtivo());
+        } else {
+            marca.setAtivo(!marcaRepository.findById(marca.getId()).get().isAtivo());
         }
         if(marca.getCadastro() == null){
             marca.setCadastro(marcaRepository.findById(marca.getId()).get().getCadastro());

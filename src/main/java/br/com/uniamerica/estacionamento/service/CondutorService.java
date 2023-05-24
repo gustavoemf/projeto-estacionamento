@@ -96,8 +96,10 @@ public class CondutorService {
         if(!Validacoes.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
         }
-        if(condutor.isAtivo() != condutorRepository.findById(condutor.getId()).get().isAtivo()){
-            condutor.isAtivo();
+        if(condutor.isAtivo() == condutorRepository.findById(condutor.getId()).get().isAtivo()){
+            condutor.setAtivo(condutorRepository.findById(condutor.getId()).get().isAtivo());
+        } else {
+            condutor.setAtivo(!condutorRepository.findById(condutor.getId()).get().isAtivo());
         }
         if(condutor.getCadastro() == null){
             condutor.setCadastro(condutorRepository.findById(condutor.getId()).get().getCadastro());

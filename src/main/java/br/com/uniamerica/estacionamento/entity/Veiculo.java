@@ -14,7 +14,6 @@ import org.hibernate.envers.Audited;
 @AuditTable(value = "veiculos_audit", schema = "audit")
 public class Veiculo extends AbstractEntity {
     @Getter @Setter
-    @Size(max = 7, message = "o campo nome não respeita a quantidade aceitável de caracteres (7)")
     @Column(name = "placa", nullable = false, unique = true, length = 7)
     private String placa;
 

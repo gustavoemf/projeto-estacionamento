@@ -27,6 +27,14 @@ public class MovimentacaoService {
 
     @Transactional
     public void cadastraMovimentacao(Movimentacao movimentacao){
+        if(configuracaoRepository.findInicioExpediente() == null
+                || configuracaoRepository.findFimExpediente() == null
+                || configuracaoRepository.findValorHora() == null
+                || configuracaoRepository.findValorMultaMinuto() == null
+                || configuracaoRepository.findTempoGanhoDeDesconto() == null
+                || configuracaoRepository.findTempoParaDesconto() == null){
+            throw new RuntimeException("verifique se os seguintes campos não estão nulos na entidade configuração: InicioExpediente, FimExpediente, ValorHora, ValorMultaMinuto, TempoGanhoDeDesconto, TempoParaDesconto");
+        }
         if(movimentacao.getId() != null){
             throw new RuntimeException("o campo id não deve ser inserido");
         }
@@ -192,7 +200,9 @@ public class MovimentacaoService {
             movimentacao.setValorTotal(Calculos.calculaValorTotal(movimentacao.getValorMulta(), movimentacao.getValorNormal()));
         }
         if(movimentacao.isAtivo() != movimentacaoRepository.findById(movimentacao.getId()).get().isAtivo()){
-            movimentacao.isAtivo();
+            movimentacao.setAtivo(movimentacaoRepository.findById(movimentacao.getId()).get().isAtivo());
+        } else {
+            movimentacao.setAtivo(!movimentacaoRepository.findById(movimentacao.getId()).get().isAtivo());
         }
         if(movimentacao.getCadastro() == null){
             movimentacao.setCadastro(movimentacaoRepository.findById(movimentacao.getId()).get().getCadastro());

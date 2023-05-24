@@ -96,8 +96,10 @@ public class VeiculoService {
         if(!Validacoes.validaPlaca(veiculo.getPlaca())){
             throw new RuntimeException("a placa não condiz com a formatação necessária");
         }
-        if(veiculo.isAtivo() != veiculoRepository.findById(veiculo.getId()).get().isAtivo()){
-            veiculo.isAtivo();
+        if(veiculo.isAtivo() == veiculoRepository.findById(veiculo.getId()).get().isAtivo()){
+            veiculo.setAtivo(veiculoRepository.findById(veiculo.getId()).get().isAtivo());
+        } else{
+            veiculo.setAtivo(!veiculoRepository.findById(veiculo.getId()).get().isAtivo());
         }
         if(veiculo.getCadastro() == null){
             veiculo.setCadastro(veiculoRepository.findById(veiculo.getId()).get().getCadastro());

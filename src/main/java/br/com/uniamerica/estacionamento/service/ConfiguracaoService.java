@@ -61,8 +61,10 @@ public class ConfiguracaoService {
         if("".equals(configuracao.getTempoGanhoDeDesconto().toString())){
             throw new RuntimeException("o campo tempoGanhoDeDesconto não pode ser vazio");
         }
-        if(configuracao.isAtivo() != configuracaoRepository.findById(configuracao.getId()).get().isAtivo()){
-            configuracao.isAtivo();
+        if(configuracao.isAtivo() == configuracaoRepository.findById(configuracao.getId()).get().isAtivo()){
+            configuracao.setAtivo(configuracaoRepository.findById(configuracao.getId()).get().isAtivo());
+        } else {
+            configuracao.setAtivo(!configuracaoRepository.findById(configuracao.getId()).get().isAtivo());
         }
         if(configuracao.getCadastro() == null){
             configuracao.setCadastro(configuracaoRepository.findById(configuracao.getId()).get().getCadastro());

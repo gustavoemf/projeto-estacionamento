@@ -16,7 +16,6 @@ import org.hibernate.envers.Audited;
 @AuditTable(value = "marcas_audit", schema = "audit")
 public class Marca extends AbstractEntity {
     @Getter @Setter
-    @Size(min = 2, max = 50, message = "o nome da marca não respeita a quantidade de caracteres necessária (2-50)")
     @Column(name = "nome", nullable = false, unique = true, length = 50)
     private String nome;
 }
