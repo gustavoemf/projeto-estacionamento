@@ -14,14 +14,14 @@ public class CalculaTempo {
                 .minusSeconds(entrada.getSecond());
         return tempo;
     }
-    public static /*LocalDateTime*/ LocalTime calculaTempoComDesconto(/*LocalDateTime*/ LocalTime tempo, /*LocalDateTime*/ LocalTime tempoGanhoDeDesconto){
+    public static /*LocalDateTime*/ LocalTime calculaTempoComDesconto(/*LocalDateTime*/ LocalTime tempo, /*LocalDateTime*/ LocalTime tempoDesconto){
         /*LocalDateTime*/ LocalTime tempoDescontado = tempo
-                /*.minusYears(tempoGanhoDeDesconto.getYear())
-                .minusMonths(tempoGanhoDeDesconto.getMonthValue())
-                .minusDays(tempoGanhoDeDesconto.getDayOfMonth())*/
-                .minusHours(tempoGanhoDeDesconto.getHour())
-                .minusMinutes(tempoGanhoDeDesconto.getMinute())
-                .minusSeconds(tempoGanhoDeDesconto.getSecond());
+                /*.minusYears(tempoDesconto.getYear())
+                .minusMonths(tempoDesconto.getMonthValue())
+                .minusDays(tempoDesconto.getDayOfMonth())*/
+                .minusHours(tempoDesconto.getHour())
+                .minusMinutes(tempoDesconto.getMinute())
+                .minusSeconds(tempoDesconto.getSecond());
         return tempoDescontado;
     }
     public static /*LocalDateTime*/ LocalTime calculaTempoPago(/*LocalDateTime*/ LocalTime tempoPago, /*LocalDateTime*/ LocalTime tempo){
