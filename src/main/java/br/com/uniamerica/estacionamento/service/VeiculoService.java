@@ -97,7 +97,7 @@ public class VeiculoService {
             throw new RuntimeException("a placa não condiz com a formatação necessária");
         }
         if(!veiculo.getPlaca().equals(veiculoRepository.findById(veiculo.getId()).get().getPlaca())){
-            throw new RuntimeException("o campo placa já existe");
+            throw new RuntimeException("o campo placa não pode ser atualizado");
         }
         if(veiculo.isAtivo() == veiculoRepository.findById(veiculo.getId()).get().isAtivo()){
             veiculo.setAtivo(veiculoRepository.findById(veiculo.getId()).get().isAtivo());

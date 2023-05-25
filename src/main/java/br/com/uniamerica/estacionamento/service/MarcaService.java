@@ -51,7 +51,7 @@ public class MarcaService {
         if(!Validacoes.validaNome(marca.getNome())){
             throw new RuntimeException("o campo nome possui caracteres inválidos");
         }
-        if(!marca.getNome().equals(marcaRepository.findById(marca.getId()).get().getNome())){
+        if(marca.getNome().equals(marcaRepository.findById(marca.getId()).get().getNome())){
             throw new RuntimeException("o campo nome já existe");
         }
         marca.setNome(Validacoes.formataNome(marca.getNome()));

@@ -127,6 +127,14 @@ public class MovimentacaoService {
         if(movimentacaoBanco==null || !movimentacaoBanco.getId().equals(movimentacao.getId())){
             throw new RuntimeException("não foi possível identificar o registro informado");
         }
+        if(configuracaoRepository.findInicioExpediente() == null
+                || configuracaoRepository.findFimExpediente() == null
+                || configuracaoRepository.findValorHora() == null
+                || configuracaoRepository.findValorMultaMinuto() == null
+                || configuracaoRepository.findTempoGanhoDeDesconto() == null
+                || configuracaoRepository.findTempoParaDesconto() == null){
+            throw new RuntimeException("verifique se os seguintes campos não estão nulos na entidade configuração: InicioExpediente, FimExpediente, ValorHora, ValorMultaMinuto, TempoGanhoDeDesconto, TempoParaDesconto");
+        }
         if(veiculoRepository.findById(movimentacao.getVeiculo().getId()).isEmpty()){
             throw new RuntimeException("o id do veiculo inserido não existe");
         }

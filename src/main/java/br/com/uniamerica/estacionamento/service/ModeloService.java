@@ -63,7 +63,7 @@ public class ModeloService {
         if(marcaRepository.findById(modelo.getMarca().getId()).isEmpty()){
             throw new RuntimeException("o id de marca inserido não existe");
         }
-        if(!modelo.getNome().equals(modeloRepository.findById(modelo.getId()).get().getNome())){
+        if(modelo.getNome().equals(modeloRepository.findById(modelo.getId()).get().getNome())){
             throw new RuntimeException("o campo nome já existe");
         }
         modelo.setNome(Validacoes.formataNome(modelo.getNome()));
