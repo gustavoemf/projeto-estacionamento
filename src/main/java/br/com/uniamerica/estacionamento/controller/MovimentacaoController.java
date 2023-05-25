@@ -1,7 +1,11 @@
 package br.com.uniamerica.estacionamento.controller;
 
+import br.com.uniamerica.estacionamento.config.Validacoes;
 import br.com.uniamerica.estacionamento.entity.Movimentacao;
+import br.com.uniamerica.estacionamento.repository.CondutorRepository;
+import br.com.uniamerica.estacionamento.repository.ConfiguracaoRepository;
 import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;
+import br.com.uniamerica.estacionamento.repository.VeiculoRepository;
 import br.com.uniamerica.estacionamento.service.MovimentacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,6 +22,12 @@ public class MovimentacaoController {
     private MovimentacaoRepository movimentacaoRepository;
     @Autowired
     private MovimentacaoService movimentacaoService;
+    @Autowired
+    private ConfiguracaoRepository configuracaoRepository;
+    @Autowired
+    private CondutorRepository condutorRepository;
+    @Autowired
+    private VeiculoRepository veiculoRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdPath(@PathVariable("id") final Long id){
@@ -45,7 +55,14 @@ public class MovimentacaoController {
         catch (Exception e){
             return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok("Registro realizado");
+        return ResponseEntity.ok(Validacoes.geraRecibo(movimentacaoRepository.findById(movimentacao.getId()).get().getEntrada(),
+                movimentacaoRepository.findById(movimentacao.getId()).get().getSaida(),
+                condutorRepository.findById(movimentacao.getId()).get().getNome(),
+                veiculoRepository.findById(movimentacao.getId()).get().getPlaca(),
+                movimentacaoRepository.findById(movimentacao.getId()).get().getTempo(),
+                movimentacaoRepository.findById(movimentacao.getId()).get().getTempoMulta(),
+                movimentacaoRepository.findById(movimentacao.getId()).get().getTempoDesconto(),
+                movimentacaoRepository.findById(movimentacao.getId()).get().getValorTotal()));
     }
 
     @PutMapping

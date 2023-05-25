@@ -2,6 +2,8 @@ package br.com.uniamerica.estacionamento.config;
 
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.InputMismatchException;
 
@@ -105,6 +107,18 @@ public class Validacoes {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static String geraRecibo (LocalTime entrada, LocalTime saida, String condutor, String placa,
+                                        LocalTime tempo, LocalTime tempoMulta, LocalTime tempoDesconto, BigDecimal valorTotal){
+        if(valorTotal == null){
+            return "Registro realizado";
+        } else {
+            return "-- RECIBO DE MOVIMENTAÇÃO --\n" + "Entrada: " + entrada + "\nSaída: " + saida
+                    + "\nCondutor: " + condutor + "\nVeículo: " + placa + "\nQuantidade de horas: " + tempo
+                    + "\nQuantidade multa: " + tempoMulta + "\nQuantidade desconto: " + tempoDesconto
+                    + "\nValor total: " + valorTotal + "\nRecibo gerado em: " + LocalDateTime.now();
         }
     }
 }
