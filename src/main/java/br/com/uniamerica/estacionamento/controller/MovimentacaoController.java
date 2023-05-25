@@ -55,7 +55,7 @@ public class MovimentacaoController {
         catch (Exception e){
             return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok(Validacoes.geraRecibo(movimentacaoRepository.findById(movimentacao.getId()).get().getEntrada(),
+        return ResponseEntity.ok(Validacoes.geraReciboCadastro(movimentacaoRepository.findById(movimentacao.getId()).get().getEntrada(),
                 movimentacaoRepository.findById(movimentacao.getId()).get().getSaida(),
                 condutorRepository.findById(movimentacao.getId()).get().getNome(),
                 veiculoRepository.findById(movimentacao.getId()).get().getPlaca(),
@@ -76,7 +76,14 @@ public class MovimentacaoController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok("Registro atualizado");
+        return ResponseEntity.ok(Validacoes.geraReciboAtualizacao(movimentacaoRepository.findById(movimentacao.getId()).get().getEntrada(),
+                movimentacaoRepository.findById(movimentacao.getId()).get().getSaida(),
+                condutorRepository.findById(movimentacao.getId()).get().getNome(),
+                veiculoRepository.findById(movimentacao.getId()).get().getPlaca(),
+                movimentacaoRepository.findById(movimentacao.getId()).get().getTempo(),
+                movimentacaoRepository.findById(movimentacao.getId()).get().getTempoMulta(),
+                movimentacaoRepository.findById(movimentacao.getId()).get().getTempoDesconto(),
+                movimentacaoRepository.findById(movimentacao.getId()).get().getValorTotal()));
     }
 
     @DeleteMapping

@@ -110,10 +110,21 @@ public class Validacoes {
         }
     }
 
-    public static String geraRecibo (LocalTime entrada, LocalTime saida, String condutor, String placa,
+    public static String geraReciboCadastro (LocalTime entrada, LocalTime saida, String condutor, String placa,
                                         LocalTime tempo, LocalTime tempoMulta, LocalTime tempoDesconto, BigDecimal valorTotal){
         if(valorTotal == null){
             return "Registro realizado";
+        } else {
+            return "-- RECIBO DE MOVIMENTAÇÃO --\n" + "Entrada: " + entrada + "\nSaída: " + saida
+                    + "\nCondutor: " + condutor + "\nVeículo: " + placa + "\nQuantidade de horas: " + tempo
+                    + "\nQuantidade multa: " + tempoMulta + "\nQuantidade desconto: " + tempoDesconto
+                    + "\nValor total: " + valorTotal + "\nRecibo gerado em: " + LocalDateTime.now();
+        }
+    }
+    public static String geraReciboAtualizacao (LocalTime entrada, LocalTime saida, String condutor, String placa,
+                                             LocalTime tempo, LocalTime tempoMulta, LocalTime tempoDesconto, BigDecimal valorTotal){
+        if(valorTotal == null){
+            return "Registro atualizado";
         } else {
             return "-- RECIBO DE MOVIMENTAÇÃO --\n" + "Entrada: " + entrada + "\nSaída: " + saida
                     + "\nCondutor: " + condutor + "\nVeículo: " + placa + "\nQuantidade de horas: " + tempo

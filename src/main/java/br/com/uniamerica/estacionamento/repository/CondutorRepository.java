@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CondutorRepository extends JpaRepository<Condutor, Long> {
-    Optional<Condutor> findById(Long id);
     List<Condutor> findByAtivo(@Param("ativo") final boolean ativo);
     Condutor findByCpf(String cpf);
     Condutor findByTelefone(String telefone);
