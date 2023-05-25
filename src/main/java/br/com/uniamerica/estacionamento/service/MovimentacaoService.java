@@ -9,6 +9,7 @@ import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;
 import br.com.uniamerica.estacionamento.repository.VeiculoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -92,20 +93,20 @@ public class MovimentacaoService {
         movimentacao.setValorNormal(BigDecimal.ZERO);
         movimentacao.setValorMulta(BigDecimal.ZERO);
 
-        Long condutorId = movimentacao.getCondutor().getId();
-        boolean movimentacaoAtivoBanco = movimentacaoRepository.findById(movimentacao.getId()).get().isAtivo();
-        boolean validaTempoPago = Validacoes.validaTempoPago(condutorRepository.findById(condutorId).get().getTempoPago(), configuracaoRepository.findTempoParaDesconto());
-        LocalDateTime movimentacaoCadastroBanco = movimentacaoRepository.findById(movimentacao.getId()).get().getCadastro();
-        LocalTime condutorTempoDescontoBanco = condutorRepository.findById(condutorId).get().getTempoDesconto();
-        LocalTime condutorTempoPagoBanco = condutorRepository.findById(condutorId).get().getTempoPago();
+        movimentacao.setValorHora(configuracaoRepository.findValorHora());
+        movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
+
+        LocalTime condutorTempoDescontoBanco = condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto();
+        LocalTime condutorTempoPagoBanco = condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoPago();
         LocalTime calculaTempo = Calculos.calculaTempo(movimentacao.getEntrada(), movimentacao.getSaida());
         LocalTime calculaTempoComDesconto = Calculos.calculaTempoComDesconto(calculaTempo, condutorTempoDescontoBanco);
+        boolean validaTempoPago = Validacoes.validaTempoPago(condutorTempoPagoBanco, configuracaoRepository.findTempoParaDesconto());
         LocalTime calculaTempoGanhoDeDesconto = Calculos.calculaTempoGanhoDeDesconto(condutorTempoDescontoBanco, configuracaoRepository.findTempoGanhoDeDesconto());
         LocalTime subtraiTempoPago = Calculos.subtraiTempoPago(condutorTempoPagoBanco, configuracaoRepository.findTempoParaDesconto());
         LocalTime calculaTempoPago = Calculos.calculaTempoPago(condutorTempoPagoBanco, movimentacao.getTempo());
-        LocalTime calculaTempoMultaInicio = Calculos.calculaTempoMulta(movimentacao.getEntrada(), configuracaoRepository.findInicioExpediente());
-        LocalTime calculaTempoMultaFim = Calculos.calculaTempoMulta(movimentacao.getSaida(), configuracaoRepository.findFimExpediente());
-        LocalTime calculaTempoMultaTotal = Calculos.calculaTempoMultaTotal(calculaTempoMultaInicio, calculaTempoMultaFim);
+        LocalTime calculaTempoMultaEntrada = Calculos.calculaTempoMulta(movimentacao.getEntrada(), configuracaoRepository.findInicioExpediente());
+        LocalTime calculaTempoMultaSaida = Calculos.calculaTempoMulta(movimentacao.getSaida(), configuracaoRepository.findFimExpediente());
+        LocalTime calculaTempoMultaTotal = Calculos.calculaTempoMultaTotal(calculaTempoMultaEntrada, calculaTempoMultaSaida);
         BigDecimal calculaValorMulta = Calculos.calculaValorMulta(movimentacao.getTempoMulta(), movimentacao.getValorMinutoMulta());
         BigDecimal calculaValorNormal = Calculos.calculaValorNormal(movimentacao.getTempo(), movimentacao.getValorHora());
         BigDecimal calculaValorTotal = Calculos.calculaValorTotal(movimentacao.getValorMulta(), movimentacao.getValorNormal());
@@ -113,23 +114,23 @@ public class MovimentacaoService {
         if (movimentacao.getSaida() != null){
             movimentacao.setValorHora(configuracaoRepository.findValorHora());
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
-            if (configuracaoRepository.findGerarDesconto()){
+            if (configuracaoRepository.findGerarDesconto() && condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto() != null){
                 movimentacao.setTempoDesconto(condutorTempoDescontoBanco);
                 movimentacao.setTempo(calculaTempoComDesconto);
             } else {
                 movimentacao.setTempo(calculaTempo);
             }
             if (validaTempoPago) {
-                condutorRepository.findById(condutorId).get().setTempoPago(subtraiTempoPago);
-                condutorRepository.findById(condutorId).get().setTempoDesconto(calculaTempoGanhoDeDesconto);
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoPago(calculaTempoGanhoDeDesconto);
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoDesconto(subtraiTempoPago);
             } else {
-                condutorRepository.findById(condutorId).get().setTempoPago(calculaTempoPago);
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoPago(calculaTempoPago);
             }
             if (movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente())) {
-                movimentacao.setTempoMulta(calculaTempoMultaInicio);
+                movimentacao.setTempoMulta(calculaTempoMultaEntrada);
                 movimentacao.setValorMulta(calculaValorMulta);
             } else if (movimentacao.getSaida().isAfter(configuracaoRepository.findFimExpediente())) {
-                movimentacao.setTempoMulta(calculaTempoMultaFim);
+                movimentacao.setTempoMulta(calculaTempoMultaSaida);
                 movimentacao.setValorMulta(calculaValorMulta);
             } else if (movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente()) && movimentacao.getSaida().isAfter(configuracaoRepository.findFimExpediente())) {
                 movimentacao.setTempoMulta(calculaTempoMultaTotal);
@@ -191,6 +192,8 @@ public class MovimentacaoService {
             throw new RuntimeException("o campo valorTotal não pode ser inserido pois é gerado de acordo com a entrada e saida");
         }
 
+        boolean movimentacaoAtivoBanco = movimentacaoRepository.findById(movimentacao.getId()).get().isAtivo();
+        LocalDateTime movimentacaoCadastroBanco = movimentacaoRepository.findById(movimentacao.getId()).get().getCadastro();
         movimentacao.setTempo(LocalTime.of(0, 0, 0));
         movimentacao.setTempoDesconto(LocalTime.of(0, 0, 0));
         movimentacao.setTempoMulta(LocalTime.of(0, 0, 0));
@@ -198,20 +201,20 @@ public class MovimentacaoService {
         movimentacao.setValorNormal(BigDecimal.ZERO);
         movimentacao.setValorMulta(BigDecimal.ZERO);
 
-        Long condutorId = movimentacao.getCondutor().getId();
-        boolean movimentacaoAtivoBanco = movimentacaoRepository.findById(movimentacao.getId()).get().isAtivo();
-        boolean validaTempoPago = Validacoes.validaTempoPago(condutorRepository.findById(condutorId).get().getTempoPago(), configuracaoRepository.findTempoParaDesconto());
-        LocalDateTime movimentacaoCadastroBanco = movimentacaoRepository.findById(movimentacao.getId()).get().getCadastro();
-        LocalTime condutorTempoDescontoBanco = condutorRepository.findById(condutorId).get().getTempoDesconto();
-        LocalTime condutorTempoPagoBanco = condutorRepository.findById(condutorId).get().getTempoPago();
+        movimentacao.setValorHora(configuracaoRepository.findValorHora());
+        movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
+
+        LocalTime condutorTempoDescontoBanco = condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto();
+        LocalTime condutorTempoPagoBanco = condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoPago();
         LocalTime calculaTempo = Calculos.calculaTempo(movimentacao.getEntrada(), movimentacao.getSaida());
         LocalTime calculaTempoComDesconto = Calculos.calculaTempoComDesconto(calculaTempo, condutorTempoDescontoBanco);
+        boolean validaTempoPago = Validacoes.validaTempoPago(condutorTempoPagoBanco, configuracaoRepository.findTempoParaDesconto());
         LocalTime calculaTempoGanhoDeDesconto = Calculos.calculaTempoGanhoDeDesconto(condutorTempoDescontoBanco, configuracaoRepository.findTempoGanhoDeDesconto());
         LocalTime subtraiTempoPago = Calculos.subtraiTempoPago(condutorTempoPagoBanco, configuracaoRepository.findTempoParaDesconto());
         LocalTime calculaTempoPago = Calculos.calculaTempoPago(condutorTempoPagoBanco, movimentacao.getTempo());
-        LocalTime calculaTempoMultaInicio = Calculos.calculaTempoMulta(movimentacao.getEntrada(), configuracaoRepository.findInicioExpediente());
-        LocalTime calculaTempoMultaFim = Calculos.calculaTempoMulta(movimentacao.getSaida(), configuracaoRepository.findFimExpediente());
-        LocalTime calculaTempoMultaTotal = Calculos.calculaTempoMultaTotal(calculaTempoMultaInicio, calculaTempoMultaFim);
+        LocalTime calculaTempoMultaEntrada = Calculos.calculaTempoMulta(movimentacao.getEntrada(), configuracaoRepository.findInicioExpediente());
+        LocalTime calculaTempoMultaSaida = Calculos.calculaTempoMulta(movimentacao.getSaida(), configuracaoRepository.findFimExpediente());
+        LocalTime calculaTempoMultaTotal = Calculos.calculaTempoMultaTotal(calculaTempoMultaEntrada, calculaTempoMultaSaida);
         BigDecimal calculaValorMulta = Calculos.calculaValorMulta(movimentacao.getTempoMulta(), movimentacao.getValorMinutoMulta());
         BigDecimal calculaValorNormal = Calculos.calculaValorNormal(movimentacao.getTempo(), movimentacao.getValorHora());
         BigDecimal calculaValorTotal = Calculos.calculaValorTotal(movimentacao.getValorMulta(), movimentacao.getValorNormal());
@@ -219,23 +222,23 @@ public class MovimentacaoService {
         if (movimentacao.getSaida() != null){
             movimentacao.setValorHora(configuracaoRepository.findValorHora());
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
-            if (configuracaoRepository.findGerarDesconto()){
+            if (configuracaoRepository.findGerarDesconto() && condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto() != null){
                 movimentacao.setTempoDesconto(condutorTempoDescontoBanco);
                 movimentacao.setTempo(calculaTempoComDesconto);
             } else {
                 movimentacao.setTempo(calculaTempo);
             }
             if (validaTempoPago) {
-                condutorRepository.findById(condutorId).get().setTempoPago(subtraiTempoPago);
-                condutorRepository.findById(condutorId).get().setTempoDesconto(calculaTempoGanhoDeDesconto);
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoPago(calculaTempoGanhoDeDesconto);
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoDesconto(subtraiTempoPago);
             } else {
-                condutorRepository.findById(condutorId).get().setTempoPago(calculaTempoPago);
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoPago(calculaTempoPago);
             }
             if (movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente())) {
-                movimentacao.setTempoMulta(calculaTempoMultaInicio);
+                movimentacao.setTempoMulta(calculaTempoMultaEntrada);
                 movimentacao.setValorMulta(calculaValorMulta);
             } else if (movimentacao.getSaida().isAfter(configuracaoRepository.findFimExpediente())) {
-                movimentacao.setTempoMulta(calculaTempoMultaFim);
+                movimentacao.setTempoMulta(calculaTempoMultaSaida);
                 movimentacao.setValorMulta(calculaValorMulta);
             } else if (movimentacao.getEntrada().isBefore(configuracaoRepository.findInicioExpediente()) && movimentacao.getSaida().isAfter(configuracaoRepository.findFimExpediente())) {
                 movimentacao.setTempoMulta(calculaTempoMultaTotal);
