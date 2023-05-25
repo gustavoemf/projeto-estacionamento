@@ -91,6 +91,7 @@ public class MovimentacaoService {
         movimentacao.setValorTotal(BigDecimal.ZERO);
         movimentacao.setValorNormal(BigDecimal.ZERO);
         movimentacao.setValorMulta(BigDecimal.ZERO);
+
         Long condutorId = movimentacao.getCondutor().getId();
         boolean movimentacaoAtivoBanco = movimentacaoRepository.findById(movimentacao.getId()).get().isAtivo();
         boolean validaTempoPago = Validacoes.validaTempoPago(condutorRepository.findById(condutorId).get().getTempoPago(), configuracaoRepository.findTempoParaDesconto());
@@ -196,6 +197,7 @@ public class MovimentacaoService {
         movimentacao.setValorTotal(BigDecimal.ZERO);
         movimentacao.setValorNormal(BigDecimal.ZERO);
         movimentacao.setValorMulta(BigDecimal.ZERO);
+
         Long condutorId = movimentacao.getCondutor().getId();
         boolean movimentacaoAtivoBanco = movimentacaoRepository.findById(movimentacao.getId()).get().isAtivo();
         boolean validaTempoPago = Validacoes.validaTempoPago(condutorRepository.findById(condutorId).get().getTempoPago(), configuracaoRepository.findTempoParaDesconto());
@@ -249,6 +251,9 @@ public class MovimentacaoService {
         }
         if(movimentacao.getCadastro() == null){
             movimentacao.setCadastro(movimentacaoCadastroBanco);
+        }
+        if(movimentacao.getCadastro() != movimentacaoCadastroBanco){
+            throw new RuntimeException("o cadastro não pode ser alterado");
         }
         this.movimentacaoRepository.save(movimentacao);
     }

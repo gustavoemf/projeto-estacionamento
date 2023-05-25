@@ -75,6 +75,9 @@ public class ModeloService {
         if(modelo.getCadastro() == null){
             modelo.setCadastro(modeloRepository.findById(modelo.getId()).get().getCadastro());
         }
+        if(modelo.getCadastro() != modeloRepository.findById(modelo.getId()).get().getCadastro()){
+            throw new RuntimeException("o cadastro não pode ser alterado");
+        }
         this.modeloRepository.save(modelo);
     }
 }

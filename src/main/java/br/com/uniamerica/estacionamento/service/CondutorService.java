@@ -51,9 +51,6 @@ public class CondutorService {
         if(condutorRepository.findByCpf(condutor.getCpf())!=null){
             throw new RuntimeException("o campo cpf já existe");
         }
-        if(condutorRepository.findByTelefone(condutor.getTelefone())!=null){
-            throw new RuntimeException("o campo telefone já existe");
-        }
         if(!this.validaCpf.isCPF(condutor.getCpf())){
             throw new RuntimeException("o cpf não condiz com a formatação necessária");
         }
@@ -96,9 +93,6 @@ public class CondutorService {
         if(!condutor.getCpf().equals(condutorRepository.findById(condutor.getId()).get().getCpf())){
             throw new RuntimeException("o campo cpf não pode ser atualizado");
         }
-        if(!condutor.getTelefone().equals(condutorRepository.findById(condutor.getId()).get().getTelefone())){
-            throw new RuntimeException("o campo telefone não pode ser atualizado");
-        }
         if(!Validacoes.validaTelefone(condutor.getTelefone())){
             throw new RuntimeException("o telefone não condiz com a formatação necessária");
         }
@@ -109,6 +103,9 @@ public class CondutorService {
         }
         if(condutor.getCadastro() == null){
             condutor.setCadastro(condutorRepository.findById(condutor.getId()).get().getCadastro());
+        }
+        if(condutor.getCadastro() != condutorRepository.findById(condutor.getId()).get().getCadastro()){
+            throw new RuntimeException("o cadastro não pode ser alterado");
         }
         condutor.setTempoPago(condutorRepository.findById(condutor.getId()).get().getTempoPago());
         condutor.setTempoDesconto(condutorRepository.findById(condutor.getId()).get().getTempoDesconto());
