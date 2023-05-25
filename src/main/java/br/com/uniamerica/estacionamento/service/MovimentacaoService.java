@@ -194,6 +194,7 @@ public class MovimentacaoService {
 
         boolean movimentacaoAtivoBanco = movimentacaoRepository.findById(movimentacao.getId()).get().isAtivo();
         LocalDateTime movimentacaoCadastroBanco = movimentacaoRepository.findById(movimentacao.getId()).get().getCadastro();
+
         movimentacao.setTempo(LocalTime.of(0, 0, 0));
         movimentacao.setTempoDesconto(LocalTime.of(0, 0, 0));
         movimentacao.setTempoMulta(LocalTime.of(0, 0, 0));
@@ -204,8 +205,8 @@ public class MovimentacaoService {
         movimentacao.setValorHora(configuracaoRepository.findValorHora());
         movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
 
-        LocalTime condutorTempoDescontoBanco = condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto();
-        LocalTime condutorTempoPagoBanco = condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoPago();
+        LocalTime condutorTempoDescontoBanco = movimentacaoRepository.findById(movimentacao.getId()).get().getCondutor().getTempoDesconto();
+        LocalTime condutorTempoPagoBanco = movimentacaoRepository.findById(movimentacao.getId()).get().getCondutor().getTempoPago();
         LocalTime calculaTempo = Calculos.calculaTempo(movimentacao.getEntrada(), movimentacao.getSaida());
         LocalTime calculaTempoComDesconto = Calculos.calculaTempoComDesconto(calculaTempo, condutorTempoDescontoBanco);
         boolean validaTempoPago = Validacoes.validaTempoPago(condutorTempoPagoBanco, configuracaoRepository.findTempoParaDesconto());
@@ -222,7 +223,7 @@ public class MovimentacaoService {
         if (movimentacao.getSaida() != null){
             movimentacao.setValorHora(configuracaoRepository.findValorHora());
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
-            if (configuracaoRepository.findGerarDesconto() && condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto() != null){
+            if (configuracaoRepository.findGerarDesconto() && condutorTempoDescontoBanco != null){
                 movimentacao.setTempoDesconto(condutorTempoDescontoBanco);
                 movimentacao.setTempo(calculaTempoComDesconto);
             } else {
