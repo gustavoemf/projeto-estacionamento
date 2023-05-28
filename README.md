@@ -7,21 +7,20 @@ Nele podemos manipular informações e dados dos veículos, condutores e das mov
 
 A classe `MovimentacaoService` contém o método `cadastrarMovimentacao` realiza o cadastro de uma nova movimentação. Nela as seguintes verifiações serão realizadas PrePersist:
 ```
-- Verifica se o id não está sendo inserido pelo usuário
-- Verifica se o id do veiculo foi preenchido
-- Verifica se o id do condutor foi preenchido
+- Verifica se os valores da entidade Configuração necessários para realizar a movimentação existem
+- Impede que o usuário insira os valores usados no cálculos, sendo apenas gerados pelo sistema
+- Verifica se o id do condutor e do veiculo foi preenchido
 - Verifica se existe uma entrada
-- Verifica se existe uma saida, caso haja, executa o cálculo de tempo de uso do estacionamento
 - Verifica se existe um tempo de uso, caso haja, executa o cálculo de multa, desconto e valor total
 ```
 A classe `MovimentacaoService` contém o método `atualizarMovimentacao` realiza a atualização de uma movimentação existente. Nela as seguintes verificações serão realizadas PreUpdate:
 ```
-- Verifica se o id não está sendo inserido pelo usuário
-- Verifica se o id do veiculo foi preenchido
-- Verifica se o id do condutor foi preenchido
+- Verifica se os valores da entidade Configuração necessários para realizar a movimentação existem
+- Impede que o usuário insira os valores usados no cálculos, sendo apenas gerados pelo sistema
+- Verifica se o id do condutor e do veiculo foi preenchido
 - Verifica se existe uma entrada
-- Verifica se existe uma saida, caso haja, executa o cálculo de tempo de uso do estacionamento
 - Verifica se existe um tempo de uso, caso haja, executa o cálculo de multa, desconto e valor total
+- Impede a alteração da data de cadastro
 ```
 
 ## 🛠️ Pré-requisitos
