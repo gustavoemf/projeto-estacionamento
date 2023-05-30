@@ -9,7 +9,6 @@ import br.com.uniamerica.estacionamento.repository.MovimentacaoRepository;
 import br.com.uniamerica.estacionamento.repository.VeiculoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -223,15 +222,15 @@ public class MovimentacaoService {
         if (movimentacao.getSaida() != null){
             movimentacao.setValorHora(configuracaoRepository.findValorHora());
             movimentacao.setValorMinutoMulta(configuracaoRepository.findValorMultaMinuto());
-            if (configuracaoRepository.findGerarDesconto() && condutorTempoDescontoBanco != null){
+            if (configuracaoRepository.findGerarDesconto() && condutorRepository.findById(movimentacao.getCondutor().getId()).get().getTempoDesconto() != null){
                 movimentacao.setTempoDesconto(condutorTempoDescontoBanco);
                 movimentacao.setTempo(calculaTempoComDesconto);
             } else {
                 movimentacao.setTempo(calculaTempo);
             }
             if (validaTempoPago) {
-                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoPago(calculaTempoGanhoDeDesconto);
-                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoDesconto(subtraiTempoPago);
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoPago(subtraiTempoPago);
+                condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoDesconto(calculaTempoGanhoDeDesconto);
             } else {
                 condutorRepository.findById(movimentacao.getCondutor().getId()).get().setTempoPago(calculaTempoPago);
             }

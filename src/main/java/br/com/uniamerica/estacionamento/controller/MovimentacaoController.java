@@ -30,7 +30,7 @@ public class MovimentacaoController {
     private VeiculoRepository veiculoRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findByIdPath(@PathVariable("id") final Long id){
+    public ResponseEntity <?> findByIdPath(@PathVariable("id") final Long id){
         final Movimentacao movimentacao = this.movimentacaoRepository.findById(id).orElse(null);
         return movimentacao == null ? ResponseEntity.badRequest().body("Nenhum valor encontrado") : ResponseEntity.ok(movimentacao);
     }
@@ -66,7 +66,7 @@ public class MovimentacaoController {
     }
 
     @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody @Validated Movimentacao movimentacao){
+    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody @Validated final Movimentacao movimentacao){
         try{
             this.movimentacaoService.atuaizaMovimentacao(id, movimentacao);
         }
