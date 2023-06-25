@@ -1,5 +1,7 @@
 package br.com.uniamerica.estacionamento.controller;
 
+import br.com.uniamerica.estacionamento.entity.Cor;
+import br.com.uniamerica.estacionamento.entity.Tipo;
 import br.com.uniamerica.estacionamento.entity.Veiculo;
 import br.com.uniamerica.estacionamento.repository.VeiculoRepository;
 import br.com.uniamerica.estacionamento.service.VeiculoService;
@@ -35,6 +37,14 @@ public class VeiculoController {
     public ResponseEntity <?> listaCompleta(){return ResponseEntity.ok(this.veiculoRepository.findAll());}
     @GetMapping("/ativo")
     public ResponseEntity <?> listaAtivo(){return ResponseEntity.ok(this.veiculoRepository.findByAtivo(true));}
+    @GetMapping("/cores")
+    public ResponseEntity<Cor[]> getCores() {
+        return ResponseEntity.ok().body(Cor.values());
+    }
+    @GetMapping("/tipo")
+    public ResponseEntity<Tipo[]> getTipo() {
+        return ResponseEntity.ok().body(Tipo.values());
+    }
 
     @PostMapping
     public ResponseEntity <?> cadastrar(@RequestBody @Validated final Veiculo veiculo){
