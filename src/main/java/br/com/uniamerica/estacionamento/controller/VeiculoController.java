@@ -57,8 +57,8 @@ public class VeiculoController {
         return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 
-    @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody @Validated Veiculo veiculo){
+    @PutMapping("/{id}")
+    public ResponseEntity <?> editar(@PathVariable("id") final Long id, @RequestBody @Validated Veiculo veiculo){
         try{
             this.veiculoService.atualizaVeiculo(id, veiculo);
         }

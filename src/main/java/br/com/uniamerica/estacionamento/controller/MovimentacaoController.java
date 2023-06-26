@@ -65,8 +65,8 @@ public class MovimentacaoController {
                 movimentacaoRepository.findById(movimentacao.getId()).get().getValorTotal()));
     }
 
-    @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody @Validated final Movimentacao movimentacao){
+    @PutMapping("/{id}")
+    public ResponseEntity <?> editar(@PathVariable("id") final Long id, @RequestBody @Validated final Movimentacao movimentacao){
         try{
             this.movimentacaoService.atuaizaMovimentacao(id, movimentacao);
         }

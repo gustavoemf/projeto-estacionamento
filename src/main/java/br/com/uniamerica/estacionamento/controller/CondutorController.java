@@ -48,8 +48,8 @@ public class CondutorController {
         return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 
-    @PutMapping
-    public ResponseEntity <?> editar(@RequestParam("id") final Long id, @RequestBody @Validated final Condutor condutor){
+    @PutMapping("/{id}")
+    public ResponseEntity <?> editar(@PathVariable("id") final Long id, @RequestBody @Validated final Condutor condutor){
         try{
             this.condutorService.atualizaCondutor(id, condutor);
         }
