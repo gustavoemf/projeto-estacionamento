@@ -63,9 +63,9 @@ public class MarcaService {
         if(marca.getCadastro() == null){
             marca.setCadastro(marcaRepository.findById(marca.getId()).get().getCadastro());
         }
-        if(marca.getCadastro() != marcaRepository.findById(marca.getId()).get().getCadastro()){
+        /*if(marca.getCadastro() != marcaRepository.findById(marca.getId()).get().getCadastro()){
             throw new RuntimeException("o cadastro não pode ser alterado");
-        }
+        }*/
         this.marcaRepository.save(marca);
     }
 }

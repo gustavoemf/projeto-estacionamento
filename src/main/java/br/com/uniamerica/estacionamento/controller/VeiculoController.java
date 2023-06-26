@@ -41,7 +41,7 @@ public class VeiculoController {
     public ResponseEntity<Cor[]> getCores() {
         return ResponseEntity.ok().body(Cor.values());
     }
-    @GetMapping("/tipo")
+    @GetMapping("/tipos")
     public ResponseEntity<Tipo[]> getTipo() {
         return ResponseEntity.ok().body(Tipo.values());
     }
