@@ -44,7 +44,7 @@ public class ModeloController {
         catch (Exception e){
             return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok("Registro realizado");
+        return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 
     @PutMapping
@@ -58,7 +58,7 @@ public class ModeloController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok("Registro atualizado");
+        return ResponseEntity.ok("Registro atualizado com sucesso!");
     }
 
     @DeleteMapping
@@ -69,13 +69,13 @@ public class ModeloController {
         }
         catch(RuntimeException e){
             if(!modeloBanco.isAtivo()){
-                throw new RuntimeException("esse registro já está desativado");
+                throw new RuntimeException("Esse registro já está desativado");
             }
             modeloBanco.setAtivo(false);
             this.modeloRepository.save(modeloBanco);
             return ResponseEntity.internalServerError().body("[REGISTRO DESATIVADO]" + e.getCause().getCause().getMessage());
         }
         modeloBanco.setAtualizacao(LocalDateTime.now());
-        return ResponseEntity.ok("Registro deletado");
+        return ResponseEntity.ok("Registro deletado com sucesso!");
     }
 }

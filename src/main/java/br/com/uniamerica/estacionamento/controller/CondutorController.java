@@ -45,7 +45,7 @@ public class CondutorController {
         catch (Exception e){
             return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok("Registro realizado");
+        return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 
     @PutMapping
@@ -59,7 +59,7 @@ public class CondutorController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok("Registro atualizado");
+        return ResponseEntity.ok("Registro atualizado com sucesso!");
     }
 
     @DeleteMapping
@@ -70,13 +70,13 @@ public class CondutorController {
         }
         catch(DataIntegrityViolationException e){
             if(!condutorBanco.isAtivo()){
-                throw new RuntimeException("esse registro já está desativado");
+                throw new RuntimeException("Esse registro já está desativado.");
             }
             condutorBanco.setAtivo(false);
             this.condutorRepository.save(condutorBanco);
             return ResponseEntity.internalServerError().body("[REGISTRO DESATIVADO]" + e.getCause().getCause().getMessage());
         }
         condutorBanco.setAtualizacao(LocalDateTime.now());
-        return ResponseEntity.ok("Registro deletado");
+        return ResponseEntity.ok("Registro deletado com sucesso!");
     }
 }

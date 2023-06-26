@@ -37,7 +37,7 @@ public class ConfiguracaoController {
         catch(Exception e){
             return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok("Registro realizado");
+        return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 
     @PutMapping
@@ -51,6 +51,6 @@ public class ConfiguracaoController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok("Registro atualizado");
+        return ResponseEntity.ok("Registro atualizado com sucesso!");
     }
 }

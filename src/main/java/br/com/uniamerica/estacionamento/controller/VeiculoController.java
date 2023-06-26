@@ -54,7 +54,7 @@ public class VeiculoController {
         catch (Exception e){
             return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok("Registro realizado");
+        return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 
     @PutMapping
@@ -68,7 +68,7 @@ public class VeiculoController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok("Registro atualizado");
+        return ResponseEntity.ok("Registro atualizado com sucesso!");
     }
 
     @DeleteMapping
@@ -79,13 +79,13 @@ public class VeiculoController {
         }
         catch(RuntimeException e){
             if(!veiculoBanco.isAtivo()){
-                throw new RuntimeException("esse registro já está desativado");
+                throw new RuntimeException("Esse registro já está desativado!");
             }
             veiculoBanco.setAtivo(false);
             this.veiculoRepository.save(veiculoBanco);
             return ResponseEntity.internalServerError().body("[REGISTRO DESATIVADO]" + e.getCause().getCause().getMessage());
         }
         veiculoBanco.setAtualizacao(LocalDateTime.now());
-        return ResponseEntity.ok("Registro deletado");
+        return ResponseEntity.ok("Registro deletado com sucesso!");
     }
 }
