@@ -76,23 +76,20 @@ public class Calculos {
         return tempoMultaTotal;
     }
     public static /*LocalDateTime*/ BigDecimal calculaValorMulta(/*LocalDateTime*/ LocalTime tempoMulta, BigDecimal valorMinutoMulta){
-        long multaHora = tempoMulta.getHour() * 60;
-        long multaMinuto = tempoMulta.getMinute();
-        long multaTotal = multaHora + multaMinuto;
+        float multaHora = tempoMulta.getHour() * 60;
+        float multaMinuto = tempoMulta.getMinute();
+        float multaTotal = multaHora + multaMinuto;
 
-        BigDecimal valorMulta = valorMinutoMulta.multiply(BigDecimal.valueOf(multaTotal));
-        return valorMulta;
+        return valorMinutoMulta.multiply(BigDecimal.valueOf(multaTotal));
     }
-    public static /*LocalDateTime*/ BigDecimal calculaValorNormal(/*LocalDateTime*/ LocalTime tempoNormal, BigDecimal valorHora){
-        long horas = tempoNormal.getHour();
-        long minutos = tempoNormal.getMinute() / 60;
-        long total = horas + minutos;
+    public static /*LocalDateTime*/ BigDecimal calculaValorNormal(/*LocalDateTime*/ LocalTime tempo, BigDecimal valorHora){
+        float horas = tempo.getHour();
+        float minutos = (float) tempo.getMinute() / 60;
+        float total = horas + minutos;
 
-        BigDecimal valorNormal = valorHora.multiply(BigDecimal.valueOf(total));
-        return valorNormal;
+        return valorHora.multiply(BigDecimal.valueOf(total));
     }
     public static /*LocalDateTime*/ BigDecimal calculaValorTotal(BigDecimal valorMulta, BigDecimal valorNormal){
-        BigDecimal valorTotal = valorMulta.add(valorNormal);
-        return valorTotal;
+        return valorMulta.add(valorNormal);
     }
 }

@@ -55,14 +55,7 @@ public class MovimentacaoController {
         catch (Exception e){
             return ResponseEntity.badRequest().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok(Validacoes.geraReciboCadastro(movimentacaoRepository.findById(movimentacao.getId()).get().getEntrada(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getSaida(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getCondutor().getNome(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getVeiculo().getPlaca(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getTempo(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getTempoMulta(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getTempoDesconto(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getValorTotal()));
+        return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 
     @PutMapping("/{id}")
@@ -76,14 +69,7 @@ public class MovimentacaoController {
         catch (RuntimeException e){
             return ResponseEntity.internalServerError().body("Erro " + e.getMessage());
         }
-        return ResponseEntity.ok(Validacoes.geraReciboCadastro(movimentacaoRepository.findById(movimentacao.getId()).get().getEntrada(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getSaida(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getCondutor().getNome(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getVeiculo().getPlaca(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getTempo(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getTempoMulta(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getTempoDesconto(),
-                movimentacaoRepository.findById(movimentacao.getId()).get().getValorTotal()));
+        return ResponseEntity.ok("Registro atualizado com sucesso!");
     }
 
     @DeleteMapping
