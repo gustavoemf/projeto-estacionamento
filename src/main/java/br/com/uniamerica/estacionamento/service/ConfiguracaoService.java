@@ -69,9 +69,9 @@ public class ConfiguracaoService {
         if(configuracao.getCadastro() == null){
             configuracao.setCadastro(configuracaoRepository.findById(configuracao.getId()).get().getCadastro());
         }
-        if(configuracao.getCadastro() != configuracaoRepository.findById(configuracao.getId()).get().getCadastro()){
+        /*if(configuracao.getCadastro() != configuracaoRepository.findById(configuracao.getId()).get().getCadastro()){
             throw new RuntimeException("o cadastro não pode ser alterado");
-        }
+        }*/
         this.configuracaoRepository.save(configuracao);
     }
 }

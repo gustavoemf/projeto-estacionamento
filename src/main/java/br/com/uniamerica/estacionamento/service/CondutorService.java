@@ -104,9 +104,9 @@ public class CondutorService {
         if(condutor.getCadastro() == null){
             condutor.setCadastro(condutorRepository.findById(condutor.getId()).get().getCadastro());
         }
-        if(condutor.getCadastro() != condutorRepository.findById(condutor.getId()).get().getCadastro()){
+        /*if(condutor.getCadastro() != condutorRepository.findById(condutor.getId()).get().getCadastro()){
             throw new RuntimeException("o cadastro não pode ser alterado");
-        }
+        }*/
         condutor.setTempoPago(condutorRepository.findById(condutor.getId()).get().getTempoPago());
         condutor.setTempoDesconto(condutorRepository.findById(condutor.getId()).get().getTempoDesconto());
         condutor.setNome(Validacoes.formataNome(condutor.getNome()));

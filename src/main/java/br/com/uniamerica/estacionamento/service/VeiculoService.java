@@ -107,9 +107,9 @@ public class VeiculoService {
         if(veiculo.getCadastro() == null){
             veiculo.setCadastro(veiculoRepository.findById(veiculo.getId()).get().getCadastro());
         }
-        if(veiculo.getCadastro() != veiculoRepository.findById(veiculo.getId()).get().getCadastro()){
+        /*if(veiculo.getCadastro() != veiculoRepository.findById(veiculo.getId()).get().getCadastro()){
             throw new RuntimeException("o cadastro não pode ser alterado");
-        }
+        }*/
         this.veiculoRepository.save(veiculo);
     }
 }
